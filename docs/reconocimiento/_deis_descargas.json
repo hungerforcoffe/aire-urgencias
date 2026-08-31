@@ -3,43 +3,43 @@
     {
       "anio": 2018,
       "estado": "ok",
-      "ruta": "C:\\Users\\pablo\\OneDrive\\Escritorio\\SIC_C&P_Project\\Big_Data_proj\\data\\raw\\deis\\deis_atencionesurgencia_2018.zip",
+      "ruta": "data/raw/deis/deis_atencionesurgencia_2018.zip",
       "MB": 65.4
     },
     {
       "anio": 2019,
       "estado": "ok",
-      "ruta": "C:\\Users\\pablo\\OneDrive\\Escritorio\\SIC_C&P_Project\\Big_Data_proj\\data\\raw\\deis\\deis_atencionesurgencia_2019.zip",
+      "ruta": "data/raw/deis/deis_atencionesurgencia_2019.zip",
       "MB": 67.3
     },
     {
       "anio": 2020,
       "estado": "ok",
-      "ruta": "C:\\Users\\pablo\\OneDrive\\Escritorio\\SIC_C&P_Project\\Big_Data_proj\\data\\raw\\deis\\deis_atencionesurgencia_2020.zip",
+      "ruta": "data/raw/deis/deis_atencionesurgencia_2020.zip",
       "MB": 58.6
     },
     {
       "anio": 2021,
       "estado": "ok",
-      "ruta": "C:\\Users\\pablo\\OneDrive\\Escritorio\\SIC_C&P_Project\\Big_Data_proj\\data\\raw\\deis\\deis_atencionesurgencia_2021.zip",
+      "ruta": "data/raw/deis/deis_atencionesurgencia_2021.zip",
       "MB": 46.7
     },
     {
       "anio": 2022,
       "estado": "ok",
-      "ruta": "C:\\Users\\pablo\\OneDrive\\Escritorio\\SIC_C&P_Project\\Big_Data_proj\\data\\raw\\deis\\deis_atencionesurgencia_2022.zip",
+      "ruta": "data/raw/deis/deis_atencionesurgencia_2022.zip",
       "MB": 128.3
     },
     {
       "anio": 2023,
       "estado": "ok",
-      "ruta": "C:\\Users\\pablo\\OneDrive\\Escritorio\\SIC_C&P_Project\\Big_Data_proj\\data\\raw\\deis\\deis_atencionesurgencia_2023.zip",
+      "ruta": "data/raw/deis/deis_atencionesurgencia_2023.zip",
       "MB": 132.5
     },
     {
       "anio": 2024,
       "estado": "ok",
-      "ruta": "C:\\Users\\pablo\\OneDrive\\Escritorio\\SIC_C&P_Project\\Big_Data_proj\\data\\raw\\deis\\deis_atencionesurgencia_2024.zip",
+      "ruta": "data/raw/deis/deis_atencionesurgencia_2024.zip",
       "MB": 47.6
     }
   ]
