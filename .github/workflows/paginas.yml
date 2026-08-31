@@ -7,12 +7,15 @@
 # repositorio, y este proyecto no pone credenciales donde no hacen falta.
 name: Publicar el sitio
 
+# Sin filtro `paths`: cualquier push a main vuelve a publicar. Tenerlo costo
+# el primer despliegue — en el push inicial de un repositorio nuevo no hay
+# commit anterior contra el cual comparar rutas, asi que GitHub salta los
+# workflows filtrados y el sitio nunca se publico. Desplegar 1 MB de archivos
+# estaticos toma segundos, asi que el filtro no ahorraba nada que valga el
+# riesgo de no publicar.
 on:
   push:
     branches: [main]
-    paths:
-      - 'sitio/**'
-      - '.github/workflows/paginas.yml'
   workflow_dispatch:
 
 permissions:
