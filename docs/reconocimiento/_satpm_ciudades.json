@@ -1,0 +1,40 @@
+{
+  "archivo": "data\\raw\\satpm\\satpm_SA_202307.nc",
+  "periodo_declarado": "202307",
+  "resolucion_grados": 0.01,
+  "ciudades": {
+    "Santiago": {
+      "lat_pedida": -33.4636,
+      "lon_pedida": -70.6605,
+      "lat_celda": -33.465,
+      "lon_celda": -70.665,
+      "pm25_celda": 37.94,
+      "ventana_celdas": "11x11",
+      "pm25_media_ventana": 38.37,
+      "pm25_min_ventana": 36.61,
+      "pm25_max_ventana": 41.61
+    },
+    "Talcahuano": {
+      "lat_pedida": -36.7249,
+      "lon_pedida": -73.1168,
+      "lat_celda": -36.725,
+      "lon_celda": -73.115,
+      "pm25_celda": 26.17,
+      "ventana_celdas": "11x11",
+      "pm25_media_ventana": 25.04,
+      "pm25_min_ventana": 17.69,
+      "pm25_max_ventana": 32.07
+    },
+    "Coyhaique": {
+      "lat_pedida": -45.5752,
+      "lon_pedida": -72.0662,
+      "lat_celda": -45.575,
+      "lon_celda": -72.065,
+      "pm25_celda": 81.41,
+      "ventana_celdas": "11x11",
+      "pm25_media_ventana": 77.38,
+      "pm25_min_ventana": 61.08,
+      "pm25_max_ventana": 85.41
+    }
+  }
+}

@@ -1,0 +1,417 @@
+{
+  "proveedores": 49,
+  "paises": 121,
+  "estaciones_via_proveedor": 17983,
+  "estaciones_por_pais": {
+    "mobile": 4881,
+    "us": 4042,
+    "cn": 1997,
+    "gb": 661,
+    "fr": 647,
+    "es": 547,
+    "pl": 538,
+    "it": 522,
+    "de": 450,
+    "ca": 371,
+    "za": 299,
+    "at": 299,
+    "au": 286,
+    "in": 237,
+    "mx": 222,
+    "cl": 171,
+    "il": 136,
+    "ro": 130,
+    "no": 109,
+    "cz": 109,
+    "be": 104,
+    "nl": 92,
+    "br": 67,
+    "pt": 67,
+    "fi": 64,
+    "bg": 61,
+    "co": 60,
+    "ru": 48,
+    "mn": 44,
+    "se": 42,
+    "sk": 38,
+    "gr": 37,
+    "no-country": 37,
+    "ch": 30,
+    "99": 29,
+    "ie": 27,
+    "hu": 25,
+    "qa": 25,
+    "th": 23,
+    "si": 22,
+    "ba": 21,
+    "rs": 21,
+    "hk": 18,
+    "hr": 18,
+    "gh": 17,
+    "lt": 17,
+    "xk": 16,
+    "dk": 16,
+    "mk": 15,
+    "pe": 14,
+    "eg": 11,
+    "lv": 10,
+    "--": 10,
+    "aj": 10,
+    "me": 9,
+    "ee": 9,
+    "ni": 9,
+    "ec": 8,
+    "pk": 8,
+    "id": 7,
+    "lu": 7,
+    "sa": 6,
+    "my": 6,
+    "vn": 5,
+    "mt": 4,
+    "ae": 4,
+    "et": 4,
+    "np": 4,
+    "cf": 4,
+    "ke": 4,
+    "bd": 3,
+    "ad": 3,
+    "gi": 3,
+    "kz": 3,
+    "bk": 3,
+    "rw": 2,
+    "ar": 2,
+    "cy": 2,
+    "af": 2,
+    "bh": 2,
+    "gt": 2,
+    "jo": 2,
+    "kg": 2,
+    "la": 2,
+    "sd": 2,
+    "ug": 2,
+    "uz": 2,
+    "su": 2,
+    "vm": 2,
+    "gm": 1,
+    "ng": 1,
+    "ph": 1,
+    "sg": 1,
+    "ci": 1,
+    "cr": 1,
+    "cw": 1,
+    "dz": 1,
+    "gn": 1,
+    "iq": 1,
+    "kw": 1,
+    "lk": 1,
+    "ml": 1,
+    "mm": 1,
+    "td": 1,
+    "tj": 1,
+    "tm": 1,
+    "ag": 1,
+    "am": 1,
+    "bm": 1,
+    "cd": 1,
+    "ce": 1,
+    "cs": 1,
+    "iz": 1,
+    "ku": 1,
+    "kv": 1,
+    "ma": 1,
+    "md": 1,
+    "mg": 1,
+    "ti": 1,
+    "tx": 1,
+    "uc": 1
+  },
+  "por_proveedor": {
+    "aepb-gov-cn": {
+      "cn": 10
+    },
+    "bogota": {
+      "co": 21
+    },
+    "agaar-mn": {
+      "mn": 42
+    },
+    "andalucia": {
+      "es": 4
+    },
+    "australia-tasmania": {
+      "au": 38
+    },
+    "australia-victoria": {
+      "au": 101
+    },
+    "australia-nsw": {
+      "au": 37
+    },
+    "australia-act": {
+      "au": 4
+    },
+    "australia-sa": {
+      "au": 12
+    },
+    "arpae-emilia-romagna": {
+      "it": 45
+    },
+    "australia-queensland": {
+      "au": 94
+    },
+    "bosnia": {
+      "ba": 19
+    },
+    "cpcb": {
+      "in": 36
+    },
+    "cmu": {
+      "us": 43
+    },
+    "caaqm": {
+      "in": 182
+    },
+    "chile-sinca": {
+      "cl": 171
+    },
+    "aqdc": {
+      "gb": 131,
+      "mobile": 7,
+      "us": 136
+    },
+    "defra": {
+      "gb": 161
+    },
+    "gios": {
+      "pl": 523
+    },
+    "hong-kong": {
+      "hk": 18
+    },
+    "ho-chi-minh-city": {
+      "vn": 2
+    },
+    "israel": {
+      "il": 135
+    },
+    "kosovo": {
+      "xk": 14
+    },
+    "medellin": {
+      "co": 36
+    },
+    "clarity": {
+      "gh": 5,
+      "gm": 1,
+      "us": 546
+    },
+    "montenegro": {
+      "me": 9
+    },
+    "mosecom": {
+      "ru": 48
+    },
+    "ncbi": {
+      "gh": 11
+    },
+    "london-air-quality-network": {
+      "gb": 367
+    },
+    "china-aqi-data": {
+      "cn": 1980
+    },
+    "norway": {
+      "no": 109
+    },
+    "netherlands": {
+      "nl": 92
+    },
+    "ogd-india": {
+      "in": 3
+    },
+    "peru-clima": {
+      "pe": 2
+    },
+    "quito-remmaq": {
+      "ec": 8
+    },
+    "richards-bay": {
+      "za": 2
+    },
+    "poland": {
+      "pl": 15
+    },
+    "rwanda-rema": {
+      "rw": 1
+    },
+    "sao-paulo": {
+      "br": 66
+    },
+    "senamhi": {
+      "pe": 10
+    },
+    "slovenian-environment-agency": {
+      "si": 22
+    },
+    "sinaica-mexico": {
+      "mx": 160
+    },
+    "senstate": {
+      "bg": 36,
+      "es": 1,
+      "gr": 1
+    },
+    "south-africa": {
+      "za": 297
+    },
+    "habitatmap": {
+      "cn": 1,
+      "fr": 2,
+      "it": 1,
+      "mobile": 4874,
+      "no-country": 37
+    },
+    "spartan": {
+      "ar": 1,
+      "bd": 1,
+      "cn": 1,
+      "id": 1,
+      "il": 1,
+      "in": 1,
+      "ng": 1,
+      "ph": 1,
+      "sg": 1,
+      "us": 2,
+      "vn": 1
+    },
+    "eea": {
+      "ad": 3,
+      "at": 299,
+      "be": 104,
+      "bg": 24,
+      "ch": 25,
+      "cy": 2,
+      "cz": 109,
+      "de": 450,
+      "dk": 16,
+      "ee": 9,
+      "es": 542,
+      "fi": 64,
+      "fr": 645,
+      "gi": 3,
+      "gr": 36,
+      "hr": 18,
+      "hu": 25,
+      "ie": 27,
+      "it": 476,
+      "lt": 17,
+      "lu": 7,
+      "lv": 10,
+      "mk": 15,
+      "mt": 4,
+      "pt": 67,
+      "ro": 130,
+      "rs": 21,
+      "se": 42,
+      "sk": 38
+    },
+    "stateair": {
+      "ae": 2,
+      "af": 1,
+      "ba": 1,
+      "bd": 2,
+      "bh": 1,
+      "ci": 1,
+      "cn": 5,
+      "co": 2,
+      "cr": 1,
+      "cw": 1,
+      "dz": 1,
+      "et": 2,
+      "gh": 1,
+      "gn": 1,
+      "gt": 1,
+      "id": 4,
+      "in": 10,
+      "iq": 1,
+      "jo": 1,
+      "kg": 1,
+      "kw": 1,
+      "kz": 1,
+      "la": 1,
+      "lk": 1,
+      "ml": 1,
+      "mm": 1,
+      "mn": 2,
+      "np": 2,
+      "pe": 2,
+      "pk": 4,
+      "sa": 1,
+      "sd": 2,
+      "td": 1,
+      "tj": 1,
+      "tm": 1,
+      "ug": 1,
+      "uz": 1,
+      "vn": 2,
+      "xk": 2
+    },
+    "airnow": {
+      "--": 10,
+      "99": 29,
+      "ae": 2,
+      "af": 1,
+      "ag": 1,
+      "aj": 10,
+      "am": 1,
+      "ar": 1,
+      "ba": 1,
+      "bg": 1,
+      "bh": 1,
+      "bk": 3,
+      "bm": 1,
+      "br": 1,
+      "ca": 371,
+      "cd": 1,
+      "ce": 1,
+      "cf": 4,
+      "ch": 5,
+      "co": 1,
+      "cs": 1,
+      "eg": 11,
+      "et": 2,
+      "gb": 2,
+      "gt": 1,
+      "id": 2,
+      "in": 5,
+      "iz": 1,
+      "jo": 1,
+      "ke": 4,
+      "kg": 1,
+      "ku": 1,
+      "kv": 1,
+      "kz": 2,
+      "la": 1,
+      "ma": 1,
+      "md": 1,
+      "mg": 1,
+      "mx": 62,
+      "my": 6,
+      "ni": 9,
+      "np": 2,
+      "pk": 4,
+      "qa": 25,
+      "rw": 1,
+      "sa": 5,
+      "su": 2,
+      "th": 23,
+      "ti": 1,
+      "tx": 1,
+      "uc": 1,
+      "ug": 1,
+      "us": 3315,
+      "uz": 1,
+      "vm": 2
+    }
+  }
+}

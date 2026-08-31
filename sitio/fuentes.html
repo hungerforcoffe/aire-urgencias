@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fuentes y método · Aire y Urgencias</title>
+<meta name="description" content="De dónde sale cada dato del sitio, qué APIs se consultan, qué reglas se aplican y qué limitaciones quedan declaradas.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/estilo.css">
+</head>
+<body>
+
+<div class="barra">
+ <div class="wrap">
+  <a class="marca" href="index.html"><b>Aire y Urgencias</b><span>MP2.5 · Chile</span></a>
+  <nav>
+   <a href="index.html">Mapa</a>
+   <a href="analisis.html">Análisis</a>
+   <a href="fuentes.html">Fuentes y método</a>
+  </nav>
+  <button class="tema" aria-label="Cambiar entre tema claro y oscuro">
+   <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+    <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.5v11a5.5 5.5 0 010-11z"/></svg>
+  </button>
+ </div>
+</div>
+
+<div class="cabecera">
+ <div class="wrap">
+  <div class="eyebrow">Cómo está hecho</div>
+  <h1>Fuentes y <em>método</em></h1>
+  <p class="dek">De dónde sale cada número, qué se consulta en vivo, qué reglas se aplican
+   antes de mostrar una cifra y qué queda fuera del alcance a propósito.</p>
+ </div>
+</div>
+
+<main>
+<div class="wrap prosa">
+
+<h2>Las fuentes</h2>
+
+<div class="tabla-scroll">
+<table>
+ <thead><tr><th>Fuente</th><th style="text-align:left">Qué aporta</th>
+   <th style="text-align:left">Cómo llega</th></tr></thead>
+ <tbody>
+  <tr><td>SINCA (MMA)</td>
+    <td style="text-align:left">MP2.5 horario y meteorología, 16 estaciones</td>
+    <td style="text-align:left">descarga por estación y año</td></tr>
+  <tr><td>DEIS (MINSAL)</td>
+    <td style="text-align:left">urgencias respiratorias por establecimiento, causa y día</td>
+    <td style="text-align:left">descarga de archivos</td></tr>
+  <tr><td>INE</td>
+    <td style="text-align:left">proyecciones de población comunal, denominador de las tasas</td>
+    <td style="text-align:left">descarga de archivos</td></tr>
+  <tr><td>CASEN</td>
+    <td style="text-align:left">porcentaje de hogares que calefaccionan con leña</td>
+    <td style="text-align:left">microdatos públicos</td></tr>
+  <tr><td>Open-Meteo</td>
+    <td style="text-align:left">viento y temperatura actuales; reanálisis ERA5 para rellenar</td>
+    <td style="text-align:left"><strong>API, sin llave</strong></td></tr>
+ </tbody>
+</table>
+</div>
+
+<p><strong>SINCA es la única fuente de aire para Chile en este proyecto.</strong> OpenAQ, que
+sería la opción obvia, es un agregador que cosecha los datos chilenos <em>desde</em> SINCA:
+usarlo para MP2.5 chileno sería contar la misma medición dos veces. Su único papel acá es el
+marco de referencia internacional.</p>
+
+<h2>Los datos y las APIs</h2>
+
+<p>El sitio combina dos cosas distintas y conviene no mezclarlas, porque tienen limitaciones
+opuestas.</p>
+
+<h3>Lo que viene de la base del proyecto</h3>
+
+<p>La base vive en <strong>Amazon Athena</strong> sobre archivos Parquet en S3: 11 tablas y
+unos 74 millones de filas, de las cuales 66 millones son urgencias del DEIS. Nada de eso se
+consulta desde el navegador. Un script en Python corre las consultas y deja los agregados
+en archivos JSON:</p>
+
+<pre><code>python -m src.sitio.exportar</code></pre>
+
+<p>La razón es dura y no tiene vuelta: <strong>GitHub Pages sirve archivos y nada más.</strong>
+No ejecuta Python, no abre conexiones a AWS y <strong>no puede guardar un secreto</strong>.
+Una página que consultara Athena en vivo tendría que llevar la llave de acceso escrita en su
+JavaScript, o sea publicarla en internet. Lo que se publica son <strong>agregados</strong>
+—medias mensuales por estación, medianas por sector de viento, la tabla semanal por
+ciudad—, unos 900 kB en total. Ningún registro individual, ninguna atención de ninguna
+persona.</p>
+
+<h3>Lo que se consulta en vivo</h3>
+
+<p>Desde el navegador solo se puede llamar a una API que cumpla dos condiciones: que
+<strong>no exija llave</strong> —porque quedaría a la vista de cualquiera que abra el código
+fuente— y que <strong>permita CORS</strong> —o el navegador bloquea la respuesta aunque el
+servidor conteste—. Eso deja pocas, y <a href="https://open-meteo.com/">Open-Meteo</a> es la
+que sirve.</p>
+
+<ul>
+ <li><strong>Viento y temperatura actuales</strong> en cada estación, para poder leer la rosa
+  hoy: «sopla del noreste, y con noreste la mediana histórica acá es 73 µg/m³».</li>
+ <li><strong>Reanálisis ERA5</strong>, que es la pieza que arregla un problema real: la red
+  meteorológica de Santiago <strong>se apagó el 8 de mayo de 2025</strong> y la estación que
+  la reemplazó empezó el 19 de agosto. No hubo traslape. Desde entonces, <strong>81.216 de
+  las 90.029 horas-estación de MP2.5 de Santiago no tienen viento medido</strong>. ERA5 es
+  la única forma de llenar ese hueco.</li>
+</ul>
+
+<p>Open-Meteo entrega <em>meteorología</em>. También publica una capa de calidad del aire
+modelada, y ahí hay que ser explícito: <strong>esa capa no se usa</strong>. Es salida de un
+modelo, no medición, y mezclarla con SINCA rompería la comparabilidad de la serie. El mismo
+criterio descarta las redes de sensores de bajo costo como PurpleAir: otro instrumento, otra
+calibración, y en las tres ciudades del estudio la cobertura es nula o casi.</p>
+
+<h3>Otras APIs que sí calzan</h3>
+
+<p>Para ampliar el sitio sin romper nada, los candidatos son los que aportan
+<em>contexto</em>, no exposición:</p>
+
+<ul>
+ <li><strong>SatPM2.5</strong> (bucket público en S3, grilla de 0,01° para Sudamérica):
+  permite ver si la única estación validada de Talcahuano representa a la comuna. Se
+  descarga en el paso de Python, no desde el navegador.</li>
+ <li><strong>Geoportal del INE</strong>: polígonos de comuna para mapas coropléticos.</li>
+ <li><strong>OpenAQ</strong>: exclusivamente para posicionar a las tres ciudades frente a
+  ciudades del mundo. Pide llave, así que va del lado de Python.</li>
+</ul>
+
+<h2>Las reglas que el sitio aplica</h2>
+
+<ol class="regla">
+ <li><strong>Asociación, nunca causalidad.</strong> Ningún texto, variable o gráfico afirma
+  que la contaminación <em>causa</em> consultas. Es un estudio ecológico observacional.</li>
+ <li><strong>Acotar al final, no al principio.</strong> La ingesta y el procesamiento operan
+  a escala nacional. El filtro a tres ciudades ocurre en la última etapa; si se filtrara en
+  la ingesta, el proyecto dejaría de ser Big Data.</li>
+ <li><strong>Nunca sobrescribir la zona cruda.</strong> Los archivos descargados son
+  inmutables y todo reproceso parte de ahí.</li>
+ <li><strong>Toda decisión de limpieza se documenta</strong>, con su umbral y su
+  justificación.</li>
+ <li><strong>Un fallo nunca puede parecer un éxito.</strong> El exportador valida cada
+  consulta antes de escribir: si una vuelve vacía, con menos filas de las esperadas o con
+  una columna entera en nulo, aborta y deja intactos los archivos anteriores. Un vacío
+  silencioso es indistinguible de un dato faltante real y contamina el análisis sin dejar
+  rastro.</li>
+</ol>
+
+<h3>La reja de cobertura</h3>
+
+<p>Un año necesita <strong>300 días con dato</strong> para que se muestre su media anual, y
+un día necesita 18 horas válidas para contar. El caso que obligó a escribir la regla:
+<strong>El Bosque midió 59 días en 2025</strong> —enero a marzo, puro verano— y su promedio
+da 14,6 µg/m³ contra 26,2 el año anterior. Sin la reja, el mapa habría anunciado que la
+comuna se limpió un 44%. Lo que pasó es que el equipo dejó de medir justo antes del
+invierno.</p>
+
+<p>Todo 2026 es parcial por la misma razón al revés: llega hasta agosto, o sea trae el
+invierno completo y ningún mes limpio de fin de año, así que sus promedios están sesgados
+hacia arriba.</p>
+
+<h2>Por qué el mapa muestra puntos y no una mancha</h2>
+
+<p>La tentación de un mapa de calidad del aire es pintar una superficie continua interpolando
+entre estaciones. Se probó, con la prueba que corresponde: predecir cada estación usando
+solo las demás (<em>leave-one-station-out</em>).</p>
+
+<div class="tabla-scroll">
+<table>
+ <thead><tr><th style="text-align:left">Ciudad</th><th>R² del modelo</th>
+   <th>R² del promedio de vecinas</th><th style="text-align:left">Veredicto</th></tr></thead>
+ <tbody>
+  <tr><td>Santiago (mediana de 10)</td><td>0,533</td><td>0,750</td>
+    <td style="text-align:left">el modelo pierde en las diez</td></tr>
+  <tr><td>Talcahuano</td><td>0,326</td><td>0,403</td>
+    <td style="text-align:left">también pierde</td></tr>
+  <tr><td>Las Condes</td><td>−0,010</td><td>−0,091</td>
+    <td style="text-align:left">impredecible por cualquiera de los dos</td></tr>
+ </tbody>
+</table>
+</div>
+
+<p>Las Condes está más alto y contra la cordillera, y no sigue al resto de Santiago: su rosa
+de contaminación incluso apunta al revés que la de las demás estaciones. Rellenar el espacio
+entre puntos habría inventado justo la parte que no se puede saber.</p>
+
+<h2>Lo que queda fuera, a propósito</h2>
+
+<p>Causalidad · inferencia individual · app para ciudadanos · otros contaminantes ·
+pronóstico · atribución de fuentes · cobertura nacional · valorización económica ·
+mortalidad · datos clínicos individuales.</p>
+
+<p>Tres de esas explican por qué el sitio no hace cosas que un mapa de calidad del aire
+comercial sí hace. <strong>Pronóstico y atribución de fuentes</strong> son la razón de que la
+rosa no anime hacia dónde va el humo: para eso harían falta un inventario de emisiones
+georreferenciado y un modelo de dispersión sobre un campo de viento en grilla, y este
+proyecto tiene viento en 13 puntos. <strong>Mortalidad</strong> es la razón de que no haya
+cifra de muertes atribuibles: ese cálculo parte de un riesgo relativo importado de estudios
+de cohorte y su resultado —«N muertes que no habrían ocurrido»— es un contrafactual, o sea
+una afirmación causal, que choca de frente con la regla 1.</p>
+
+<h3>La limitación principal</h3>
+
+<p>El proyecto <strong>no controla por circulación viral</strong>. Las urgencias respiratorias
+de invierno están dominadas por VRS e influenza, y el MP2.5 también sube en invierno por
+calefacción. Ambos suben juntos sin que uno explique al otro. El descuento estacional de la
+página de análisis atenúa el problema, porque el ciclo viral es marcadamente estacional,
+pero no lo elimina: un año de epidemia fuerte aparece como anomalía positiva de urgencias
+sin ninguna relación con el aire. Queda declarado y sin corregir.</p>
+
+<h2>Reproducir el sitio</h2>
+
+<pre><code># 1. datos: consulta Athena y escribe los JSON del sitio
+python -m src.sitio.exportar
+
+# 2. revisar lo escrito sin volver a consultar
+python -m src.sitio.exportar --verificar
+
+# 3. ver el sitio en local
+python -m http.server 8000 --directory sitio</code></pre>
+
+<p>El paso 1 es el único que necesita credenciales de AWS, y las lee del perfil local
+(<code>~/.aws/credentials</code>). No hay ninguna llave en el código ni en el sitio.</p>
+
+</div>
+</main>
+
+<footer>
+ <div class="wrap">
+  Estudio ecológico observacional · <b>asociación, no causalidad</b> · capstone de Big Data<br>
+  Aire: SINCA (MMA) · Salud: DEIS (MINSAL) · Población: INE · Leña: CASEN ·
+  Meteorología en vivo: <a href="https://open-meteo.com/">Open-Meteo</a> ·
+  Cartografía: OpenStreetMap y CARTO
+ </div>
+</footer>
+
+<script src="assets/js/comun.js"></script>
+</body>
+</html>

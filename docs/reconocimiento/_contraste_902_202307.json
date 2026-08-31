@@ -1,0 +1,68 @@
+{
+  "estacion_openaq": 1004,
+  "estacion_sinca": "RIX/902",
+  "periodo": [
+    "20230701",
+    "20230731"
+  ],
+  "horas_openaq": 704,
+  "horas_sinca": 743,
+  "sinca_validados": 737,
+  "sinca_preliminares": 0,
+  "sinca_no_validados": 2,
+  "cobertura_relativa_openaq": 0.948,
+  "por_desfase_horario": {
+    "-2": {
+      "pares": 696,
+      "identicos": 5,
+      "pct_identicos": 0.72,
+      "dif_media": 12.649,
+      "dif_mediana": 24.0,
+      "dif_abs_media": 51.77,
+      "dif_min": -467.0,
+      "dif_max": 151.0
+    },
+    "-1": {
+      "pares": 697,
+      "identicos": 6,
+      "pct_identicos": 0.86,
+      "dif_media": 13.261,
+      "dif_mediana": 24.0,
+      "dif_abs_media": 52.578,
+      "dif_min": -466.0,
+      "dif_max": 152.0
+    },
+    "0": {
+      "pares": 697,
+      "identicos": 5,
+      "pct_identicos": 0.72,
+      "dif_media": 13.714,
+      "dif_mediana": 25.0,
+      "dif_abs_media": 53.881,
+      "dif_min": -471.0,
+      "dif_max": 152.0
+    },
+    "1": {
+      "pares": 696,
+      "identicos": 2,
+      "pct_identicos": 0.29,
+      "dif_media": 13.963,
+      "dif_mediana": 25.0,
+      "dif_abs_media": 55.376,
+      "dif_min": -493.0,
+      "dif_max": 153.0
+    },
+    "2": {
+      "pares": 695,
+      "identicos": 3,
+      "pct_identicos": 0.43,
+      "dif_media": 13.993,
+      "dif_mediana": 26.0,
+      "dif_abs_media": 56.554,
+      "dif_min": -508.0,
+      "dif_max": 154.0
+    }
+  },
+  "mejor_desfase": -1,
+  "veredicto": "DIFIEREN"
+}

@@ -1,0 +1,103 @@
+{
+  "comuna": "Talcahuano",
+  "cod_comuna": 8110,
+  "region_sinca": "RVIII",
+  "estaciones": [
+    {
+      "codigo": "801",
+      "nombre": "San Vicente, Bomberos",
+      "parametros": [
+        "0001"
+      ],
+      "ficha_id": "91",
+      "tiene_mp25": false
+    },
+    {
+      "codigo": "802",
+      "nombre": "Consultorio - San Vicente",
+      "parametros": [
+        "0001",
+        "0002",
+        "0003",
+        "0NOX",
+        "PM10",
+        "PM25"
+      ],
+      "ficha_id": "241",
+      "tiene_mp25": true,
+      "dias": 2556,
+      "validados": 2427,
+      "preliminares": 52,
+      "no_validados": 31
+    },
+    {
+      "codigo": "803",
+      "nombre": "Libertad",
+      "parametros": [
+        "PM10",
+        "PM25"
+      ],
+      "ficha_id": "127",
+      "tiene_mp25": true,
+      "dias": 2556,
+      "validados": 0,
+      "preliminares": 0,
+      "no_validados": 0
+    },
+    {
+      "codigo": "806",
+      "nombre": "Inpesca",
+      "parametros": [
+        "0001",
+        "PM10",
+        "PM25"
+      ],
+      "ficha_id": "209",
+      "tiene_mp25": true,
+      "dias": 2556,
+      "validados": 0,
+      "preliminares": 0,
+      "no_validados": 2519
+    },
+    {
+      "codigo": "807",
+      "nombre": "Indura",
+      "parametros": [
+        "0001",
+        "0003",
+        "0004",
+        "0008",
+        "PM10",
+        "PM25"
+      ],
+      "ficha_id": "104",
+      "tiene_mp25": true,
+      "dias": 2556,
+      "validados": 0,
+      "preliminares": 0,
+      "no_validados": 2504
+    },
+    {
+      "codigo": "837",
+      "nombre": "Nueva Libertad",
+      "parametros": [
+        "0001",
+        "0002",
+        "0003",
+        "0004",
+        "0008",
+        "0CH4",
+        "0NOX",
+        "PM10",
+        "PM25",
+        "THCM"
+      ],
+      "ficha_id": "240",
+      "tiene_mp25": true,
+      "dias": 2556,
+      "validados": 0,
+      "preliminares": 0,
+      "no_validados": 2522
+    }
+  ]
+}

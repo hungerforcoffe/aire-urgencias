@@ -1,0 +1,52 @@
+[project]
+name = "aire-urgencias"
+version = "0.1.0"
+description = "Asociacion entre MP2.5 y consultas de urgencia respiratoria en Santiago, Talcahuano y Coyhaique (2018-2024)"
+requires-python = ">=3.12,<3.13"
+
+dependencies = [
+    # Manipulacion de datos
+    "pandas>=2.2",
+    "numpy>=1.26",
+    # >=20 no es capricho: los Parquet del proyecto los escribe pyarrow 25, que
+    # guarda SizeStatistics en los metadatos, y pyarrow 19 falla al leerlos con
+    # "Repetition level histogram size mismatch" — un error que no menciona la
+    # version y no lleva a ninguna parte. Verificado: 19 falla, 20 lee.
+    # No se puede evitar al escribir: probado con write_page_index=False,
+    # write_statistics=False y los formatos 1.0, 2.4 y 2.6.
+    "pyarrow>=20",            # parquet en data/interim y data/processed
+    # Ingesta
+    "requests>=2.32",
+    "boto3>=1.34",            # OpenAQ en S3, sin firmar (bucket publico)
+    "tenacity>=8.3",          # reintentos: distinguir 403 de 404 sin abandonar
+    # Lectura de fuentes chilenas
+    "openpyxl>=3.1",          # DEIS publica varios .xlsx
+    "charset-normalizer>=3.3", # SINCA/DEIS suelen venir en latin-1/cp1252
+    # Analisis
+    "statsmodels>=0.14",      # modelos con rezagos y control de estacionalidad
+    "scipy>=1.13",
+    # Visualizacion
+    "matplotlib>=3.9",
+    # Notebooks
+    "jupyterlab>=4.2",
+    "ipykernel>=6.29",
+    # Utilidades
+    "tqdm>=4.66",
+    "python-dateutil>=2.9",
+    "pyodbc>=5.3.0",
+    "netcdf4>=1.7",
+    "pyathena[pandas]>=3.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.5",
+    "pytest>=8.2",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

@@ -1,0 +1,68 @@
+{
+  "estacion_openaq": 25,
+  "estacion_sinca": "RM/D14",
+  "periodo": [
+    "20230701",
+    "20230731"
+  ],
+  "horas_openaq": 704,
+  "horas_sinca": 743,
+  "sinca_validados": 743,
+  "sinca_preliminares": 0,
+  "sinca_no_validados": 0,
+  "cobertura_relativa_openaq": 0.948,
+  "por_desfase_horario": {
+    "-2": {
+      "pares": 702,
+      "identicos": 13,
+      "pct_identicos": 1.85,
+      "dif_media": 10.286,
+      "dif_mediana": 11.0,
+      "dif_abs_media": 15.181,
+      "dif_min": -65.0,
+      "dif_max": 55.0
+    },
+    "-1": {
+      "pares": 703,
+      "identicos": 13,
+      "pct_identicos": 1.85,
+      "dif_media": 10.404,
+      "dif_mediana": 11.0,
+      "dif_abs_media": 15.528,
+      "dif_min": -67.0,
+      "dif_max": 56.0
+    },
+    "0": {
+      "pares": 703,
+      "identicos": 15,
+      "pct_identicos": 2.13,
+      "dif_media": 10.505,
+      "dif_mediana": 11.0,
+      "dif_abs_media": 15.905,
+      "dif_min": -69.0,
+      "dif_max": 56.0
+    },
+    "1": {
+      "pares": 702,
+      "identicos": 12,
+      "pct_identicos": 1.71,
+      "dif_media": 10.694,
+      "dif_mediana": 11.0,
+      "dif_abs_media": 16.335,
+      "dif_min": -47.0,
+      "dif_max": 57.0
+    },
+    "2": {
+      "pares": 701,
+      "identicos": 17,
+      "pct_identicos": 2.43,
+      "dif_media": 10.823,
+      "dif_mediana": 12.0,
+      "dif_abs_media": 16.732,
+      "dif_min": -48.0,
+      "dif_max": 58.0
+    }
+  },
+  "mejor_desfase": 2,
+  "veredicto": "DIFIEREN"
+}

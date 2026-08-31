@@ -1,0 +1,5749 @@
+{
+  "2018": {
+    "filas_leidas": 4488935,
+    "establecimientos_sin_mapa": 14,
+    "por_ciudad": {
+      "Santiago": {
+        "n_establecimientos": 104,
+        "detalle": {
+          "09-100": {
+            "comuna": "Independencia",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 7123
+          },
+          "09-101": {
+            "comuna": "Independencia",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 21688
+          },
+          "09-801": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 24687
+          },
+          "09-802": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 11470
+          },
+          "09-804": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14240
+          },
+          "09-805": {
+            "comuna": "Huechuraba",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 17020
+          },
+          "09-808": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13909
+          },
+          "09-809": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 18789
+          },
+          "09-813": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 15049
+          },
+          "09-815": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 22169
+          },
+          "09-821": {
+            "comuna": "Independencia",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 12137
+          },
+          "09-824": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 17319
+          },
+          "09-890": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 10223
+          },
+          "09-941": {
+            "comuna": "Huechuraba",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 5774
+          },
+          "10-100": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 3803
+          },
+          "10-110": {
+            "comuna": "Santiago",
+            "dias_con_registro": 2,
+            "filas": 54,
+            "urgencias_respiratorias": 0
+          },
+          "10-120": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 24724
+          },
+          "10-316": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 8832
+          },
+          "10-320": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14413
+          },
+          "10-345": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 7782
+          },
+          "10-354": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13343
+          },
+          "10-361": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 17479
+          },
+          "10-364": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 11503
+          },
+          "10-860": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 25621
+          },
+          "10-907": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 11057
+          },
+          "10-920": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 12098
+          },
+          "11-100": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 20684
+          },
+          "11-101": {
+            "comuna": "Maipu",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 8759
+          },
+          "11-195": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 4108
+          },
+          "11-302": {
+            "comuna": "Estación Central",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14690
+          },
+          "11-378": {
+            "comuna": "Maipu",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 12088
+          },
+          "11-381": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 9087
+          },
+          "11-800": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 17468
+          },
+          "11-804": {
+            "comuna": "Maipu",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14906
+          },
+          "11-805": {
+            "comuna": "Cerrillos",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 13877
+          },
+          "11-806": {
+            "comuna": "Estación Central",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 15875
+          },
+          "11-809": {
+            "comuna": "Maipu",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 19845
+          },
+          "11-903": {
+            "comuna": "Cerrillos",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 15885
+          },
+          "12-100": {
+            "comuna": "Providencia",
+            "dias_con_registro": 359,
+            "filas": 9693,
+            "urgencias_respiratorias": 2451
+          },
+          "12-101": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 362,
+            "filas": 9774,
+            "urgencias_respiratorias": 2682
+          },
+          "12-102": {
+            "comuna": "Providencia",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 18691
+          },
+          "12-303": {
+            "comuna": "Providencia",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 2812
+          },
+          "12-317": {
+            "comuna": "La Reina",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 9981
+          },
+          "12-806": {
+            "comuna": "Las Condes",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 11914
+          },
+          "12-807": {
+            "comuna": "Lo Barnechea",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14352
+          },
+          "12-810": {
+            "comuna": "Ñuñoa",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 6519
+          },
+          "12-813": {
+            "comuna": "Macul",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 9826
+          },
+          "12-814": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13059
+          },
+          "12-815": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14501
+          },
+          "12-816": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14887
+          },
+          "12-818": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 15076
+          },
+          "12-820": {
+            "comuna": "Ñuñoa",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13577
+          },
+          "13-100": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 4662
+          },
+          "13-130": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 24046
+          },
+          "13-180": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 11706
+          },
+          "13-190": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 4856
+          },
+          "13-301": {
+            "comuna": "San Joaquín",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 12394
+          },
+          "13-317": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 10358
+          },
+          "13-802": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 12761
+          },
+          "13-803": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 15095
+          },
+          "13-806": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 12344
+          },
+          "13-807": {
+            "comuna": "La Granja",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 10112
+          },
+          "13-808": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13235
+          },
+          "13-809": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 20187
+          },
+          "13-812": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13424
+          },
+          "13-813": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 11495
+          },
+          "13-814": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 12966
+          },
+          "13-815": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 17431
+          },
+          "13-820": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 11787
+          },
+          "13-822": {
+            "comuna": "San Joaquín",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 12405
+          },
+          "13-823": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 19710,
+            "urgencias_respiratorias": 40558
+          },
+          "13-826": {
+            "comuna": "La Cisterna",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 9583
+          },
+          "13-828": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14158
+          },
+          "13-829": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13024
+          },
+          "13-830": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 16480
+          },
+          "13-831": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 11852
+          },
+          "13-832": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 12900
+          },
+          "14-101": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 18586
+          },
+          "14-103": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 21487
+          },
+          "14-105": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 4176
+          },
+          "14-330": {
+            "comuna": "La Florida",
+            "dias_con_registro": 279,
+            "filas": 7533,
+            "urgencias_respiratorias": 6344
+          },
+          "14-334": {
+            "comuna": "La Florida",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 9288
+          },
+          "14-801": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 28102
+          },
+          "14-802": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 9465
+          },
+          "14-804": {
+            "comuna": "La Florida",
+            "dias_con_registro": 363,
+            "filas": 9801,
+            "urgencias_respiratorias": 15654
+          },
+          "14-805": {
+            "comuna": "La Florida",
+            "dias_con_registro": 357,
+            "filas": 9639,
+            "urgencias_respiratorias": 14665
+          },
+          "14-806": {
+            "comuna": "La Granja",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 32270
+          },
+          "14-807": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 356,
+            "filas": 9612,
+            "urgencias_respiratorias": 12944
+          },
+          "14-808": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13790
+          },
+          "14-809": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 363,
+            "filas": 9801,
+            "urgencias_respiratorias": 14315
+          },
+          "14-811": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 347,
+            "filas": 9369,
+            "urgencias_respiratorias": 22693
+          },
+          "14-812": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 24470
+          },
+          "14-814": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 363,
+            "filas": 9801,
+            "urgencias_respiratorias": 10308
+          },
+          "14-816": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 8120
+          },
+          "14-817": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 16331
+          },
+          "14-819": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 358,
+            "filas": 9666,
+            "urgencias_respiratorias": 14043
+          },
+          "14-820": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 21173
+          },
+          "14-821": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 23622
+          },
+          "14-822": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 21192
+          },
+          "14-824": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 10142
+          },
+          "14-825": {
+            "comuna": "La Granja",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 15978
+          },
+          "14-826": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 24449
+          },
+          "14-828": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 363,
+            "filas": 9801,
+            "urgencias_respiratorias": 7794
+          },
+          "14-831": {
+            "comuna": "La Florida",
+            "dias_con_registro": 362,
+            "filas": 9774,
+            "urgencias_respiratorias": 10905
+          }
+        }
+      },
+      "Talcahuano": {
+        "n_establecimientos": 5,
+        "detalle": {
+          "19-100": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 17158
+          },
+          "19-802": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 357,
+            "filas": 9639,
+            "urgencias_respiratorias": 14186
+          },
+          "19-803": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 12207
+          },
+          "19-807": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 15404
+          },
+          "19-808": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 16613
+          }
+        }
+      },
+      "Coyhaique": {
+        "n_establecimientos": 2,
+        "detalle": {
+          "25-100": {
+            "comuna": "Coyhaique",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 21719
+          },
+          "25-900": {
+            "comuna": "Coyhaique",
+            "dias_con_registro": 2,
+            "filas": 54,
+            "urgencias_respiratorias": 0
+          }
+        }
+      }
+    }
+  },
+  "2019": {
+    "filas_leidas": 4550877,
+    "establecimientos_sin_mapa": 15,
+    "por_ciudad": {
+      "Santiago": {
+        "n_establecimientos": 104,
+        "detalle": {
+          "09-100": {
+            "comuna": "Independencia",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 7346
+          },
+          "09-101": {
+            "comuna": "Independencia",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 21852
+          },
+          "09-801": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 27776
+          },
+          "09-802": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 12282
+          },
+          "09-804": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 12596
+          },
+          "09-805": {
+            "comuna": "Huechuraba",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13481
+          },
+          "09-808": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 363,
+            "filas": 9801,
+            "urgencias_respiratorias": 11530
+          },
+          "09-809": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 18379
+          },
+          "09-813": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 363,
+            "filas": 9801,
+            "urgencias_respiratorias": 17566
+          },
+          "09-815": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 28018
+          },
+          "09-821": {
+            "comuna": "Independencia",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 5016
+          },
+          "09-824": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 15498
+          },
+          "09-890": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 3360
+          },
+          "09-941": {
+            "comuna": "Huechuraba",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 5679
+          },
+          "10-100": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 4146
+          },
+          "10-110": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 1
+          },
+          "10-120": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 24832
+          },
+          "10-316": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 8407
+          },
+          "10-320": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13401
+          },
+          "10-345": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 7443
+          },
+          "10-354": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13979
+          },
+          "10-361": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 18543
+          },
+          "10-364": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13171
+          },
+          "10-860": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 28200
+          },
+          "10-907": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 10951
+          },
+          "10-920": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 11791
+          },
+          "11-100": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 21858
+          },
+          "11-101": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 15504
+          },
+          "11-195": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 4610
+          },
+          "11-302": {
+            "comuna": "Estación Central",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 15076
+          },
+          "11-378": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14221
+          },
+          "11-381": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 9217
+          },
+          "11-800": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14847
+          },
+          "11-804": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14784
+          },
+          "11-805": {
+            "comuna": "Cerrillos",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13744
+          },
+          "11-806": {
+            "comuna": "Estación Central",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14265
+          },
+          "11-809": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 20027
+          },
+          "11-903": {
+            "comuna": "Cerrillos",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 15658
+          },
+          "12-100": {
+            "comuna": "Providencia",
+            "dias_con_registro": 361,
+            "filas": 9747,
+            "urgencias_respiratorias": 2564
+          },
+          "12-101": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 2946
+          },
+          "12-102": {
+            "comuna": "Providencia",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 20528
+          },
+          "12-303": {
+            "comuna": "Providencia",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 3428
+          },
+          "12-317": {
+            "comuna": "La Reina",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 10264
+          },
+          "12-806": {
+            "comuna": "Las Condes",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14470
+          },
+          "12-807": {
+            "comuna": "Lo Barnechea",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14341
+          },
+          "12-810": {
+            "comuna": "Ñuñoa",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 6521
+          },
+          "12-813": {
+            "comuna": "Macul",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 10330
+          },
+          "12-814": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14033
+          },
+          "12-815": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14662
+          },
+          "12-816": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 16108
+          },
+          "12-818": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 14835
+          },
+          "12-820": {
+            "comuna": "Ñuñoa",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13492
+          },
+          "13-100": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 5352
+          },
+          "13-130": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 25014
+          },
+          "13-180": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 11322
+          },
+          "13-190": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 4875
+          },
+          "13-301": {
+            "comuna": "San Joaquín",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 12067
+          },
+          "13-317": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 11660
+          },
+          "13-802": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 13548
+          },
+          "13-803": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 15285
+          },
+          "13-806": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 12129
+          },
+          "13-807": {
+            "comuna": "La Granja",
+            "dias_con_registro": 361,
+            "filas": 9747,
+            "urgencias_respiratorias": 10507
+          },
+          "13-808": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13718
+          },
+          "13-809": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 359,
+            "filas": 9693,
+            "urgencias_respiratorias": 20235
+          },
+          "13-812": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 12253
+          },
+          "13-813": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13027
+          },
+          "13-814": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13550
+          },
+          "13-815": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 363,
+            "filas": 9801,
+            "urgencias_respiratorias": 16068
+          },
+          "13-820": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 12336
+          },
+          "13-822": {
+            "comuna": "San Joaquín",
+            "dias_con_registro": 362,
+            "filas": 9774,
+            "urgencias_respiratorias": 11579
+          },
+          "13-823": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 19710,
+            "urgencias_respiratorias": 41216
+          },
+          "13-826": {
+            "comuna": "La Cisterna",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 10486
+          },
+          "13-828": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 363,
+            "filas": 9801,
+            "urgencias_respiratorias": 15627
+          },
+          "13-829": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13726
+          },
+          "13-830": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 18767
+          },
+          "13-831": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 10912
+          },
+          "13-832": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13052
+          },
+          "14-101": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 22210
+          },
+          "14-103": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 22296
+          },
+          "14-105": {
+            "comuna": "La Florida",
+            "dias_con_registro": 359,
+            "filas": 9693,
+            "urgencias_respiratorias": 3518
+          },
+          "14-330": {
+            "comuna": "La Florida",
+            "dias_con_registro": 329,
+            "filas": 8883,
+            "urgencias_respiratorias": 8973
+          },
+          "14-334": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 9874
+          },
+          "14-801": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 362,
+            "filas": 9774,
+            "urgencias_respiratorias": 27203
+          },
+          "14-802": {
+            "comuna": "La Florida",
+            "dias_con_registro": 349,
+            "filas": 9423,
+            "urgencias_respiratorias": 7992
+          },
+          "14-804": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 16606
+          },
+          "14-805": {
+            "comuna": "La Florida",
+            "dias_con_registro": 362,
+            "filas": 9774,
+            "urgencias_respiratorias": 14173
+          },
+          "14-806": {
+            "comuna": "La Granja",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 32656
+          },
+          "14-807": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 346,
+            "filas": 9342,
+            "urgencias_respiratorias": 14925
+          },
+          "14-808": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 360,
+            "filas": 9720,
+            "urgencias_respiratorias": 13454
+          },
+          "14-809": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 352,
+            "filas": 9504,
+            "urgencias_respiratorias": 14716
+          },
+          "14-811": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 363,
+            "filas": 9801,
+            "urgencias_respiratorias": 21287
+          },
+          "14-812": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 361,
+            "filas": 9747,
+            "urgencias_respiratorias": 23081
+          },
+          "14-814": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 349,
+            "filas": 9423,
+            "urgencias_respiratorias": 10043
+          },
+          "14-816": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 8005
+          },
+          "14-817": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 362,
+            "filas": 9774,
+            "urgencias_respiratorias": 15467
+          },
+          "14-819": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 361,
+            "filas": 9747,
+            "urgencias_respiratorias": 15385
+          },
+          "14-820": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 359,
+            "filas": 9693,
+            "urgencias_respiratorias": 21449
+          },
+          "14-821": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 23021
+          },
+          "14-822": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 362,
+            "filas": 9774,
+            "urgencias_respiratorias": 22227
+          },
+          "14-824": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 9513
+          },
+          "14-825": {
+            "comuna": "La Granja",
+            "dias_con_registro": 358,
+            "filas": 9666,
+            "urgencias_respiratorias": 15771
+          },
+          "14-826": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 26399
+          },
+          "14-828": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 364,
+            "filas": 9828,
+            "urgencias_respiratorias": 8224
+          },
+          "14-831": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 10220
+          }
+        }
+      },
+      "Talcahuano": {
+        "n_establecimientos": 5,
+        "detalle": {
+          "19-100": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 15082
+          },
+          "19-802": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 12585
+          },
+          "19-803": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 11913
+          },
+          "19-807": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 357,
+            "filas": 9639,
+            "urgencias_respiratorias": 17021
+          },
+          "19-808": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 13838
+          }
+        }
+      },
+      "Coyhaique": {
+        "n_establecimientos": 1,
+        "detalle": {
+          "25-100": {
+            "comuna": "Coyhaique",
+            "dias_con_registro": 365,
+            "filas": 9855,
+            "urgencias_respiratorias": 20578
+          }
+        }
+      }
+    }
+  },
+  "2020": {
+    "filas_leidas": 6446646,
+    "establecimientos_sin_mapa": 1,
+    "por_ciudad": {
+      "Santiago": {
+        "n_establecimientos": 112,
+        "detalle": {
+          "09-100": {
+            "comuna": "Independencia",
+            "dias_con_registro": 366,
+            "filas": 11600,
+            "urgencias_respiratorias": 2010
+          },
+          "09-101": {
+            "comuna": "Independencia",
+            "dias_con_registro": 366,
+            "filas": 11505,
+            "urgencias_respiratorias": 4331
+          },
+          "09-801": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 366,
+            "filas": 11512,
+            "urgencias_respiratorias": 6952
+          },
+          "09-802": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 365,
+            "filas": 11479,
+            "urgencias_respiratorias": 2900
+          },
+          "09-804": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 366,
+            "filas": 11561,
+            "urgencias_respiratorias": 2494
+          },
+          "09-805": {
+            "comuna": "Huechuraba",
+            "dias_con_registro": 366,
+            "filas": 11567,
+            "urgencias_respiratorias": 3462
+          },
+          "09-808": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 366,
+            "filas": 11507,
+            "urgencias_respiratorias": 2399
+          },
+          "09-809": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 366,
+            "filas": 11599,
+            "urgencias_respiratorias": 4563
+          },
+          "09-813": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 365,
+            "filas": 11490,
+            "urgencias_respiratorias": 4249
+          },
+          "09-815": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 366,
+            "filas": 11564,
+            "urgencias_respiratorias": 6941
+          },
+          "09-821": {
+            "comuna": "Independencia",
+            "dias_con_registro": 366,
+            "filas": 11588,
+            "urgencias_respiratorias": 839
+          },
+          "09-824": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 366,
+            "filas": 11609,
+            "urgencias_respiratorias": 3229
+          },
+          "09-890": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 366,
+            "filas": 11888,
+            "urgencias_respiratorias": 475
+          },
+          "09-941": {
+            "comuna": "Huechuraba",
+            "dias_con_registro": 366,
+            "filas": 11521,
+            "urgencias_respiratorias": 1245
+          },
+          "10-100": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 11560,
+            "urgencias_respiratorias": 2384
+          },
+          "10-110": {
+            "comuna": "Santiago",
+            "dias_con_registro": 366,
+            "filas": 11532,
+            "urgencias_respiratorias": 7
+          },
+          "10-120": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 366,
+            "filas": 11573,
+            "urgencias_respiratorias": 6693
+          },
+          "10-860": {
+            "comuna": "Renca",
+            "dias_con_registro": 366,
+            "filas": 11495,
+            "urgencias_respiratorias": 8235
+          },
+          "10-900": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 366,
+            "filas": 11744,
+            "urgencias_respiratorias": 4261
+          },
+          "10-902": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 364,
+            "filas": 11708,
+            "urgencias_respiratorias": 1855
+          },
+          "10-903": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 366,
+            "filas": 12656,
+            "urgencias_respiratorias": 1776
+          },
+          "10-906": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 11463,
+            "urgencias_respiratorias": 4346
+          },
+          "10-907": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 366,
+            "filas": 11593,
+            "urgencias_respiratorias": 4022
+          },
+          "10-908": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 366,
+            "filas": 11794,
+            "urgencias_respiratorias": 2944
+          },
+          "10-910": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 365,
+            "filas": 11465,
+            "urgencias_respiratorias": 2543
+          },
+          "10-911": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 12600,
+            "urgencias_respiratorias": 1889
+          },
+          "10-913": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 366,
+            "filas": 11505,
+            "urgencias_respiratorias": 2688
+          },
+          "10-915": {
+            "comuna": "Renca",
+            "dias_con_registro": 366,
+            "filas": 11519,
+            "urgencias_respiratorias": 4300
+          },
+          "10-916": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 366,
+            "filas": 11580,
+            "urgencias_respiratorias": 2304
+          },
+          "10-919": {
+            "comuna": "Renca",
+            "dias_con_registro": 366,
+            "filas": 14630,
+            "urgencias_respiratorias": 3519
+          },
+          "10-920": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 366,
+            "filas": 11634,
+            "urgencias_respiratorias": 3193
+          },
+          "10-921": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 11856,
+            "urgencias_respiratorias": 2022
+          },
+          "10-922": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 366,
+            "filas": 12888,
+            "urgencias_respiratorias": 1987
+          },
+          "11-100": {
+            "comuna": "Santiago",
+            "dias_con_registro": 366,
+            "filas": 11760,
+            "urgencias_respiratorias": 4236
+          },
+          "11-101": {
+            "comuna": "Maipú",
+            "dias_con_registro": 366,
+            "filas": 12560,
+            "urgencias_respiratorias": 2760
+          },
+          "11-195": {
+            "comuna": "Santiago",
+            "dias_con_registro": 366,
+            "filas": 14504,
+            "urgencias_respiratorias": 2454
+          },
+          "11-800": {
+            "comuna": "Santiago",
+            "dias_con_registro": 366,
+            "filas": 12464,
+            "urgencias_respiratorias": 2454
+          },
+          "11-804": {
+            "comuna": "Maipú",
+            "dias_con_registro": 366,
+            "filas": 12011,
+            "urgencias_respiratorias": 3597
+          },
+          "11-805": {
+            "comuna": "Cerrillos",
+            "dias_con_registro": 366,
+            "filas": 12984,
+            "urgencias_respiratorias": 3471
+          },
+          "11-806": {
+            "comuna": "Estación Central",
+            "dias_con_registro": 366,
+            "filas": 13016,
+            "urgencias_respiratorias": 3584
+          },
+          "11-809": {
+            "comuna": "Maipú",
+            "dias_con_registro": 366,
+            "filas": 11671,
+            "urgencias_respiratorias": 5162
+          },
+          "11-900": {
+            "comuna": "Estación Central",
+            "dias_con_registro": 366,
+            "filas": 12464,
+            "urgencias_respiratorias": 3488
+          },
+          "11-901": {
+            "comuna": "Maipú",
+            "dias_con_registro": 366,
+            "filas": 14579,
+            "urgencias_respiratorias": 3121
+          },
+          "11-903": {
+            "comuna": "Cerrillos",
+            "dias_con_registro": 366,
+            "filas": 12544,
+            "urgencias_respiratorias": 3802
+          },
+          "11-923": {
+            "comuna": "Santiago",
+            "dias_con_registro": 366,
+            "filas": 13024,
+            "urgencias_respiratorias": 2132
+          },
+          "12-100": {
+            "comuna": "Providencia",
+            "dias_con_registro": 366,
+            "filas": 11838,
+            "urgencias_respiratorias": 1698
+          },
+          "12-101": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 366,
+            "filas": 11865,
+            "urgencias_respiratorias": 1226
+          },
+          "12-102": {
+            "comuna": "Providencia",
+            "dias_con_registro": 366,
+            "filas": 12838,
+            "urgencias_respiratorias": 3721
+          },
+          "12-320": {
+            "comuna": "La Reina",
+            "dias_con_registro": 232,
+            "filas": 7456,
+            "urgencias_respiratorias": 423
+          },
+          "12-806": {
+            "comuna": "Las Condes",
+            "dias_con_registro": 366,
+            "filas": 11502,
+            "urgencias_respiratorias": 2974
+          },
+          "12-807": {
+            "comuna": "Lo Barnechea",
+            "dias_con_registro": 366,
+            "filas": 11822,
+            "urgencias_respiratorias": 2553
+          },
+          "12-810": {
+            "comuna": "Ñuñoa",
+            "dias_con_registro": 366,
+            "filas": 11519,
+            "urgencias_respiratorias": 1455
+          },
+          "12-813": {
+            "comuna": "Macul",
+            "dias_con_registro": 366,
+            "filas": 11508,
+            "urgencias_respiratorias": 2476
+          },
+          "12-814": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 366,
+            "filas": 11734,
+            "urgencias_respiratorias": 2647
+          },
+          "12-815": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 366,
+            "filas": 11614,
+            "urgencias_respiratorias": 2642
+          },
+          "12-816": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 366,
+            "filas": 12098,
+            "urgencias_respiratorias": 4680
+          },
+          "12-818": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 11565,
+            "urgencias_respiratorias": 2965
+          },
+          "12-820": {
+            "comuna": "Ñuñoa",
+            "dias_con_registro": 366,
+            "filas": 11738,
+            "urgencias_respiratorias": 3063
+          },
+          "12-903": {
+            "comuna": "La Reina",
+            "dias_con_registro": 366,
+            "filas": 11762,
+            "urgencias_respiratorias": 2330
+          },
+          "12-904": {
+            "comuna": "Providencia",
+            "dias_con_registro": 363,
+            "filas": 12454,
+            "urgencias_respiratorias": 683
+          },
+          "13-100": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 366,
+            "filas": 12264,
+            "urgencias_respiratorias": 2726
+          },
+          "13-130": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 366,
+            "filas": 11509,
+            "urgencias_respiratorias": 6040
+          },
+          "13-180": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 11491,
+            "urgencias_respiratorias": 2746
+          },
+          "13-190": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 11498,
+            "urgencias_respiratorias": 951
+          },
+          "13-802": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 366,
+            "filas": 12480,
+            "urgencias_respiratorias": 2792
+          },
+          "13-803": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 366,
+            "filas": 12211,
+            "urgencias_respiratorias": 3948
+          },
+          "13-806": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 366,
+            "filas": 12576,
+            "urgencias_respiratorias": 2354
+          },
+          "13-807": {
+            "comuna": "La Granja",
+            "dias_con_registro": 366,
+            "filas": 11650,
+            "urgencias_respiratorias": 2259
+          },
+          "13-808": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 366,
+            "filas": 11532,
+            "urgencias_respiratorias": 2650
+          },
+          "13-809": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 366,
+            "filas": 12125,
+            "urgencias_respiratorias": 6091
+          },
+          "13-812": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 366,
+            "filas": 11537,
+            "urgencias_respiratorias": 2548
+          },
+          "13-813": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 11533,
+            "urgencias_respiratorias": 3210
+          },
+          "13-814": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 366,
+            "filas": 11568,
+            "urgencias_respiratorias": 1854
+          },
+          "13-815": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 11515,
+            "urgencias_respiratorias": 3592
+          },
+          "13-820": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 365,
+            "filas": 12400,
+            "urgencias_respiratorias": 2139
+          },
+          "13-822": {
+            "comuna": "San Joaquín",
+            "dias_con_registro": 366,
+            "filas": 11512,
+            "urgencias_respiratorias": 2717
+          },
+          "13-823": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 366,
+            "filas": 12449,
+            "urgencias_respiratorias": 5634
+          },
+          "13-826": {
+            "comuna": "La Cisterna",
+            "dias_con_registro": 366,
+            "filas": 11514,
+            "urgencias_respiratorias": 2549
+          },
+          "13-828": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 11519,
+            "urgencias_respiratorias": 3444
+          },
+          "13-829": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 11556,
+            "urgencias_respiratorias": 3815
+          },
+          "13-830": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 12496,
+            "urgencias_respiratorias": 5441
+          },
+          "13-831": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 366,
+            "filas": 12448,
+            "urgencias_respiratorias": 2434
+          },
+          "13-832": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 11523,
+            "urgencias_respiratorias": 3072
+          },
+          "13-910": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 366,
+            "filas": 11528,
+            "urgencias_respiratorias": 2727
+          },
+          "13-911": {
+            "comuna": "San Joaquín",
+            "dias_con_registro": 366,
+            "filas": 11523,
+            "urgencias_respiratorias": 2310
+          },
+          "14-101": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 366,
+            "filas": 13028,
+            "urgencias_respiratorias": 6324
+          },
+          "14-103": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 366,
+            "filas": 11494,
+            "urgencias_respiratorias": 4961
+          },
+          "14-105": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 14561,
+            "urgencias_respiratorias": 1082
+          },
+          "14-801": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 5747
+          },
+          "14-802": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 13496,
+            "urgencias_respiratorias": 1968
+          },
+          "14-804": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 14632,
+            "urgencias_respiratorias": 3677
+          },
+          "14-805": {
+            "comuna": "La Florida",
+            "dias_con_registro": 361,
+            "filas": 14120,
+            "urgencias_respiratorias": 3137
+          },
+          "14-806": {
+            "comuna": "La Granja",
+            "dias_con_registro": 365,
+            "filas": 11641,
+            "urgencias_respiratorias": 8258
+          },
+          "14-807": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 358,
+            "filas": 11243,
+            "urgencias_respiratorias": 3603
+          },
+          "14-808": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 364,
+            "filas": 12817,
+            "urgencias_respiratorias": 3164
+          },
+          "14-809": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 366,
+            "filas": 14614,
+            "urgencias_respiratorias": 5356
+          },
+          "14-811": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 366,
+            "filas": 14558,
+            "urgencias_respiratorias": 6172
+          },
+          "14-812": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 5826
+          },
+          "14-814": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 366,
+            "filas": 13784,
+            "urgencias_respiratorias": 1961
+          },
+          "14-816": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 1481
+          },
+          "14-817": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 366,
+            "filas": 11602,
+            "urgencias_respiratorias": 3193
+          },
+          "14-819": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 362,
+            "filas": 11539,
+            "urgencias_respiratorias": 4464
+          },
+          "14-820": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 5777
+          },
+          "14-821": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 4936
+          },
+          "14-822": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 4586
+          },
+          "14-824": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 13600,
+            "urgencias_respiratorias": 1933
+          },
+          "14-825": {
+            "comuna": "La Granja",
+            "dias_con_registro": 366,
+            "filas": 12192,
+            "urgencias_respiratorias": 2367
+          },
+          "14-826": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 6236
+          },
+          "14-828": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 356,
+            "filas": 11220,
+            "urgencias_respiratorias": 1656
+          },
+          "14-831": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 11848,
+            "urgencias_respiratorias": 1848
+          },
+          "14-900": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 14624,
+            "urgencias_respiratorias": 2001
+          },
+          "14-951": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 14624,
+            "urgencias_respiratorias": 3441
+          }
+        }
+      },
+      "Talcahuano": {
+        "n_establecimientos": 5,
+        "detalle": {
+          "19-100": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 366,
+            "filas": 11744,
+            "urgencias_respiratorias": 3309
+          },
+          "19-802": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 366,
+            "filas": 11617,
+            "urgencias_respiratorias": 2848
+          },
+          "19-803": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 366,
+            "filas": 11982,
+            "urgencias_respiratorias": 1939
+          },
+          "19-807": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 364,
+            "filas": 11579,
+            "urgencias_respiratorias": 3223
+          },
+          "19-808": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 366,
+            "filas": 11550,
+            "urgencias_respiratorias": 2673
+          }
+        }
+      },
+      "Coyhaique": {
+        "n_establecimientos": 2,
+        "detalle": {
+          "25-100": {
+            "comuna": "Coyhaique",
+            "dias_con_registro": 366,
+            "filas": 11489,
+            "urgencias_respiratorias": 4005
+          },
+          "25-900": {
+            "comuna": "Coyhaique",
+            "dias_con_registro": 226,
+            "filas": 7280,
+            "urgencias_respiratorias": 383
+          }
+        }
+      }
+    }
+  },
+  "2021": {
+    "filas_leidas": 8816240,
+    "establecimientos_sin_mapa": 0,
+    "por_ciudad": {
+      "Santiago": {
+        "n_establecimientos": 115,
+        "detalle": {
+          "09-100": {
+            "comuna": "Independencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 882
+          },
+          "09-101": {
+            "comuna": "Independencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10488
+          },
+          "09-102": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 293,
+            "filas": 11720,
+            "urgencias_respiratorias": 0
+          },
+          "09-801": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7845
+          },
+          "09-802": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 363,
+            "filas": 14520,
+            "urgencias_respiratorias": 3910
+          },
+          "09-804": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1991
+          },
+          "09-805": {
+            "comuna": "Huechuraba",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4388
+          },
+          "09-808": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3459
+          },
+          "09-809": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3866
+          },
+          "09-813": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5132
+          },
+          "09-815": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9472
+          },
+          "09-821": {
+            "comuna": "Independencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3183
+          },
+          "09-824": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3624
+          },
+          "09-890": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1274
+          },
+          "09-941": {
+            "comuna": "Huechuraba",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1367
+          },
+          "10-100": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1287
+          },
+          "10-110": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 0
+          },
+          "10-120": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 13425
+          },
+          "10-860": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7819
+          },
+          "10-900": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5156
+          },
+          "10-902": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1397
+          },
+          "10-903": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1764
+          },
+          "10-906": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4495
+          },
+          "10-907": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5580
+          },
+          "10-908": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 362,
+            "filas": 14480,
+            "urgencias_respiratorias": 1136
+          },
+          "10-910": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 807
+          },
+          "10-911": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1762
+          },
+          "10-913": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2080
+          },
+          "10-915": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3910
+          },
+          "10-916": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2154
+          },
+          "10-919": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4403
+          },
+          "10-920": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2526
+          },
+          "10-921": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1850
+          },
+          "10-922": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1394
+          },
+          "10-939": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 2,
+            "filas": 80,
+            "urgencias_respiratorias": 0
+          },
+          "11-100": {
+            "comuna": "Santiago",
+            "dias_con_registro": 254,
+            "filas": 10160,
+            "urgencias_respiratorias": 359
+          },
+          "11-101": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4585
+          },
+          "11-195": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1365
+          },
+          "11-800": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1447
+          },
+          "11-804": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4247
+          },
+          "11-805": {
+            "comuna": "Cerrillos",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3501
+          },
+          "11-806": {
+            "comuna": "Estación Central",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4070
+          },
+          "11-809": {
+            "comuna": "Maipú",
+            "dias_con_registro": 363,
+            "filas": 14520,
+            "urgencias_respiratorias": 6445
+          },
+          "11-900": {
+            "comuna": "Estación Central",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5915
+          },
+          "11-901": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2605
+          },
+          "11-903": {
+            "comuna": "Cerrillos",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3707
+          },
+          "11-923": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1208
+          },
+          "12-100": {
+            "comuna": "Providencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1182
+          },
+          "12-101": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 590
+          },
+          "12-102": {
+            "comuna": "Providencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7544
+          },
+          "12-320": {
+            "comuna": "La Reina",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 975
+          },
+          "12-806": {
+            "comuna": "Las Condes",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5031
+          },
+          "12-807": {
+            "comuna": "Lo Barnechea",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2396
+          },
+          "12-810": {
+            "comuna": "Ñuñoa",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 993
+          },
+          "12-813": {
+            "comuna": "Macul",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2568
+          },
+          "12-814": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 818
+          },
+          "12-815": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 914
+          },
+          "12-816": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3412
+          },
+          "12-818": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3205
+          },
+          "12-820": {
+            "comuna": "Ñuñoa",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2962
+          },
+          "12-903": {
+            "comuna": "La Reina",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2710
+          },
+          "12-904": {
+            "comuna": "Providencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 912
+          },
+          "13-100": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2319
+          },
+          "13-130": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 16565
+          },
+          "13-180": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3850
+          },
+          "13-190": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 448
+          },
+          "13-802": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 2420
+          },
+          "13-803": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3044
+          },
+          "13-806": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1646
+          },
+          "13-807": {
+            "comuna": "La Granja",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 1403
+          },
+          "13-808": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2535
+          },
+          "13-809": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5560
+          },
+          "13-812": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2165
+          },
+          "13-813": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3859
+          },
+          "13-814": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 408
+          },
+          "13-815": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3914
+          },
+          "13-820": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1196
+          },
+          "13-822": {
+            "comuna": "San Joaquín",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2688
+          },
+          "13-823": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3576
+          },
+          "13-826": {
+            "comuna": "La Cisterna",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2054
+          },
+          "13-828": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 360,
+            "filas": 14400,
+            "urgencias_respiratorias": 2486
+          },
+          "13-829": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3010
+          },
+          "13-830": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 7109
+          },
+          "13-831": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 2001
+          },
+          "13-832": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2797
+          },
+          "13-910": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1812
+          },
+          "13-911": {
+            "comuna": "San Joaquín",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2555
+          },
+          "14-101": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5634
+          },
+          "14-103": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8948
+          },
+          "14-105": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1809
+          },
+          "14-801": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4748
+          },
+          "14-802": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2732
+          },
+          "14-804": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2782
+          },
+          "14-805": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4748
+          },
+          "14-806": {
+            "comuna": "La Granja",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4256
+          },
+          "14-807": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 358,
+            "filas": 14320,
+            "urgencias_respiratorias": 4752
+          },
+          "14-808": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2844
+          },
+          "14-809": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3084
+          },
+          "14-811": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6068
+          },
+          "14-812": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4978
+          },
+          "14-814": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 357,
+            "filas": 14280,
+            "urgencias_respiratorias": 2067
+          },
+          "14-816": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1132
+          },
+          "14-817": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1995
+          },
+          "14-819": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3992
+          },
+          "14-820": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7083
+          },
+          "14-821": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5770
+          },
+          "14-822": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4456
+          },
+          "14-824": {
+            "comuna": "La Florida",
+            "dias_con_registro": 363,
+            "filas": 14520,
+            "urgencias_respiratorias": 1044
+          },
+          "14-825": {
+            "comuna": "La Granja",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2235
+          },
+          "14-826": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5209
+          },
+          "14-828": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 246,
+            "filas": 9840,
+            "urgencias_respiratorias": 743
+          },
+          "14-831": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1500
+          },
+          "14-900": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1845
+          },
+          "14-951": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3667
+          },
+          "201063": {
+            "comuna": "Independencia",
+            "dias_con_registro": 363,
+            "filas": 14520,
+            "urgencias_respiratorias": 1406
+          }
+        }
+      },
+      "Talcahuano": {
+        "n_establecimientos": 6,
+        "detalle": {
+          "19-100": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3800
+          },
+          "19-802": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 363,
+            "filas": 14520,
+            "urgencias_respiratorias": 3995
+          },
+          "19-803": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 704
+          },
+          "19-807": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 354,
+            "filas": 14160,
+            "urgencias_respiratorias": 1322
+          },
+          "19-808": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 117,
+            "filas": 4680,
+            "urgencias_respiratorias": 414
+          },
+          "19-912": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 306,
+            "filas": 12240,
+            "urgencias_respiratorias": 3436
+          }
+        }
+      },
+      "Coyhaique": {
+        "n_establecimientos": 2,
+        "detalle": {
+          "25-100": {
+            "comuna": "Coyhaique",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3046
+          },
+          "25-900": {
+            "comuna": "Coyhaique",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1649
+          }
+        }
+      }
+    }
+  },
+  "2022": {
+    "filas_leidas": 8926307,
+    "establecimientos_sin_mapa": 7,
+    "por_ciudad": {
+      "Santiago": {
+        "n_establecimientos": 113,
+        "detalle": {
+          "09-100": {
+            "comuna": "Independencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2366
+          },
+          "09-101": {
+            "comuna": "Independencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 20755
+          },
+          "09-102": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 0
+          },
+          "09-801": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 19975
+          },
+          "09-802": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11047
+          },
+          "09-804": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 8691
+          },
+          "09-805": {
+            "comuna": "Huechuraba",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 14917
+          },
+          "09-808": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10269
+          },
+          "09-809": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 339,
+            "filas": 13560,
+            "urgencias_respiratorias": 11908
+          },
+          "09-813": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 353,
+            "filas": 14120,
+            "urgencias_respiratorias": 12428
+          },
+          "09-815": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 24224
+          },
+          "09-821": {
+            "comuna": "Independencia",
+            "dias_con_registro": 363,
+            "filas": 14520,
+            "urgencias_respiratorias": 6790
+          },
+          "09-824": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10027
+          },
+          "09-890": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3988
+          },
+          "09-941": {
+            "comuna": "Huechuraba",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7335
+          },
+          "10-100": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2231
+          },
+          "10-110": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4
+          },
+          "10-860": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 20343
+          },
+          "10-900": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 17541
+          },
+          "10-902": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5649
+          },
+          "10-903": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6004
+          },
+          "10-906": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 12729
+          },
+          "10-907": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 13366
+          },
+          "10-908": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5074
+          },
+          "10-910": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2859
+          },
+          "10-911": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6562
+          },
+          "10-913": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7338
+          },
+          "10-915": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10337
+          },
+          "10-916": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6121
+          },
+          "10-919": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 12040
+          },
+          "10-920": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10346
+          },
+          "10-921": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7721
+          },
+          "10-922": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6842
+          },
+          "11-100": {
+            "comuna": "Santiago",
+            "dias_con_registro": 345,
+            "filas": 13800,
+            "urgencias_respiratorias": 17176
+          },
+          "11-101": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 18018
+          },
+          "11-195": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2533
+          },
+          "11-800": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4714
+          },
+          "11-804": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 12424
+          },
+          "11-805": {
+            "comuna": "Cerrillos",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10109
+          },
+          "11-806": {
+            "comuna": "Estación Central",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 13491
+          },
+          "11-809": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 20270
+          },
+          "11-900": {
+            "comuna": "Estación Central",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10111
+          },
+          "11-901": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8727
+          },
+          "11-903": {
+            "comuna": "Cerrillos",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 15244
+          },
+          "11-923": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9618
+          },
+          "12-100": {
+            "comuna": "Providencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2220
+          },
+          "12-101": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2347
+          },
+          "12-102": {
+            "comuna": "Providencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 21426
+          },
+          "12-320": {
+            "comuna": "La Reina",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 4400
+          },
+          "12-806": {
+            "comuna": "Las Condes",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9801
+          },
+          "12-807": {
+            "comuna": "Lo Barnechea",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7715
+          },
+          "12-810": {
+            "comuna": "Ñuñoa",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4683
+          },
+          "12-813": {
+            "comuna": "Macul",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9259
+          },
+          "12-814": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4361
+          },
+          "12-815": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8113
+          },
+          "12-816": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8575
+          },
+          "12-818": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11782
+          },
+          "12-820": {
+            "comuna": "Ñuñoa",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9450
+          },
+          "12-903": {
+            "comuna": "La Reina",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10557
+          },
+          "12-904": {
+            "comuna": "Providencia",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 2521
+          },
+          "13-100": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3291
+          },
+          "13-130": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 30095
+          },
+          "13-180": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9815
+          },
+          "13-190": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1852
+          },
+          "13-802": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 15396
+          },
+          "13-803": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9336
+          },
+          "13-806": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 361,
+            "filas": 14440,
+            "urgencias_respiratorias": 5913
+          },
+          "13-807": {
+            "comuna": "La Granja",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5635
+          },
+          "13-808": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8371
+          },
+          "13-809": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 360,
+            "filas": 14400,
+            "urgencias_respiratorias": 14638
+          },
+          "13-812": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7335
+          },
+          "13-813": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 14695
+          },
+          "13-814": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5499
+          },
+          "13-815": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 10991
+          },
+          "13-820": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 361,
+            "filas": 14440,
+            "urgencias_respiratorias": 5865
+          },
+          "13-822": {
+            "comuna": "San Joaquín",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9370
+          },
+          "13-823": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8986
+          },
+          "13-826": {
+            "comuna": "La Cisterna",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6205
+          },
+          "13-828": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 362,
+            "filas": 14480,
+            "urgencias_respiratorias": 9650
+          },
+          "13-829": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 13823
+          },
+          "13-830": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 19056
+          },
+          "13-831": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8602
+          },
+          "13-832": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6317
+          },
+          "13-910": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8355
+          },
+          "13-911": {
+            "comuna": "San Joaquín",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9299
+          },
+          "14-101": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 19852
+          },
+          "14-103": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 25318
+          },
+          "14-105": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7011
+          },
+          "14-801": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10542
+          },
+          "14-802": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9370
+          },
+          "14-804": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10009
+          },
+          "14-805": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 16509
+          },
+          "14-806": {
+            "comuna": "La Granja",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 19413
+          },
+          "14-807": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 13059
+          },
+          "14-808": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8643
+          },
+          "14-809": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11411
+          },
+          "14-811": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 23058
+          },
+          "14-812": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 12702
+          },
+          "14-814": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10295
+          },
+          "14-816": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3260
+          },
+          "14-817": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8337
+          },
+          "14-819": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 13641
+          },
+          "14-820": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 18432
+          },
+          "14-821": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 19212
+          },
+          "14-822": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10453
+          },
+          "14-824": {
+            "comuna": "La Florida",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 7068
+          },
+          "14-825": {
+            "comuna": "La Granja",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10689
+          },
+          "14-826": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 18329
+          },
+          "14-828": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8454
+          },
+          "14-831": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4882
+          },
+          "14-900": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6909
+          },
+          "14-951": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10348
+          },
+          "201063": {
+            "comuna": "Independencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10928
+          }
+        }
+      },
+      "Talcahuano": {
+        "n_establecimientos": 5,
+        "detalle": {
+          "19-100": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11021
+          },
+          "19-802": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 13033
+          },
+          "19-803": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4604
+          },
+          "19-807": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8801
+          },
+          "19-912": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 17345
+          }
+        }
+      },
+      "Coyhaique": {
+        "n_establecimientos": 2,
+        "detalle": {
+          "25-100": {
+            "comuna": "Coyhaique",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 11369
+          },
+          "25-900": {
+            "comuna": "Coyhaique",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5778
+          }
+        }
+      }
+    }
+  },
+  "2023": {
+    "filas_leidas": 8899080,
+    "establecimientos_sin_mapa": 5,
+    "por_ciudad": {
+      "Santiago": {
+        "n_establecimientos": 115,
+        "detalle": {
+          "09-100": {
+            "comuna": "Independencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3097
+          },
+          "09-101": {
+            "comuna": "Independencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 18974
+          },
+          "09-102": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 363,
+            "filas": 14520,
+            "urgencias_respiratorias": 0
+          },
+          "09-801": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 363,
+            "filas": 14520,
+            "urgencias_respiratorias": 24594
+          },
+          "09-802": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11245
+          },
+          "09-804": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 9320
+          },
+          "09-805": {
+            "comuna": "Huechuraba",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 14429
+          },
+          "09-808": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10391
+          },
+          "09-809": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 361,
+            "filas": 14440,
+            "urgencias_respiratorias": 19089
+          },
+          "09-813": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 338,
+            "filas": 13520,
+            "urgencias_respiratorias": 6873
+          },
+          "09-815": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 363,
+            "filas": 14520,
+            "urgencias_respiratorias": 21644
+          },
+          "09-821": {
+            "comuna": "Independencia",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 7854
+          },
+          "09-824": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 12728
+          },
+          "09-890": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4170
+          },
+          "09-941": {
+            "comuna": "Huechuraba",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6944
+          },
+          "10-100": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2941
+          },
+          "10-110": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 0
+          },
+          "10-120": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 20985
+          },
+          "10-860": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 23997
+          },
+          "10-900": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 18745
+          },
+          "10-902": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8324
+          },
+          "10-903": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6932
+          },
+          "10-906": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 19536
+          },
+          "10-907": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 14731
+          },
+          "10-908": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 10750
+          },
+          "10-910": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9360
+          },
+          "10-911": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7313
+          },
+          "10-913": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 363,
+            "filas": 14520,
+            "urgencias_respiratorias": 9340
+          },
+          "10-915": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 15529
+          },
+          "10-916": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8199
+          },
+          "10-919": {
+            "comuna": "Renca",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11413
+          },
+          "10-920": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 12881
+          },
+          "10-921": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 362,
+            "filas": 14480,
+            "urgencias_respiratorias": 9421
+          },
+          "10-922": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6872
+          },
+          "10-939": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 362,
+            "filas": 14480,
+            "urgencias_respiratorias": 5434
+          },
+          "11-100": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 18255
+          },
+          "11-101": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 17639
+          },
+          "11-195": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5178
+          },
+          "11-800": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8854
+          },
+          "11-804": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 15350
+          },
+          "11-805": {
+            "comuna": "Cerrillos",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11491
+          },
+          "11-806": {
+            "comuna": "Estación Central",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 13670
+          },
+          "11-809": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 21421
+          },
+          "11-900": {
+            "comuna": "Estación Central",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 12892
+          },
+          "11-901": {
+            "comuna": "Maipú",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 14318
+          },
+          "11-903": {
+            "comuna": "Cerrillos",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 23066
+          },
+          "11-923": {
+            "comuna": "Santiago",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9845
+          },
+          "12-100": {
+            "comuna": "Providencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2345
+          },
+          "12-101": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 2895
+          },
+          "12-102": {
+            "comuna": "Providencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 17718
+          },
+          "12-320": {
+            "comuna": "La Reina",
+            "dias_con_registro": 242,
+            "filas": 9680,
+            "urgencias_respiratorias": 2197
+          },
+          "12-806": {
+            "comuna": "Las Condes",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9399
+          },
+          "12-807": {
+            "comuna": "Lo Barnechea",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10452
+          },
+          "12-810": {
+            "comuna": "Ñuñoa",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5885
+          },
+          "12-813": {
+            "comuna": "Macul",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9247
+          },
+          "12-814": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7535
+          },
+          "12-815": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11130
+          },
+          "12-816": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11430
+          },
+          "12-818": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 15258
+          },
+          "12-820": {
+            "comuna": "Ñuñoa",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 14950
+          },
+          "12-903": {
+            "comuna": "La Reina",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 12430
+          },
+          "12-904": {
+            "comuna": "Providencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5106
+          },
+          "13-100": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 3455
+          },
+          "13-130": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 24139
+          },
+          "13-180": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8990
+          },
+          "13-190": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 1872
+          },
+          "13-802": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 21270
+          },
+          "13-803": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 14363
+          },
+          "13-806": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 363,
+            "filas": 14520,
+            "urgencias_respiratorias": 7634
+          },
+          "13-807": {
+            "comuna": "La Granja",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8108
+          },
+          "13-808": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10405
+          },
+          "13-809": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 19067
+          },
+          "13-812": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 12279
+          },
+          "13-813": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 13780
+          },
+          "13-814": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10215
+          },
+          "13-815": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11440
+          },
+          "13-820": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 11111
+          },
+          "13-822": {
+            "comuna": "San Joaquín",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11044
+          },
+          "13-823": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10999
+          },
+          "13-826": {
+            "comuna": "La Cisterna",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8754
+          },
+          "13-828": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 14994
+          },
+          "13-829": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 16425
+          },
+          "13-830": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 20738
+          },
+          "13-831": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 12338
+          },
+          "13-832": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9310
+          },
+          "13-910": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11637
+          },
+          "13-911": {
+            "comuna": "San Joaquín",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 13747
+          },
+          "14-101": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 17479
+          },
+          "14-103": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 22285
+          },
+          "14-105": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 5714
+          },
+          "14-801": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 21686
+          },
+          "14-802": {
+            "comuna": "La Florida",
+            "dias_con_registro": 363,
+            "filas": 14520,
+            "urgencias_respiratorias": 10762
+          },
+          "14-804": {
+            "comuna": "La Florida",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 15002
+          },
+          "14-805": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 20095
+          },
+          "14-806": {
+            "comuna": "La Granja",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 24872
+          },
+          "14-807": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 13347
+          },
+          "14-808": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9811
+          },
+          "14-809": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11919
+          },
+          "14-811": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 26287
+          },
+          "14-812": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 21082
+          },
+          "14-814": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11972
+          },
+          "14-816": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6104
+          },
+          "14-817": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11268
+          },
+          "14-819": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 12683
+          },
+          "14-820": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 361,
+            "filas": 14440,
+            "urgencias_respiratorias": 23986
+          },
+          "14-821": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 21143
+          },
+          "14-822": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 19517
+          },
+          "14-824": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 8227
+          },
+          "14-825": {
+            "comuna": "La Granja",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11003
+          },
+          "14-826": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 356,
+            "filas": 14240,
+            "urgencias_respiratorias": 22010
+          },
+          "14-828": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10889
+          },
+          "14-831": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7540
+          },
+          "14-900": {
+            "comuna": "La Florida",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7535
+          },
+          "14-951": {
+            "comuna": "La Florida",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 9713
+          },
+          "201063": {
+            "comuna": "Independencia",
+            "dias_con_registro": 362,
+            "filas": 14480,
+            "urgencias_respiratorias": 11242
+          }
+        }
+      },
+      "Talcahuano": {
+        "n_establecimientos": 5,
+        "detalle": {
+          "19-100": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11715
+          },
+          "19-802": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 12307
+          },
+          "19-803": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7977
+          },
+          "19-807": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 360,
+            "filas": 14400,
+            "urgencias_respiratorias": 12053
+          },
+          "19-912": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 15032
+          }
+        }
+      },
+      "Coyhaique": {
+        "n_establecimientos": 2,
+        "detalle": {
+          "25-100": {
+            "comuna": "Coyhaique",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 15856
+          },
+          "25-900": {
+            "comuna": "Coyhaique",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6122
+          }
+        }
+      }
+    }
+  },
+  "2024": {
+    "filas_leidas": 8973229,
+    "establecimientos_sin_mapa": 5,
+    "por_ciudad": {
+      "Santiago": {
+        "n_establecimientos": 116,
+        "detalle": {
+          "09-100": {
+            "comuna": "Independencia",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 4005
+          },
+          "09-101": {
+            "comuna": "Independencia",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 17397
+          },
+          "09-102": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 357,
+            "filas": 14280,
+            "urgencias_respiratorias": 0
+          },
+          "09-801": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 358,
+            "filas": 14320,
+            "urgencias_respiratorias": 24566
+          },
+          "09-802": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 11748
+          },
+          "09-804": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 127,
+            "filas": 5080,
+            "urgencias_respiratorias": 1438
+          },
+          "09-805": {
+            "comuna": "Huechuraba",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 12406
+          },
+          "09-808": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 9843
+          },
+          "09-809": {
+            "comuna": "Conchalí",
+            "dias_con_registro": 362,
+            "filas": 14480,
+            "urgencias_respiratorias": 21163
+          },
+          "09-813": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 358,
+            "filas": 14320,
+            "urgencias_respiratorias": 6569
+          },
+          "09-815": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 22375
+          },
+          "09-821": {
+            "comuna": "Independencia",
+            "dias_con_registro": 284,
+            "filas": 11360,
+            "urgencias_respiratorias": 5038
+          },
+          "09-824": {
+            "comuna": "Quilicura",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 12641
+          },
+          "09-890": {
+            "comuna": "Recoleta",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 3989
+          },
+          "09-941": {
+            "comuna": "Huechuraba",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 6629
+          },
+          "10-100": {
+            "comuna": "Santiago",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 3203
+          },
+          "10-110": {
+            "comuna": "Santiago",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 0
+          },
+          "10-120": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 20852
+          },
+          "10-860": {
+            "comuna": "Renca",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 26738
+          },
+          "10-900": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 17801
+          },
+          "10-902": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 8163
+          },
+          "10-903": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 6764
+          },
+          "10-906": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 19109
+          },
+          "10-907": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 16052
+          },
+          "10-908": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 10799
+          },
+          "10-910": {
+            "comuna": "Quinta Normal",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 9083
+          },
+          "10-911": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 9468
+          },
+          "10-913": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 10700
+          },
+          "10-915": {
+            "comuna": "Renca",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 14883
+          },
+          "10-916": {
+            "comuna": "Cerro Navia",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 7082
+          },
+          "10-919": {
+            "comuna": "Renca",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 9908
+          },
+          "10-920": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 10618
+          },
+          "10-921": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 10066
+          },
+          "10-922": {
+            "comuna": "Lo Prado",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6703
+          },
+          "10-939": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 6558
+          },
+          "11-100": {
+            "comuna": "Santiago",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 16216
+          },
+          "11-101": {
+            "comuna": "Maipú",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 16009
+          },
+          "11-195": {
+            "comuna": "Santiago",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 7111
+          },
+          "11-800": {
+            "comuna": "Santiago",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 8777
+          },
+          "11-804": {
+            "comuna": "Maipú",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 16127
+          },
+          "11-805": {
+            "comuna": "Cerrillos",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 11591
+          },
+          "11-806": {
+            "comuna": "Estación Central",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 12329
+          },
+          "11-809": {
+            "comuna": "Maipú",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 20667
+          },
+          "11-900": {
+            "comuna": "Estación Central",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 13476
+          },
+          "11-901": {
+            "comuna": "Maipú",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 13326
+          },
+          "11-903": {
+            "comuna": "Cerrillos",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 23661
+          },
+          "11-923": {
+            "comuna": "Santiago",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 9983
+          },
+          "12-100": {
+            "comuna": "Providencia",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 2159
+          },
+          "12-101": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 3287
+          },
+          "12-102": {
+            "comuna": "Providencia",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 13344
+          },
+          "12-806": {
+            "comuna": "Las Condes",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 10292
+          },
+          "12-807": {
+            "comuna": "Lo Barnechea",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 11716
+          },
+          "12-810": {
+            "comuna": "Ñuñoa",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 5250
+          },
+          "12-813": {
+            "comuna": "Macul",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 9957
+          },
+          "12-814": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 12392
+          },
+          "12-815": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 14703
+          },
+          "12-816": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 14008
+          },
+          "12-818": {
+            "comuna": "Peñalolén",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 14238
+          },
+          "12-820": {
+            "comuna": "Ñuñoa",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 16071
+          },
+          "12-903": {
+            "comuna": "La Reina",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 12398
+          },
+          "12-904": {
+            "comuna": "Providencia",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 5445
+          },
+          "13-100": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 3897
+          },
+          "13-130": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 22621
+          },
+          "13-180": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 9327
+          },
+          "13-190": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 2188
+          },
+          "13-802": {
+            "comuna": "San Miguel",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 20318
+          },
+          "13-803": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 15326
+          },
+          "13-806": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 7944
+          },
+          "13-807": {
+            "comuna": "La Granja",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 6997
+          },
+          "13-808": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 10693
+          },
+          "13-809": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 18792
+          },
+          "13-812": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 13707
+          },
+          "13-813": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 14942
+          },
+          "13-814": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 10654
+          },
+          "13-815": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 12966
+          },
+          "13-820": {
+            "comuna": "Lo Espejo",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 12046
+          },
+          "13-822": {
+            "comuna": "San Joaquín",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 11534
+          },
+          "13-823": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 11357
+          },
+          "13-826": {
+            "comuna": "La Cisterna",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 8969
+          },
+          "13-828": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 15221
+          },
+          "13-829": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 19093
+          },
+          "13-830": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 21890
+          },
+          "13-831": {
+            "comuna": "Pedro Aguirre Cerda",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 12407
+          },
+          "13-832": {
+            "comuna": "San Bernardo",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 9910
+          },
+          "13-910": {
+            "comuna": "El Bosque",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 13342
+          },
+          "13-911": {
+            "comuna": "San Joaquín",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 16230
+          },
+          "14-101": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 16332
+          },
+          "14-103": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 22610
+          },
+          "14-105": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 5824
+          },
+          "14-801": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 363,
+            "filas": 14520,
+            "urgencias_respiratorias": 19496
+          },
+          "14-802": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 11873
+          },
+          "14-804": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 15754
+          },
+          "14-805": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 18966
+          },
+          "14-806": {
+            "comuna": "La Granja",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 19999
+          },
+          "14-807": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 15527
+          },
+          "14-808": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 9763
+          },
+          "14-809": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 11280
+          },
+          "14-811": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 25733
+          },
+          "14-812": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 363,
+            "filas": 14520,
+            "urgencias_respiratorias": 21454
+          },
+          "14-814": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 12316
+          },
+          "14-816": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 6564
+          },
+          "14-817": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 11443
+          },
+          "14-819": {
+            "comuna": "La Pintana",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 12510
+          },
+          "14-820": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 24717
+          },
+          "14-821": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 21999
+          },
+          "14-822": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 21204
+          },
+          "14-824": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 7841
+          },
+          "14-825": {
+            "comuna": "La Granja",
+            "dias_con_registro": 364,
+            "filas": 14560,
+            "urgencias_respiratorias": 10087
+          },
+          "14-826": {
+            "comuna": "Puente Alto",
+            "dias_con_registro": 360,
+            "filas": 14400,
+            "urgencias_respiratorias": 21287
+          },
+          "14-828": {
+            "comuna": "San Ramón",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 11267
+          },
+          "14-831": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 7040
+          },
+          "14-900": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 7470
+          },
+          "14-951": {
+            "comuna": "La Florida",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 9078
+          },
+          "201063": {
+            "comuna": "Independencia",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 11474
+          },
+          "201438": {
+            "comuna": "Pudahuel",
+            "dias_con_registro": 362,
+            "filas": 14480,
+            "urgencias_respiratorias": 4104
+          },
+          "201632": {
+            "comuna": "Maipú",
+            "dias_con_registro": 145,
+            "filas": 5800,
+            "urgencias_respiratorias": 4658
+          }
+        }
+      },
+      "Talcahuano": {
+        "n_establecimientos": 5,
+        "detalle": {
+          "19-100": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 11909
+          },
+          "19-802": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 9392
+          },
+          "19-803": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 365,
+            "filas": 14600,
+            "urgencias_respiratorias": 7002
+          },
+          "19-807": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 362,
+            "filas": 14480,
+            "urgencias_respiratorias": 11513
+          },
+          "201018": {
+            "comuna": "Talcahuano",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 13037
+          }
+        }
+      },
+      "Coyhaique": {
+        "n_establecimientos": 2,
+        "detalle": {
+          "25-100": {
+            "comuna": "Coyhaique",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 17381
+          },
+          "25-900": {
+            "comuna": "Coyhaique",
+            "dias_con_registro": 366,
+            "filas": 14640,
+            "urgencias_respiratorias": 6513
+          }
+        }
+      }
+    }
+  },
+  "recambio_de_establecimientos": {
+    "Coyhaique": {
+      "25-900": {
+        "presente_en": [
+          2018,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2019
+        ]
+      }
+    },
+    "Santiago": {
+      "09-102": {
+        "presente_en": [
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019,
+          2020
+        ]
+      },
+      "10-120": {
+        "presente_en": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2022
+        ]
+      },
+      "10-316": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "10-320": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "10-345": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "10-354": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "10-361": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "10-364": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "10-900": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "10-902": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "10-903": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "10-906": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "10-908": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "10-910": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "10-911": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "10-913": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "10-915": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "10-916": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "10-919": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "10-921": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "10-922": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "10-939": {
+        "presente_en": [
+          2021,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019,
+          2020,
+          2022
+        ]
+      },
+      "11-302": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "11-378": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "11-381": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "11-900": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "11-901": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "11-923": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "12-303": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "12-317": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "12-320": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023
+        ],
+        "ausente_en": [
+          2018,
+          2019,
+          2024
+        ]
+      },
+      "12-903": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "12-904": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "13-301": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "13-317": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "13-910": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "13-911": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "14-330": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "14-334": {
+        "presente_en": [
+          2018,
+          2019
+        ],
+        "ausente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "14-900": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "14-951": {
+        "presente_en": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019
+        ]
+      },
+      "201063": {
+        "presente_en": [
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019,
+          2020
+        ]
+      },
+      "201438": {
+        "presente_en": [
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "201632": {
+        "presente_en": [
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      }
+    },
+    "Talcahuano": {
+      "19-808": {
+        "presente_en": [
+          2018,
+          2019,
+          2020,
+          2021
+        ],
+        "ausente_en": [
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "19-912": {
+        "presente_en": [
+          2021,
+          2022,
+          2023
+        ],
+        "ausente_en": [
+          2018,
+          2019,
+          2020,
+          2024
+        ]
+      },
+      "201018": {
+        "presente_en": [
+          2024
+        ],
+        "ausente_en": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      }
+    }
+  }
+}

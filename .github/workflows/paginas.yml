@@ -1,0 +1,52 @@
+# Publica `sitio/` en GitHub Pages.
+#
+# El flujo NO consulta Athena: publica los JSON tal como están versionados. Para
+# actualizar las cifras hay que correr `python -m src.sitio.exportar` en local y
+# hacer commit de lo que cambie en `sitio/assets/datos/`. Es a propósito: dejar
+# que el CI consultara AWS obligaría a guardar una llave en los secretos del
+# repositorio, y este proyecto no pone credenciales donde no hacen falta.
+name: Publicar el sitio
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'sitio/**'
+      - '.github/workflows/paginas.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un despliegue a la vez, sin cancelar el que ya está corriendo.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Falla temprano si faltan los datos: sin esto el sitio se publicaría
+      # con el mapa vacío y el error solo se vería al abrirlo.
+      - name: Comprobar que los datos estén
+        run: |
+          for f in meta estaciones mensual ciudades semanal; do
+            test -s "sitio/assets/datos/$f.json" \
+              || { echo "falta sitio/assets/datos/$f.json — corre 'python -m src.sitio.exportar'"; exit 1; }
+          done
+          echo "los cinco JSON están presentes"
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: sitio
+      - id: despliegue
+        uses: actions/deploy-pages@v4

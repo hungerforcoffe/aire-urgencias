@@ -1,0 +1,14 @@
+{
+  "bucket": "satpmdata",
+  "region_aws": "us-west-2",
+  "firma": "UNSIGNED",
+  "http": 200,
+  "responde_sin_credenciales": true,
+  "prefijos_raiz": [
+    "V6GL03/"
+  ],
+  "bucket_erroneo_citado_en_la_web": {
+    "nombre": "v6.gl.02.04",
+    "estado": "NoSuchBucket"
+  }
+}

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Análisis semanal · Aire y Urgencias</title>
+<meta name="description" content="Asociación entre MP2.5 y consultas de urgencia respiratoria en Santiago, Talcahuano y Coyhaique, 1.350 semanas entre 2018 y 2026.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/estilo.css">
+</head>
+<body>
+
+<div class="barra">
+ <div class="wrap">
+  <a class="marca" href="index.html"><b>Aire y Urgencias</b><span>MP2.5 · Chile</span></a>
+  <nav>
+   <a href="index.html">Mapa</a>
+   <a href="analisis.html">Análisis</a>
+   <a href="fuentes.html">Fuentes y método</a>
+  </nav>
+  <button class="tema" aria-label="Cambiar entre tema claro y oscuro">
+   <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+    <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.5v11a5.5 5.5 0 010-11z"/></svg>
+  </button>
+ </div>
+</div>
+
+<div class="cabecera">
+ <div class="wrap cab-grid">
+  <div>
+   <div class="eyebrow">Base de datos del proyecto · 1.350 semanas</div>
+   <h1>MP2.5 y <em>urgencias respiratorias</em></h1>
+   <p class="dek">La pregunta del estudio: cómo se asocia la variación semanal de MP2.5 con
+    la variación semanal de consultas de urgencia por causa respiratoria, controlando por
+    temperatura, estacionalidad y período de pandemia. <strong>Asociación entre agregados de
+    ciudad</strong> — nunca el riesgo de una persona, nunca causalidad.</p>
+  </div>
+  <div class="sello">
+   semanas&nbsp;<b id="pie-semanas">—</b><br>
+   corte&nbsp;&nbsp;&nbsp;<b id="pie-corte">—</b><br>
+   fuente&nbsp;&nbsp;<b>DEIS + SINCA</b>
+  </div>
+ </div>
+</div>
+
+<main>
+<div class="wrap">
+
+ <div class="panel">
+  <div class="controles">
+   <div class="campo">
+    <label for="sel-ciudad">Ciudad</label>
+    <select id="sel-ciudad"></select>
+   </div>
+   <div class="campo">
+    <label for="sel-rezago">Rezago del MP2.5</label>
+    <select id="sel-rezago">
+     <option value="0">misma semana</option>
+     <option value="1" selected>1 semana antes</option>
+     <option value="2">2 semanas antes</option>
+    </select>
+   </div>
+   <div class="campo">
+    <label>Serie</label>
+    <div class="grupo" id="modo">
+     <button data-modo="anomalia" aria-pressed="true">En anomalía</button>
+     <button data-modo="bruto" aria-pressed="false">En bruto</button>
+    </div>
+   </div>
+  </div>
+  <div class="kpis" id="kpis"></div>
+ </div>
+
+ <div class="lienzos" id="lienzos"></div>
+
+ <div class="notas">
+  <div class="nota aviso">
+   <h3>El resultado principal, dicho de frente</h3>
+   <p>En bruto, Santiago da <b>r = 0,27</b>: parece una asociación. Al descontar el ciclo
+    estacional cae a <b>0,04</b>, con intervalo de 95% entre −0,06 y 0,13. Talcahuano queda
+    en −0,01 y Coyhaique en 0,08. <b>Los tres intervalos incluyen el cero.</b></p>
+   <p>O sea: casi toda la correlación aparente era el calendario. A resolución semanal y con
+    este descuento estacional, <b>el dato no distingue la asociación de su ausencia</b>.</p>
+   <p>Eso no prueba que no exista. La semana es una ventana ancha para un efecto que la
+    literatura busca en días, el descuento por semana del año puede quitar señal real junto
+    con la estacional, y acá no se controla circulación viral. Es un resultado que se
+    informa como es, no un fracaso que se esconde.</p>
+  </div>
+  <div class="nota">
+   <h3>Por qué «en anomalía» y no en bruto</h3>
+   <p>En invierno sube el MP2.5 —calefacción a leña más inversión térmica— y suben las
+    urgencias respiratorias —circulación viral y frío—. Correlacionar las series crudas mide
+    sobre todo que <b>las dos conocen el calendario</b>.</p>
+   <p>La anomalía resta a cada semana el promedio histórico de esa misma semana del año en
+    esa ciudad. La pregunta pasa a ser la interesante: cuando una semana trae <b>más MP2.5
+    que lo normal para esa fecha</b>, ¿trae también más urgencias que lo normal?</p>
+  </div>
+  <div class="nota">
+   <h3>El confusor que no está controlado</h3>
+   <p>Las urgencias respiratorias de invierno están dominadas por <b>virus respiratorios</b>
+    (VRS, influenza). El MP2.5 también sube en invierno. Ambos suben juntos sin que uno
+    explique al otro.</p>
+   <p>El proyecto no incorporó la vigilancia virológica del ISP, así que este confusor
+    <b>queda declarado y no corregido</b>. El descuento estacional lo atenúa —el ciclo viral
+    es marcadamente estacional— pero no lo elimina: un año de epidemia fuerte se ve como
+    anomalía positiva de urgencias sin nada que ver con el aire.</p>
+  </div>
+  <div class="nota">
+   <h3>Qué es una unidad de análisis acá</h3>
+   <p>Una fila es <b>una ciudad en una semana</b>: el MP2.5 promedio de sus estaciones y las
+    urgencias de sus establecimientos, divididas por la población proyectada del INE.</p>
+   <p>De ahí que sea un <b>estudio ecológico</b>. Que una ciudad con más MP2.5 tenga más
+    urgencias no implica que las personas expuestas sean las que consultaron: eso se llama
+    falacia ecológica y es la razón por la que ninguna conclusión de esta página baja del
+    nivel de ciudad.</p>
+  </div>
+ </div>
+
+</div>
+</main>
+
+<footer>
+ <div class="wrap">
+  Estudio ecológico observacional · <b>asociación, no causalidad</b> · capstone de Big Data<br>
+  Urgencias: DEIS (MINSAL) · Aire: SINCA (MMA) · Población: proyecciones comunales INE
+ </div>
+</footer>
+
+<script src="assets/js/comun.js"></script>
+<script src="assets/js/analisis.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+# ---------------------------------------------------------------
+# Datos: se versiona el CODIGO, nunca los datos.
+# Se conserva la estructura de carpetas (via .gitkeep), no su contenido.
+# ---------------------------------------------------------------
+data/**
+!data/**/
+!data/**/.gitkeep
+
+# EXCEPCION deliberada: sitio/assets/datos/ NO es la zona de datos, es el
+# resultado publicado (agregados, ~900 kB) que GitHub Pages necesita servir.
+# Sin estos archivos el sitio se despliega vacio. No agregar reglas que los
+# ignoren. Ver sitio/README.md.
+
+# Logs: misma logica, se conserva la carpeta y no su contenido.
+logs/**
+!logs/.gitkeep
+
+# ---------------------------------------------------------------
+# Entorno virtual y Python
+# ---------------------------------------------------------------
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------
+# Credenciales y configuracion local
+# Ningun secreto entra al repo. Los buckets usados son publicos.
+# ---------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.aws/
+
+# Claves de AWS. El script las escribe FUERA del repositorio, pero si alguien
+# mueve el archivo aqui por error, no debe poder subirlo.
+credenciales*.json
+*credentials*.json
+*accesskey*
+aws_*.json
+
+# Ajustes locales de Claude Code (por integrante, no del equipo)
+.claude/settings.local.json
+
+# Intermedio de armado del informe: HTML con las figuras en base64.
+# Se regenera con `python -m src.analisis.generar_pdf`; no se versiona.
+docs/reconocimiento/figuras/_informe_armado.html
+
+# ---------------------------------------------------------------
+# Sistema operativo y editores
+# ---------------------------------------------------------------
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
+*.swp

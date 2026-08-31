@@ -1,0 +1,781 @@
+<meta charset="utf-8">
+<title>Aire y Urgencias — Informe de cierre de la etapa de reconocimiento</title>
+<style>
+  @page { size: A4; margin: 20mm 18mm 18mm 18mm; }
+  @page { @bottom-center { content: counter(page); } }
+
+  :root {
+    --sup: #fcfcfb; --tinta: #0b0b0b; --tinta2: #52514e; --muted: #898781;
+    --rejilla: #e1e0d9; --base: #c3c2b7;
+    --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a;
+    --critico: #d03b3b; --bueno: #0ca30c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    color: var(--tinta); background: var(--sup);
+    font-size: 10.2pt; line-height: 1.52; margin: 0;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  h1 { font-size: 21pt; line-height: 1.2; margin: 0 0 6px; letter-spacing: -0.01em; }
+  h2 {
+    font-size: 14pt; margin: 26px 0 10px; padding-top: 12px;
+    border-top: 2px solid var(--tinta); letter-spacing: -0.01em;
+    break-after: avoid;
+  }
+  h3 { font-size: 11.4pt; margin: 18px 0 6px; break-after: avoid; }
+  h4 { font-size: 10.4pt; margin: 14px 0 4px; color: var(--tinta2); break-after: avoid; }
+  p { margin: 0 0 9px; }
+  ul, ol { margin: 0 0 10px; padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  code {
+    font-family: "Cascadia Mono", Consolas, monospace; font-size: 8.8pt;
+    background: #f2f1ec; padding: 1px 4px; border-radius: 3px;
+  }
+  pre {
+    font-family: "Cascadia Mono", Consolas, monospace; font-size: 8.4pt;
+    background: #f5f4ef; border-left: 3px solid var(--base);
+    padding: 9px 12px; margin: 9px 0; line-height: 1.42;
+    white-space: pre-wrap; overflow-wrap: anywhere; break-inside: avoid;
+  }
+  table {
+    border-collapse: collapse; width: 100%; margin: 10px 0 14px;
+    font-size: 8.9pt; break-inside: avoid;
+  }
+  th {
+    text-align: left; font-weight: 600; color: var(--tinta2);
+    border-bottom: 1.5px solid var(--base); padding: 5px 7px 5px 0;
+    vertical-align: bottom;
+  }
+  td { padding: 4px 7px 4px 0; border-bottom: 1px solid var(--rejilla); vertical-align: top; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; padding-right: 12px; }
+  figure { margin: 16px 0; break-inside: avoid; }
+  figure img { width: 100%; height: auto; display: block; }
+  figcaption { font-size: 8.2pt; color: var(--muted); margin-top: 5px; }
+
+  .portada { padding-top: 30mm; break-after: page; }
+  .sub { font-size: 12pt; color: var(--tinta2); margin: 0 0 26px; }
+  .meta { font-size: 9.4pt; color: var(--tinta2); border-top: 1px solid var(--rejilla); padding-top: 12px; }
+  .meta div { margin-bottom: 3px; }
+
+  .clave {
+    background: #f3f6fc; border-left: 3px solid var(--s1);
+    padding: 10px 14px; margin: 12px 0; break-inside: avoid;
+  }
+  .alerta {
+    background: #fdf3f3; border-left: 3px solid var(--critico);
+    padding: 10px 14px; margin: 12px 0; break-inside: avoid;
+  }
+  .clave p:last-child, .alerta p:last-child { margin-bottom: 0; }
+  .etiqueta {
+    font-size: 7.6pt; text-transform: uppercase; letter-spacing: 0.07em;
+    font-weight: 700; color: var(--tinta2); display: block; margin-bottom: 4px;
+  }
+  .cifras { display: flex; gap: 14px; margin: 14px 0; flex-wrap: wrap; }
+  .cifra { flex: 1 1 130px; border-top: 2px solid var(--s1); padding-top: 7px; }
+  .cifra .v { font-size: 17pt; font-weight: 600; line-height: 1.1; }
+  .cifra .k { font-size: 8.2pt; color: var(--tinta2); margin-top: 2px; }
+  .nota { font-size: 8.6pt; color: var(--tinta2); }
+  .pagina { break-before: page; }
+  .no-romper { break-inside: avoid; }
+  a { color: var(--s1); text-decoration: none; overflow-wrap: anywhere; }
+</style>
+
+<div class="portada">
+  <div style="font-size:8.6pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px">
+    Capstone de Big Data · Informe de etapa
+  </div>
+  <h1>Aire y Urgencias</h1>
+  <p class="sub">Reconocimiento de fuentes: qué publica cada una,<br>cómo se obtiene y qué condiciona el diseño</p>
+
+  <div class="clave" style="margin:30px 0">
+    <p>Este informe cierra la <strong>etapa 1: reconocimiento de fuentes</strong>. No contiene
+    resultados del análisis de asociación — ese es el objeto de la etapa siguiente. Lo que
+    documenta es qué entrega realmente cada fuente, cómo se accede a ella, qué se rompe al
+    intentarlo y qué decisiones de diseño quedan abiertas.</p>
+    <p style="margin-top:8px">Todas las cifras provienen de descargas y mediciones ejecutadas
+    sobre los datos reales. Nada está estimado salvo donde se indica explícitamente.</p>
+  </div>
+
+  <div class="meta">
+    <div><strong>Pregunta de investigación:</strong> cómo se asocia la variación de MP2.5 con
+    la variación de consultas de urgencia por causa respiratoria en Santiago, Talcahuano y
+    Coyhaique (2018-2024), controlando por temperatura, estacionalidad y período de pandemia.</div>
+    <div style="margin-top:8px"><strong>Fecha:</strong> 6 de agosto de 2026</div>
+    <div><strong>Fuentes reconocidas:</strong> OpenAQ (cerrada), DEIS/MINSAL (cerrada),
+    SINCA/MMA (parcial)</div>
+    <div><strong>Naturaleza del estudio:</strong> ecológico observacional. Se analiza
+    <em>asociación</em>, nunca causalidad.</div>
+  </div>
+</div>
+
+<h2>1. Resumen ejecutivo</h2>
+
+<p>Se reconocieron tres fuentes de datos. Las tres son accesibles desde la conexión del
+proyecto y ninguna quedó bloqueada. El período 2018-2024 está cubierto por completo en las
+tres. El proyecto es viable.</p>
+
+<p>Los cinco hallazgos que cambian el diseño respecto de lo previsto son:</p>
+
+<ol>
+  <li><strong>El DEIS publica dato diario</strong>, no semanal ni mensual, con los 365 días de
+  cada año sin huecos. El alcance original suponía agregación semanal; ahora es una decisión
+  y no una restricción.</li>
+
+  <li><strong>OpenAQ no replica el dato de SINCA: publica una transformación no declarada.</strong>
+  Lo que entrega para Chile es la media móvil de 24 horas del MP2.5 de SINCA, desplazada
+  +10&nbsp;µg/m³ y redondeada. Queda descartado como fuente de aire chileno, que era la
+  sospecha inicial, pero por una razón más fuerte que la prevista.</li>
+
+  <li><strong>El esquema del DEIS cambia entre años</strong>: formato de archivo, presencia de
+  cabecera, formato de fecha, capitalización de nombres de columna y número de columnas. Un
+  lector único falla.</li>
+
+  <li><strong>El archivo del DEIS mezcla totales agregados con detalle en la misma columna</strong>,
+  y una de las causas tiene un nombre que induce a error de dos órdenes de magnitud.</li>
+
+  <li><strong>Talcahuano dispone de una sola estación de MP2.5 con datos validados</strong>, frente
+  a doce en Santiago y dos en Coyhaique. Es el punto más frágil del diseño actual.</li>
+</ol>
+
+<div class="cifras">
+  <div class="cifra"><div class="v">51,1 M</div><div class="k">filas de urgencias del DEIS, 2018-2024</div></div>
+  <div class="cifra"><div class="v">8,3 GB</div><div class="k">DEIS descomprimido</div></div>
+  <div class="cifra"><div class="v">9,8 GB</div><div class="k">OpenAQ mundial comprimido</div></div>
+  <div class="cifra"><div class="v">121</div><div class="k">países en OpenAQ</div></div>
+  <div class="cifra"><div class="v">19</div><div class="k">estaciones SINCA de MP2.5 en las tres ciudades</div></div>
+</div>
+
+<h2>2. Cómo se hizo</h2>
+
+<p>El reconocimiento siguió una regla: <strong>ninguna afirmación sobre una fuente se acepta sin
+haberla comprobado contra el archivo real</strong>. La documentación oficial se usó para orientar
+la búsqueda, nunca como evidencia.</p>
+
+<h3>2.1 Validación de cada descarga</h3>
+
+<p>El punto de partida fue que una respuesta HTTP 200 no significa que haya datos. Se comprobó
+en dos fuentes distintas:</p>
+
+<ul>
+  <li>SINCA devuelve un <strong>GIF vacío de 0 bytes con HTTP 200</strong> cuando el parámetro de
+  formato es incorrecto.</li>
+  <li>El DEIS publica series cuyo recurso existe pero cuyo contenido viene sin filas.</li>
+</ul>
+
+<p>Por eso toda descarga pasa por una cadena de comprobaciones antes de darse por buena:</p>
+
+<pre>1. código HTTP        403 → sin permiso o bloqueo;  404 → no existe
+2. content-type       lo que el servidor declara
+3. números mágicos    lo que el cuerpo realmente es  (PK\x03\x04 para ZIP)
+4. integridad         testzip() sobre el archivo completo
+5. contenido          que existan miembros y filas</pre>
+
+<p>El control 3 es el que atrapa el caso peligroso: servidor que responde 200 con una página de
+error o una imagen. Nada se escribe en la zona cruda sin pasar los cinco.</p>
+
+<h3>2.2 Distinguir «bloqueado» de «inexistente»</h3>
+
+<p>La conexión del proyecto está detrás de CGNAT, lo que hace que un 403 sea ambiguo: puede ser
+la IP o puede ser que el recurso no exista. Confundirlos lleva a descartar datos que sí están.
+Se resolvió con contrastes dentro de la misma petición:</p>
+
+<table>
+  <thead><tr><th>Observación</th><th>Interpretación</th><th>Cómo se determinó</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><code>openaq-fetches</code> → 403<br><code>openaq-data-archive</code> → 200</td>
+      <td>No es la IP: el bucket dejó de ser público</td>
+      <td>Misma IP y mismo cliente, dos resultados distintos</td>
+    </tr>
+    <tr>
+      <td><code>/DatosAbiertos/</code> → 403<br><code>/DatosAbiertos/AtencionesUrgencia/</code> → 404</td>
+      <td>No es la IP: el servidor IIS deshabilita el listado de directorios</td>
+      <td>El servidor devuelve códigos distintos según exista o no la ruta</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>2.3 No asumir esquema</h3>
+
+<p>Ninguna cabecera se dio por supuesta. Los lectores detectan codificación, separador y
+columnas, y registran qué variante encontraron. Esto no fue precaución teórica: los tres
+esquemas distintos de OpenAQ se descubrieron porque el propio muestreo falló con
+<code>KeyError: 'parameter'</code>, y la segunda partición del bucket apareció porque el conteo
+falló con <code>IndexError</code>. En ambos casos el fallo <em>era</em> el hallazgo.</p>
+
+<h3>2.4 Herramientas</h3>
+
+<p>Python 3.12 fijado con <code>uv</code>; pandas, pyarrow, statsmodels, boto3 (sin firmar, buckets
+públicos), requests y pyodbc. Antes de dar el entorno por bueno se ejecutó una prueba del
+pipeline completo en miniatura — CSV latin-1 con separador <code>;</code> y centinelas, agregación
+temporal, rezagos, modelo y escritura a Parquet — porque <code>uv</code> resolvió pandas 3.0, un salto
+mayor. La prueba pasó y no hizo falta fijar una versión anterior.</p>
+
+<div class="pagina"></div>
+<h2>3. OpenAQ</h2>
+
+<p><strong>Rol asignado: solo referencia internacional.</strong> Sirve para posicionar las tres
+ciudades frente al resto del mundo. No es fuente de datos chilenos.</p>
+
+<h3>3.1 Acceso</h3>
+
+<p>El bucket <code>s3://openaq-data-archive</code> responde sin credenciales (HTTP 200, firma
+<code>UNSIGNED</code>). La API, en cambio, está cerrada: <code>v3</code> devuelve <code>401</code>
+(exige clave) y <code>v2</code> devuelve <code>410 Gone</code>. Todo el catálogo hubo que derivarlo
+del propio bucket.</p>
+
+<h3>3.2 Estructura</h3>
+
+<p>El bucket tiene <strong>dos árboles paralelos</strong>, y esto no está documentado:</p>
+
+<pre>records/csv.gz/locationid=&lt;id&gt;/year=&lt;yyyy&gt;/month=&lt;mm&gt;/location-&lt;id&gt;-&lt;yyyymmdd&gt;.csv.gz
+records/csv.gz/provider=&lt;prov&gt;/country=&lt;iso2&gt;/locationid=&lt;id&gt;/year=&lt;yyyy&gt;/month=&lt;mm&gt;/…</pre>
+
+<p>La vista plana por <code>locationid</code> no dice de qué país es cada estación. La vista por
+proveedor sí incluye <code>country=</code>, y es la única forma de contar países sin clave de API.
+Las dos vistas <strong>no son equivalentes</strong>: la de proveedor cubre 17.983 de 55.007
+estaciones, es decir un tercio del archivo.</p>
+
+<p>Formato: CSV comprimido con gzip, un archivo por estación-día, <strong>codificación UTF-8</strong>
+(verificado a nivel de bytes: <code>µ</code> llega como <code>\xc2\xb5</code>). Esto lo diferencia de
+las fuentes chilenas, que son latin-1.</p>
+
+<h4>El esquema no es uniforme</h4>
+
+<table>
+  <thead><tr><th class="num">Estaciones</th><th>Columnas</th></tr></thead>
+  <tbody>
+    <tr><td class="num">195</td><td><code>location_id, sensors_id, location, datetime, lat, lon, parameter, units, value</code></td></tr>
+    <tr><td class="num">10</td><td>igual, pero con <strong><code>lat</code> y <code>lon</code> duplicadas</strong></td></tr>
+    <tr><td class="num">3</td><td>igual, pero con <strong><code>measurand</code> en lugar de <code>parameter</code></strong></td></tr>
+  </tbody>
+</table>
+
+<p class="nota">Sobre 208 estaciones muestreadas. Un lector que asuma la cabecera estándar falla
+en torno al 6 % de las estaciones. No hay columna de país, ni de ciudad, ni marca de validación.</p>
+
+<h3>3.3 Cobertura y volumen</h3>
+
+<table>
+  <thead><tr><th>Magnitud</th><th class="num">Valor</th><th>Cómo se obtuvo</th></tr></thead>
+  <tbody>
+    <tr><td>Estaciones (<code>locationid</code>)</td><td class="num">55.007</td><td>conteo exhaustivo</td></tr>
+    <tr><td>Proveedores</td><td class="num">49</td><td>conteo exhaustivo</td></tr>
+    <tr><td>Países</td><td class="num">121</td><td>conteo exhaustivo vía proveedor</td></tr>
+    <tr><td>Estaciones chilenas</td><td class="num">171</td><td>conteo exhaustivo (puesto 16 de 121)</td></tr>
+    <tr><td>Archivos 2018-2024</td><td class="num">≈ 16,2 M</td><td>extrapolado de muestra de 250 estaciones</td></tr>
+    <tr><td>Disco comprimido</td><td class="num">≈ 9,8 GB</td><td>extrapolado</td></tr>
+    <tr><td>Disco sin comprimir</td><td class="num">≈ 243 GB</td><td>extrapolado (ratio medido: 24,8×)</td></tr>
+  </tbody>
+</table>
+
+<p class="nota"><strong>Sobre el número de filas.</strong> La extrapolación da del orden de
+74.000 millones, pero la media es de 4.570 filas por archivo mientras que la estación Parque
+O'Higgins tiene 20: la distribución está dominada por sensores de bajo costo que registran cada
+minuto. Esa cifra debe tratarse como cota superior de orden de magnitud, no como conteo.</p>
+
+<p>El volumen en bytes es manejable. Lo caro son los <strong>16 millones de objetos pequeños</strong>:
+el coste de listar y abrir domina sobre el de leer.</p>
+
+<h3>3.4 El hallazgo principal: OpenAQ publica una transformación</h3>
+
+<p>La sospecha inicial del proyecto era que OpenAQ duplicaba el dato de SINCA y que usarlo sería
+contar la misma medición dos veces. Se puso a prueba descargando el mismo mes y la misma estación
+de ambas fuentes y comparando hora a hora. <strong>Se probaron desfases de −2 a +2 horas</strong>
+para no confundir un desalineamiento temporal con una diferencia de valores.</p>
+
+<table>
+  <thead><tr><th>Estación</th><th class="num">Horas</th><th class="num">Idénticas</th><th class="num">Dif. media</th><th>Mejor desfase</th></tr></thead>
+  <tbody>
+    <tr><td>Santiago / Parque O'Higgins</td><td class="num">703</td><td class="num">2,1 %</td><td class="num">+10,5 µg/m³</td><td>ninguno mejora</td></tr>
+    <tr><td>Temuco / Padre Las Casas II</td><td class="num">674</td><td class="num">0,7 %</td><td class="num">+13,7 µg/m³</td><td>ninguno mejora</td></tr>
+    <tr><td>Coyhaique II</td><td class="num">676</td><td class="num">0,7 %</td><td class="num">+11,2 µg/m³</td><td>ninguno mejora</td></tr>
+  </tbody>
+</table>
+
+<p>Ningún desfase sube la coincidencia por encima del 2,4 %. No es un problema de alineación:
+son datos distintos. Los valores de OpenAQ resultaban además llamativamente suaves, lo que
+sugirió comparar contra medias móviles en vez de contra el dato horario.</p>
+
+<figure>
+  <img src="{{FIG1}}" alt="Correlación entre el valor de OpenAQ y medias móviles del dato de SINCA, por tamaño de ventana">
+  <figcaption><strong>Figura 1.</strong> La correlación con el dato horario es 0,596; con la media
+  móvil de 24 horas, 0,9998.</figcaption>
+</figure>
+
+<div class="clave">
+  <span class="etiqueta">Resultado</span>
+  <p style="font-size:11pt"><code style="font-size:10pt">OpenAQ = redondeo( media_móvil_24h(SINCA validado) + 10 )</code></p>
+  <p style="margin-top:8px">La prueba decisiva no es la correlación sino la <strong>desviación
+  estándar del residuo: 0,2888</strong>. El error de redondear a entero se distribuye uniforme en
+  [−0,5 ; 0,5], cuya desviación teórica es 1/√12 = <strong>0,28868</strong>. La coincidencia a
+  cuatro decimales significa que, una vez descontado el +10, <em>el único ruido que queda es el
+  del redondeo</em>: la relación es determinista.</p>
+</div>
+
+<p>La fórmula reproduce el valor exacto en el 97,6 % de las horas en Parque O'Higgins y entre el
+90 % y el 92 % en las demás. Se verificó en <strong>cuatro estaciones de tres regiones</strong>,
+con el mismo desplazamiento de +10 en todas, lo que indica un artefacto del procesamiento de
+OpenAQ y no una característica de las estaciones.</p>
+
+<h4>La hipótesis alternativa se probó y no se sostiene</h4>
+
+<p>Cabía pensar que la diferencia fuera preliminar contra validado. SINCA expone tres columnas
+excluyentes y en los períodos consultados la de preliminares está vacía:</p>
+
+<table>
+  <thead><tr><th>Período (Parque O'Higgins)</th><th class="num">Validados</th><th class="num">Preliminares</th><th class="num">No validados</th></tr></thead>
+  <tbody>
+    <tr><td>junio 2024</td><td class="num">714</td><td class="num">0</td><td class="num">0</td></tr>
+    <tr><td>junio 2025</td><td class="num">719</td><td class="num">0</td><td class="num">0</td></tr>
+    <tr><td>junio 2026</td><td class="num">718</td><td class="num">0</td><td class="num">0</td></tr>
+  </tbody>
+</table>
+
+<p>Ni el mes más reciente disponible tiene preliminares pendientes. No hay diferencia de
+validación que explique la discrepancia.</p>
+
+<p><strong>Por qué exactamente +10 queda como pregunta abierta.</strong> El dato empírico es firme
+y suficiente para la decisión; el mecanismo que lo produce, no. No se investigó más porque no
+cambiaría la conclusión.</p>
+
+<h3>3.5 Consecuencias</h3>
+
+<ul>
+  <li><strong>OpenAQ queda solo como marco de referencia internacional.</strong> No sirve como
+  respaldo ni como fuente alternativa de MP2.5 chileno.</li>
+  <li><strong>El percentil mundial de las tres ciudades debe calcularse con el dato de SINCA</strong>
+  insertado en la distribución de OpenAQ, nunca con el número que OpenAQ trae para Chile: sería
+  comparar una media móvil desplazada contra los datos crudos del resto del mundo.</li>
+  <li><strong>La idea de medir cuánto cambia un dato al validarse no es realizable</strong> con estas
+  dos fuentes. Lo observado no es validación, es transformación. Requeriría capturar el
+  preliminar de SINCA en tiempo real y compararlo meses después: otro diseño.</li>
+  <li>OpenAQ <strong>no conserva marcas de validación</strong> (no existe el campo) y <strong>no trae
+  meteorología</strong> para las estaciones chilenas.</li>
+</ul>
+
+<div class="pagina"></div>
+<h2>4. DEIS — Atenciones de Urgencia</h2>
+
+<h3>4.1 Acceso</h3>
+
+<p>La ruta de descarga <strong>no está enlazada desde ninguna página navegable</strong>. La sección
+de datos abiertos de <code>deis.minsal.cl</code> se carga por JavaScript y no expone enlaces en el
+HTML; el registro del portal nacional de datos abiertos (creado en 2013 y nunca actualizado)
+apunta a <code>www.deis.cl</code>, dominio que <strong>ya no resuelve en DNS</strong>. La ruta se
+ubicó por búsqueda:</p>
+
+<pre>https://repositoriodeis.minsal.cl/SistemaAtencionesUrgencia/AtencionesUrgencia&lt;AAAA&gt;.zip</pre>
+
+<p>Años disponibles y verificados como ZIP íntegros: <strong>2017 a 2026</strong>. El período del
+estudio está cubierto por completo.</p>
+
+<div class="clave">
+  <span class="etiqueta">Hallazgo destacado</span>
+  <p style="font-size:11pt"><strong>El DEIS publica dato diario, no semanal.</strong></p>
+  <p style="margin-top:6px">Cada año trae exactamente 365 días (366 en bisiestos), del 1 de enero
+  al 31 de diciembre, sin huecos. El archivo incluye además una columna <code>semana</code> ya
+  calculada. Como SINCA es horario, <strong>ambos lados soportan resolución diaria</strong>: la
+  agregación semanal del alcance original deja de ser una restricción de los datos y pasa a ser
+  una decisión de diseño.</p>
+</div>
+
+<h3>4.2 El formato cambia entre años</h3>
+
+<table>
+  <thead><tr><th>Año</th><th>Contenido del ZIP</th><th>Formato</th></tr></thead>
+  <tbody>
+    <tr><td>2018</td><td><code>AtencionesUrgenciaLineal2018.mdb</code> + diccionario</td><td><strong>Microsoft Access</strong></td></tr>
+    <tr><td>2019</td><td><code>AtencionesUrgencia2019.mdb</code> + diccionario</td><td><strong>Microsoft Access</strong></td></tr>
+    <tr><td>2020</td><td><code>AtencionesUrgencia2020.csv</code> + diccionario</td><td>CSV</td></tr>
+    <tr><td>2021-2024</td><td><code>AtencionesUrgencia&lt;año&gt;.csv</code></td><td>CSV, sin diccionario</td></tr>
+  </tbody>
+</table>
+
+<p>Los archivos Access pesan 1,10 y 1,11 GB descomprimidos. Se leen con el driver ODBC de Access
+de 64 bits, presente en el equipo, vía <code>pyodbc</code>. <strong>Sin ese driver, 2018 y 2019 son
+ilegibles</strong> y el período se reduciría a 2020-2024, que son justamente los años contaminados
+por la pandemia. El diccionario de datos oficial acompaña a los años 2018-2020 y deja de
+publicarse desde 2021.</p>
+
+<h3>4.3 El esquema no es estable</h3>
+
+<table>
+  <thead><tr><th>Año</th><th class="num">Columnas</th><th>Cabecera</th><th>Campo de causa</th><th>Geografía</th></tr></thead>
+  <tbody>
+    <tr><td>2018-2019</td><td class="num">15</td><td>tabla Access</td><td><code>Idcausa</code></td><td>no</td></tr>
+    <tr><td>2020</td><td class="num">15</td><td><strong>no tiene</strong></td><td>—</td><td>no</td></tr>
+    <tr><td>2021</td><td class="num">15</td><td>sí</td><td><code>IdCausa</code></td><td>no</td></tr>
+    <tr><td>2022</td><td class="num">15</td><td>sí</td><td><strong><code>Idcausa</code></strong></td><td>no</td></tr>
+    <tr><td>2023-2024</td><td class="num"><strong>21</strong></td><td>sí</td><td><code>IdCausa</code></td><td><strong>sí</strong></td></tr>
+  </tbody>
+</table>
+
+<p>Cuatro rupturas concretas:</p>
+
+<ol>
+  <li><strong>2020 se publicó sin fila de cabecera.</strong> La primera línea ya es un dato. Un
+  lector con <code>header=0</code> perdería esa fila y usaría sus valores como nombres de columna.</li>
+  <li><strong>El formato de fecha cambia.</strong> En 2020 las fechas son objetos <code>Date</code>
+  de Java serializados (<code>Wed Sep 23 00:00:00 GMT-04:00 2020</code>); en 2018, 2019 y 2021-2024
+  son <code>dd/mm/aaaa</code>. Un único parser falla en uno de los dos grupos.</li>
+  <li><strong><code>IdCausa</code> cambia de capitalización</strong> solo en 2022.</li>
+  <li><strong>2023 añade seis columnas geográficas</strong> (región, dependencia y comuna).</li>
+</ol>
+
+<p>Codificación latin-1 y separador <code>;</code> en todos los años. Ningún año trae UTF-8.</p>
+
+<h4>Las columnas del Access no tienen nombre</h4>
+
+<p>En los archivos de 2018-2019 las seis columnas numéricas se llaman <code>Col01</code>…<code>Col06</code>,
+sin significado declarado, y sus tipos no siguen el orden esperado. <strong>El mapeo no se asumió:
+se verificó</strong> sobre las 4.488.935 filas de 2018:</p>
+
+<pre>Col01 = Col02 + Col03 + Col04 + Col05 + Col06   →   4.488.935 de 4.488.935  (100,00 %)</pre>
+
+<p>Queda establecido que el orden coincide con el del CSV:
+<code>Total, Menores_1, De_1_a_4, De_5_a_14, De_15_a_64, De_65_y_mas</code>.</p>
+
+<h3>4.4 Valores derivados y una trampa de nombre</h3>
+
+<p>El archivo <strong>mezcla agregados con detalle en la misma columna</strong>. Entre las 40 causas
+hay totales de sección que son suma de otras filas:</p>
+
+<pre>causas 3+4+5+6+10+11 (detalle respiratorio)   = 4.939.422
+causa 2  «TOTAL CAUSAS SISTEMA RESPIRATORIO»  = 4.939.422    → idéntico</pre>
+
+<p>La coincidencia se repite en todos los años comprobados. Sumar todas las filas de causa cuenta
+cada atención al menos dos veces.</p>
+
+<div class="alerta">
+  <span class="etiqueta">Trampa de dos órdenes de magnitud</span>
+  <p>La causa <strong>7 se llama <code>CAUSAS SISTEMA RESPIRATORIO</code></strong> y es fácil
+  confundirla con las atenciones respiratorias. No lo es:</p>
+  <pre style="background:#fff;margin:8px 0">causas 7 + 8 + 22 + 23                            = 548.790
+causa 25 «SECCIÓN 2. TOTAL DE HOSPITALIZACIONES»  = 548.790    → idéntico</pre>
+  <p>La causa 7 pertenece a la Sección 2 del formulario: son <strong>hospitalizaciones</strong> por
+  causa respiratoria, no atenciones de urgencia. Su magnitud (79.897 en 2018) es unas 60 veces
+  menor que la causa 2. Usarla por su nombre subestimaría el indicador en dos órdenes de magnitud,
+  sin error visible.</p>
+</div>
+
+<p>Filas que son agregados o encabezados de sección, no causas:
+<code>1, 2, 7, 8, 12, 18, 21, 22, 23, 25, 26, 34, 36, 42</code>.</p>
+
+<h4>No hay suavizado</h4>
+
+<p>A diferencia de OpenAQ, el DEIS publica <strong>conteos brutos</strong>. Los valores son enteros
+sin redondeo sospechoso y <strong>la suma de los cinco grupos etarios iguala la columna
+<code>Total</code> en el 100 % de las filas</strong>, en los cinco años CSV: cero discrepancias sobre
+unos 42 millones de filas. El único derivado son los totales por sección descritos arriba, que
+además están declarados en el diccionario.</p>
+
+<h3>4.5 Lo que el archivo permite</h3>
+
+<p><strong>Causas respiratorias con CIE-10 explícito</strong> (esto es detalle, no agregado):</p>
+
+<table>
+  <thead><tr><th class="num">IdCausa</th><th>Glosa</th><th>CIE-10</th></tr></thead>
+  <tbody>
+    <tr><td class="num">3</td><td>Bronquitis / bronquiolitis aguda</td><td>J20-J21</td></tr>
+    <tr><td class="num">4</td><td>Influenza</td><td>J09-J11</td></tr>
+    <tr><td class="num">5</td><td>Neumonía</td><td>J12-J18</td></tr>
+    <tr><td class="num">6</td><td>Otra causa respiratoria</td><td>J22, J30-J39, J47, J60-J98</td></tr>
+    <tr><td class="num">10</td><td>IRA alta</td><td>J00-J06</td></tr>
+    <tr><td class="num">11</td><td>Crisis obstructiva bronquial</td><td>J40-J46</td></tr>
+  </tbody>
+</table>
+
+<p><strong>Cinco grupos etarios</strong> en columnas separadas: menores de 1, 1 a 4, 5 a 14, 15 a 64
+y 65 o más. Permite restringir a los grupos sensibles sin trabajo adicional. El total de causas
+distintas es 40 en todos los años: esto sí es estable.</p>
+
+<h3>4.6 Geografía: hay que cruzar con otra fuente</h3>
+
+<p>Lo que identifica al establecimiento es un código con formato <code>RR-NNN</code>.
+<strong>Hasta 2022 el archivo no trae ningún campo geográfico</strong>; región y comuna solo
+aparecen desde 2023. Para 2018-2022 la única vía de asignar una atención a una ciudad es cruzar
+con la <em>Base de Establecimientos</em> del año correspondiente, que aporta comuna, coordenadas
+y — hasta 2020 — fechas de vigencia.</p>
+
+<p>Esa dimensión <strong>también tiene esquema inestable</strong>: pasa de 29 a 32 columnas, la clave
+cambia de nombre en 2020 (<code>Código Antiguo Establecimiento</code> → <code>Código Antiguo</code>),
+la cabecera está en la segunda fila y <strong>las fechas de apertura y cierre desaparecen desde
+2021</strong>. El recambio de establecimientos, por tanto, no se puede leer de la dimensión: hay que
+inferirlo de la presencia o ausencia en cada base anual.</p>
+
+<h3>4.7 Volumen</h3>
+
+<table>
+  <thead><tr><th>Año</th><th class="num">Filas</th><th>Formato</th><th class="num">Descomprimido</th></tr></thead>
+  <tbody>
+    <tr><td>2018</td><td class="num">4.488.935</td><td>mdb</td><td class="num">1,10 GB</td></tr>
+    <tr><td>2019</td><td class="num">4.550.877</td><td>mdb</td><td class="num">1,11 GB</td></tr>
+    <tr><td>2020</td><td class="num">6.446.646</td><td>csv</td><td class="num">1,02 GB</td></tr>
+    <tr><td>2021</td><td class="num">8.816.240</td><td>csv</td><td class="num">1,04 GB</td></tr>
+    <tr><td>2022</td><td class="num">8.926.307</td><td>csv</td><td class="num">1,06 GB</td></tr>
+    <tr><td>2023</td><td class="num">8.899.080</td><td>csv</td><td class="num">1,49 GB</td></tr>
+    <tr><td>2024</td><td class="num">8.973.229</td><td>csv</td><td class="num">1,50 GB</td></tr>
+    <tr><td><strong>Total</strong></td><td class="num"><strong>51.101.314</strong></td><td></td><td class="num"><strong>≈ 8,3 GB</strong></td></tr>
+  </tbody>
+</table>
+
+<p>Comprimido en ZIP son 573 MB. La estructura es un producto cartesiano de establecimiento ×
+causa × día, con los ceros explícitos: el archivo registra los días sin atenciones de una causa,
+lo cual es correcto — ausencia de fila no equivale a cero — pero infla el volumen unas 40 veces
+respecto del dato con contenido.</p>
+
+<div class="pagina"></div>
+<h2>5. SINCA</h2>
+
+<p><strong>Rol: única fuente de aire para Chile.</strong> El reconocimiento está parcialmente hecho;
+se completó lo necesario para el contraste con OpenAQ y para evaluar Talcahuano.</p>
+
+<h3>5.1 El patrón de descarga no está documentado</h3>
+
+<p>Se dedujo leyendo el JavaScript de la página de consulta:</p>
+
+<pre>https://sinca.mma.gob.cl/cgi-bin/APUB-MMA/apub.tsindico2.cgi
+    ?outtype=xcl
+    &amp;macro=./&lt;REGIÓN&gt;/&lt;ESTACIÓN&gt;/Cal/&lt;PARÁM&gt;//&lt;PARÁM&gt;.&lt;resolución&gt;.&lt;agregación&gt;.ic
+    &amp;from=&lt;AAMMDD&gt;&amp;to=&lt;AAMMDD&gt;
+    &amp;path=/usr/airviro/data/CONAMA/&amp;lang=esp&amp;rsrc=&amp;macropath=</pre>
+
+<p>Tres trampas, todas verificadas, y las tres hacen que un fallo parezca un éxito:</p>
+
+<ol>
+  <li><strong><code>outtype=xcl</code> devuelve CSV</strong>, pese al nombre. El valor
+  <code>outtype=csv</code> devuelve un <strong>GIF vacío de 0 bytes con HTTP 200</strong>.</li>
+  <li><strong>Las barras del parámetro <code>macro</code> no deben codificarse.</strong> Pasarlo por el
+  mecanismo habitual de parámetros las convierte en <code>%2F</code> y el servidor responde el mismo
+  GIF vacío.</li>
+  <li>Las fechas van en formato <code>AAMMDD</code>, de dos dígitos de año.</li>
+</ol>
+
+<p>El servidor es Apache directo, sin CloudFront: el CGNAT no lo bloquea.</p>
+
+<h3>5.2 Las marcas de validación: el activo diferencial de SINCA</h3>
+
+<pre>FECHA (YYMMDD);HORA (HHMM);Registros validados;Registros preliminares;Registros no validados;
+230714;0100;50;;;
+230714;0200;42;;;</pre>
+
+<p>Tres columnas excluyentes: un dato aparece en una sola. <strong>Esta información no existe en
+ninguna otra fuente del proyecto</strong> y resultó decisiva al evaluar Talcahuano.</p>
+
+<h3>5.3 Estaciones de MP2.5 en las tres ciudades</h3>
+
+<p>La web de SINCA declara la comuna de cada estación, de modo que la asignación no se infiere de
+coordenadas: se lee del catálogo oficial.</p>
+
+<table>
+  <thead><tr><th>Ciudad</th><th>Región</th><th>Estaciones con MP2.5</th></tr></thead>
+  <tbody>
+    <tr><td>Santiago</td><td><code>RM</code></td><td>D12 La Florida, D13 Las Condes, D14 Parque O'Higgins, D15 Pudahuel, D16 Cerrillos I, D17 El Bosque, D18 Cerro Navia, D27 Puente Alto, D28 Talagante, D29 Quilicura I, D30 Quilicura, D35 Cerrillos II <span class="nota">(12)</span></td></tr>
+    <tr><td>Talcahuano</td><td><code>RVIII</code></td><td>802 Consultorio - San Vicente, 803 Libertad, 806 Inpesca, 807 Indura, 837 Nueva Libertad <span class="nota">(5)</span></td></tr>
+    <tr><td>Coyhaique</td><td><code>RXI</code></td><td>B03 Coyhaique, B04 Coyhaique II <span class="nota">(2)</span></td></tr>
+  </tbody>
+</table>
+
+<p class="nota">Pendiente para completar el reconocimiento de SINCA: disponibilidad de temperatura
+y viento por estación, unidades, filas por estación-año y volumen nacional.</p>
+
+<div class="pagina"></div>
+<h2>6. Cambio de ciudad: Temuco → Talcahuano</h2>
+
+<p>Talcahuano sustituyó a Temuco por ser una ciudad reconocida por su contaminación industrial.
+El cambio se recolectó por completo en las tres fuentes.</p>
+
+<h3>6.1 En SINCA: cinco estaciones, pero solo una utilizable</h3>
+
+<p>Se descargó la serie diaria completa 2018-2024 de las cinco estaciones y se miró en qué columna
+de validación cae el dato:</p>
+
+<figure>
+  <img src="{{FIG3}}" alt="Días con dato por marca de validación en las cinco estaciones de MP2.5 de Talcahuano">
+  <figcaption><strong>Figura 2.</strong> Solo <code>RVIII/802</code> publica datos validados. Las tres
+  estaciones cuyo registro completo cae en «no validados» pertenecen a la red industrial;
+  <code>RVIII/803</code> tiene macro publicado pero la serie viene vacía.</figcaption>
+</figure>
+
+<p>La estación utilizable cubre <strong>2.427 de 2.556 días (95,0 %)</strong>, repartidos de forma
+pareja entre 2018 y 2024. Es sólida, pero es una sola.</p>
+
+<p>Se revisó el resto del Gran Concepción por si convenía ampliar el ámbito. Concepción,
+Chiguayante, Tomé, Coronel y Hualqui sí tienen estación validada. <strong>Hualpén no</strong>: sus
+tres estaciones son íntegramente no validadas, pese a compartir con Talcahuano la bahía de San
+Vicente y el cordón industrial.</p>
+
+<h3>6.2 En DEIS: Talcahuano es mejor que Temuco</h3>
+
+<table>
+  <thead><tr><th></th><th class="num">2018</th><th class="num">2019</th><th class="num">2020</th><th class="num">2021</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th></tr></thead>
+  <tbody>
+    <tr><td>Establecimientos</td><td class="num">5</td><td class="num">5</td><td class="num">5</td><td class="num">6</td><td class="num">5</td><td class="num">5</td><td class="num">5</td></tr>
+    <tr><td>Urgencias respiratorias</td><td class="num">75.568</td><td class="num">70.439</td><td class="num">13.992</td><td class="num">13.671</td><td class="num">54.804</td><td class="num">59.084</td><td class="num">52.853</td></tr>
+  </tbody>
+</table>
+
+<p>Cobertura estable, sin el salto artificial de 5 a 11 establecimientos que tenía Temuco en 2020,
+y alrededor de un 40 % más de volumen en 2018-2019. Los cinco registran los 365 días del año casi
+sin excepción.</p>
+
+<h3>6.3 El identificador de establecimiento no es una clave estable</h3>
+
+<p>En Talcahuano tres códigos tienen presencia parcial y parecen tres establecimientos distintos:
+uno que cierra, otro que nace y muere, y un tercero que aparece al final. <strong>Son dos, y uno
+cambia de identificador.</strong> El cruce con la dimensión lo aclara:</p>
+
+<pre>base 2021:  antiguo=19-808   vigente=119808   SAPU Los Cerros
+base 2021:  antiguo=19-912   vigente=201018   SAR  Los Cerros
+base 2024:  antiguo=201018   vigente=201018   SAR  Los Cerros   ← el código antiguo fue reemplazado</pre>
+
+<ul>
+  <li><code>19-808</code> → <code>19-912</code> es una <strong>conversión real</strong>: SAPU Los Cerros
+  se convierte en SAR Los Cerros. Se ve en el reparto de 2021 (117 días el SAPU, 306 el SAR).</li>
+  <li><code>19-912</code> → <code>201018</code> <strong>no es un cambio de establecimiento</strong>: es el
+  mismo SAR Los Cerros, al que el DEIS empezó a identificar en 2024 con su código <em>vigente</em>
+  en vez del <em>antiguo</em>.</li>
+</ul>
+
+<p>La migración de codificación es progresiva y afecta a todo el país:</p>
+
+<table>
+  <thead><tr><th>Año</th><th class="num">Formato antiguo <code>NN-NNN</code></th><th class="num">Formato vigente <code>NNNNNN</code></th></tr></thead>
+  <tbody>
+    <tr><td>2022</td><td class="num">622</td><td class="num">16</td></tr>
+    <tr><td>2023</td><td class="num">620</td><td class="num">22</td></tr>
+    <tr><td>2024</td><td class="num">609</td><td class="num"><strong>31</strong></td></tr>
+  </tbody>
+</table>
+
+<p>Un análisis que trate el identificador como clave estable contará el mismo establecimiento dos
+veces y verá cierres y aperturas que no ocurrieron.</p>
+
+<h3>6.4 Balance del cambio</h3>
+
+<table>
+  <thead><tr><th>Aspecto</th><th>Temuco</th><th>Talcahuano</th></tr></thead>
+  <tbody>
+    <tr><td>Estaciones SINCA con MP2.5 validado</td><td>3</td><td><strong>1</strong></td></tr>
+    <tr><td>Establecimientos DEIS</td><td>5 → 11 (salto)</td><td>5 (estable)</td></tr>
+    <tr><td>Urgencias respiratorias 2018-2019</td><td>≈ 52.000</td><td><strong>≈ 73.000</strong></td></tr>
+    <tr><td>Cobertura diaria DEIS</td><td>completa</td><td>completa</td></tr>
+  </tbody>
+</table>
+
+<p>El cambio <strong>mejora el lado salud y empeora el lado aire</strong>. Talcahuano queda apoyado
+en una sola estación de MP2.5. Si esa estación tiene un vacío largo, la ciudad se queda sin
+exposición para ese período y no hay con qué rellenar dentro de la comuna.</p>
+
+<div class="pagina"></div>
+<h2>7. El efecto de la pandemia</h2>
+
+<figure>
+  <img src="{{FIG2}}" alt="Urgencias respiratorias anuales por ciudad, 2018-2024">
+  <figcaption><strong>Figura 3.</strong> Santiago cae al 25 % de su nivel de 2019 durante
+  2020-2021. El patrón se repite en las tres ciudades.</figcaption>
+</figure>
+
+<p>La caída es del orden del 75 % y afecta a las tres ciudades. No es una caída de la
+contaminación: es el efecto de la pandemia sobre la consulta de urgencia. <strong>Controlar por
+período de pandemia no es opcional.</strong></p>
+
+<p>Un matiz que conviene registrar: <strong>Talcahuano no recupera su nivel previo</strong>. Entre
+2022 y 2024 se mueve en 53.000-59.000 frente a 70.000-76.000 en 2018-2019, alrededor de un 25 %
+por debajo, y con la misma cantidad de establecimientos registrando los 365 días. La caída no se
+explica por cobertura. Un control binario del tipo «2020-2021 sí, resto no» no captura esa
+diferencia de nivel.</p>
+
+<h2>8. Riesgos y decisiones que gatillan</h2>
+
+<table>
+  <thead><tr><th>Riesgo</th><th>Decisión que exige</th></tr></thead>
+  <tbody>
+    <tr><td>El DEIS es diario y SINCA horario</td><td>Fijar la resolución del análisis. Bloquea el diseño de rezagos</td></tr>
+    <tr><td>Totales agregados mezclados con detalle</td><td>Filtrar siempre a <code>IdCausa ∈ {3,4,5,6,10,11}</code>. Nunca sumar todas las causas</td></tr>
+    <tr><td>La causa 7 parece respiratoria y es hospitalización</td><td>Excluirla explícitamente. Error silencioso de factor ≈ 60</td></tr>
+    <tr><td>2018-2019 en Access</td><td>Convertir a Parquet una sola vez. Sin el driver ODBC el período se reduce a los años de pandemia</td></tr>
+    <tr><td>2020 sin cabecera y con fecha en formato Java</td><td>Tratar 2020 como caso especial en el lector</td></tr>
+    <tr><td>Nombres de columna que cambian de capitalización</td><td>Normalizar al leer</td></tr>
+    <tr><td>Sin geografía hasta 2022</td><td>Cruzar con la Base de Establecimientos <em>de cada año</em>, no con una sola</td></tr>
+    <tr><td>El identificador de establecimiento cambia de formato</td><td>Normalizar códigos antiguo ↔ vigente antes de construir series</td></tr>
+    <tr><td>Caída del 75 % en 2020-2021</td><td>Control de pandemia explícito, no un indicador binario de año</td></tr>
+    <tr><td>Talcahuano con una sola estación validada</td><td>Definir el ámbito espacial (ver §9)</td></tr>
+    <tr><td>Tres esquemas de CSV en OpenAQ</td><td>Normalizar cabeceras: <code>measurand</code> como alias de <code>parameter</code>, colapsar columnas duplicadas</td></tr>
+    <tr><td>16,2 millones de objetos pequeños en OpenAQ</td><td>Consolidar a Parquet particionado en la ingesta</td></tr>
+  </tbody>
+</table>
+
+<h2>9. Decisiones pendientes</h2>
+
+<h4>9.1 ¿Resolución diaria o semanal? <span class="nota">(bloquea el resto)</span></h4>
+<p>El dato diario permite ver la forma del rezago en vez de dos puntos, pero multiplica el volumen
+y exige tratar el efecto día de la semana, que en consulta de urgencia es fuerte.
+<strong>Recomendación:</strong> construir la tabla final diaria y agregar a semanal en el último
+paso, de modo que ambas opciones queden abiertas sin reprocesar.</p>
+
+<h4>9.2 ¿Cómo se define el ámbito espacial de Talcahuano?</h4>
+<table>
+  <thead><tr><th>Opción</th><th>Estaciones validadas</th><th>Valoración</th></tr></thead>
+  <tbody>
+    <tr><td>Talcahuano estricto (comuna 8110)</td><td>1</td><td>Coherente con el alcance, pero frágil</td></tr>
+    <tr><td>Talcahuano + Hualpén</td><td>1</td><td><strong>No se justifica:</strong> añade población sin añadir medición</td></tr>
+    <tr><td>Gran Concepción (8101-8112)</td><td>6</td><td>Análogo al Gran Santiago, pero diluye la señal industrial que motivó el cambio</td></tr>
+  </tbody>
+</table>
+<p><strong>Recomendación:</strong> la primera opción, con la tercera documentada como análisis de
+sensibilidad.</p>
+
+<h4>9.3 ¿Se pueden usar los datos no validados?</h4>
+<p>Las tres estaciones industriales de Talcahuano aportan unos 2.500 días cada una y cubrirían el
+período completo con tres puntos más de exposición. Pero mezclar validado con no validado exige
+una regla escrita, y conviene saber qué significa exactamente «no validado» en SINCA antes de
+usarlo. Entra en el reconocimiento pendiente de SINCA.</p>
+
+<h4>9.4 ¿Se empalma SAPU Los Cerros con SAR Los Cerros?</h4>
+<p>Es una conversión de servicio en el mismo lugar, no un cierre y una apertura. Empalmarlos da
+una serie continua para Talcahuano. <strong>Recomendación:</strong> empalmar y documentar la regla.</p>
+
+<h4>9.5 ¿Qué causas y qué grupos etarios entran?</h4>
+<p>Influenza e IRA alta pueden responder más a circulación viral que a contaminación — de ahí la
+utilidad de incorporar la vigilancia del ISP como control del confusor. Los menores de 5 y los
+mayores de 65 son los grupos sensibles, pero restringir a ellos reduce los conteos de Coyhaique,
+que ya son bajos.</p>
+
+<h2>10. Estado y qué sigue</h2>
+
+<table>
+  <thead><tr><th>Fuente</th><th>Estado</th><th>Qué falta</th></tr></thead>
+  <tbody>
+    <tr><td>OpenAQ</td><td><strong>Cerrada</strong></td><td>—</td></tr>
+    <tr><td>DEIS (MINSAL)</td><td><strong>Cerrada</strong></td><td>—</td></tr>
+    <tr><td>SINCA (MMA)</td><td>Parcial</td><td>Meteorología por estación, unidades, volumen nacional, significado de «no validado»</td></tr>
+    <tr><td>ISP</td><td>No iniciada</td><td>Vigilancia de virus respiratorios, para el control del confusor</td></tr>
+    <tr><td>Reanálisis meteorológico</td><td>No iniciada</td><td>Temperatura donde SINCA no mide</td></tr>
+  </tbody>
+</table>
+
+<p>Antes de pasar a la ingesta completa hay que <strong>resolver la decisión 9.1</strong>, porque
+condiciona el formato de todas las tablas intermedias, y <strong>completar el reconocimiento de
+SINCA</strong>, que es la única fuente de exposición del estudio.</p>
+
+<h3>Lo que queda en el repositorio</h3>
+
+<table>
+  <thead><tr><th>Ruta</th><th>Contenido</th></tr></thead>
+  <tbody>
+    <tr><td><code>docs/reconocimiento/hallazgos.md</code></td><td>Documento completo con toda la evidencia y las tablas de riesgos</td></tr>
+    <tr><td><code>src/ingesta/reconocer_openaq.py</code></td><td>Acceso, partición, conteo, inventario, barrido y descarga</td></tr>
+    <tr><td><code>src/ingesta/reconocer_deis.py</code></td><td>Disponibilidad, descarga validada, comparación de esquemas, perfil y cobertura</td></tr>
+    <tr><td><code>src/ingesta/sinca_cliente.py</code></td><td>Cliente de descarga y catálogo de estaciones con su comuna</td></tr>
+    <tr><td><code>src/ingesta/contrastar_openaq_sinca.py</code></td><td>Contraste de validación entre fuentes</td></tr>
+    <tr><td><code>docs/reconocimiento/_*.json</code></td><td>Evidencia en crudo de cada medición citada en este informe</td></tr>
+  </tbody>
+</table>
+
+<p class="nota" style="margin-top:20px;border-top:1px solid var(--rejilla);padding-top:10px">
+Los scripts son reejecutables y reproducen todas las cifras de este informe. Los datos
+descargados no se versionan: <code>data/</code> está excluido del repositorio, y la zona cruda es
+inmutable — todo reproceso parte de ella.</p>

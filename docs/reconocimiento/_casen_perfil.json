@@ -1,0 +1,38 @@
+{
+  "archivo": "data\\raw\\casen\\casen_2022.dta",
+  "variable_usada": "v34b",
+  "etiqueta": "v34b. ¿Qué combustible o fuente de energía usa habitualmente para calefaccionar?",
+  "peso": "expr",
+  "unidad": "personas (la base es de personas; NO es proporción de hogares)",
+  "categorias": {
+    "4. Carbón, leña o derivados (pellets, astillas o briquetas)": 76401,
+    "1. Gas licuado (cilindro o tanque individual)": 41225,
+    "8. No tiene sistema": 30084,
+    "5. Electricidad": 18848,
+    "3. Parafina (kerosene) o petróleo": 17137,
+    "7. No usa combustible o fuente de energía": 10366,
+    "2. Gas por red (de cañería)": 8002,
+    "6. Energía solar": 168
+  },
+  "por_region": {
+    "Región Metropolitana de Santiago": {
+      "ciudad_del_estudio": "Santiago",
+      "n_muestral": 38674,
+      "n_muestral_lena": 2281,
+      "pct_personas_lena_ponderado": 3.6
+    },
+    "Región de Aysén del Gral. Carlos Ibáñez del Campo": {
+      "ciudad_del_estudio": "Coyhaique",
+      "n_muestral": 3747,
+      "n_muestral_lena": 3165,
+      "pct_personas_lena_ponderado": 82.5
+    },
+    "Región del Biobío": {
+      "ciudad_del_estudio": "Talcahuano",
+      "n_muestral": 19914,
+      "n_muestral_lena": 13811,
+      "pct_personas_lena_ponderado": 63.5
+    }
+  },
+  "advertencia": "CASEN no es representativa a nivel de comuna: las comunas no son dominio de estudio. Estas cifras son regionales y así deben reportarse."
+}

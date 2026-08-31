@@ -1,0 +1,28 @@
+{
+  "estaciones": 55056,
+  "id_maximo": 6471509,
+  "exhaustivo": true,
+  "paginas": 56,
+  "prefijos_anomalos": [
+    "records/csv.gz/provider=aepb-gov-cn/",
+    "records/csv.gz/provider=agaar-mn/",
+    "records/csv.gz/provider=airnow/",
+    "records/csv.gz/provider=andalucia/",
+    "records/csv.gz/provider=aqdc/",
+    "records/csv.gz/provider=arpae-emilia-romagna/",
+    "records/csv.gz/provider=australia-act/",
+    "records/csv.gz/provider=australia-nsw/",
+    "records/csv.gz/provider=australia-queensland/",
+    "records/csv.gz/provider=australia-sa/",
+    "records/csv.gz/provider=australia-tasmania/",
+    "records/csv.gz/provider=australia-victoria/",
+    "records/csv.gz/provider=bogota/",
+    "records/csv.gz/provider=bosnia/",
+    "records/csv.gz/provider=caaqm/",
+    "records/csv.gz/provider=chile-sinca/",
+    "records/csv.gz/provider=china-aqi-data/",
+    "records/csv.gz/provider=clarity/",
+    "records/csv.gz/provider=cmu/",
+    "records/csv.gz/provider=cpcb/"
+  ]
+}
