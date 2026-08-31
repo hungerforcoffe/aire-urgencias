@@ -19,7 +19,7 @@
 
   let meta, semanal, ciudades;
   try { [meta, semanal, ciudades] = await AU.cargar("meta", "semanal", "ciudades"); }
-  catch (e) { AU.fallo("#lienzos", e); return; }
+  catch (e) { AU.fallo("#paneles", e); return; }
 
   // El rezago se calcula recorriendo el arreglo, así que el orden es parte del
   // cálculo, no de la presentación. El exportador ya ordena; esto lo garantiza
@@ -128,11 +128,11 @@
   /* ================= dibujo ================= */
   const P = { l: 46, r: 14, t: 12, b: 26 };
   function ejes(w, h, xt, yt, ylab) {
-    const L = AU.css("--line"), I3 = AU.css("--ink-3");
+    const L = AU.css("--linea"), I3 = AU.css("--tinta-3");
     const M = 'font-family="IBM Plex Mono,monospace" font-size="9"';
     let g = `<line x1="${P.l}" y1="${h - P.b}" x2="${w - P.r}" y2="${h - P.b}" stroke="${L}"/>`;
     for (const t of yt) g += `<line x1="${P.l}" y1="${t.y.toFixed(1)}" x2="${w - P.r}"
-      y2="${t.y.toFixed(1)}" stroke="${L}" stroke-dasharray="2 3"/>
+      y2="${t.y.toFixed(1)}" stroke="${L}"/>
       <text x="${P.l - 5}" y="${(t.y + 3).toFixed(1)}" text-anchor="end" ${M}
         fill="${t.color || I3}">${t.t}</text>`;
     for (const t of xt) g += `<text x="${t.x.toFixed(1)}" y="${h - P.b + 13}"
@@ -148,17 +148,20 @@
     const w = 700, h = 250;
     const mps = filas.map(f => f.mp25_media).filter(v => v !== null);
     const tas = filas.map(f => f.tasa_resp_100k).filter(v => v !== null);
-    if (!mps.length) return '<p class="aviso-caja">Sin datos para esta ciudad.</p>';
+    if (!mps.length) return '<p class="aviso">Sin datos para esta ciudad.</p>';
     const maxMp = bonito(Math.max(...mps)), maxTa = bonito(Math.max(...tas));
     const X = escala(0, filas.length - 1, P.l, w - P.r);
     const Ymp = escala(0, maxMp, h - P.b, P.t), Yta = escala(0, maxTa, h - P.b, P.t);
-    const AC = AU.css("--accent"), E4 = AU.css("--e4");
+    // Dos magnitudes distintas sobre un mismo marco: el MP2.5 va en tinta
+    // neutra —es la serie medida— y las urgencias en el naranja de señal, que
+    // es el único color de interfaz de todo el sitio.
+    const AC = AU.css("--tinta"), E4 = AU.css("--senal");
 
     let bandas = "";
     filas.forEach((f, i) => {
       if (f.es_invierno) bandas += `<rect x="${(X(i) - (X(1) - X(0)) / 2).toFixed(1)}" y="${P.t}"
         width="${(X(1) - X(0)).toFixed(2)}" height="${h - P.b - P.t}"
-        fill="${AU.css("--accent-soft")}"/>`;
+        fill="${AU.css("--senal-suave")}"/>`;
     });
     const linea = (campo, Y, color) => {
       let d = "", run = [];
@@ -189,12 +192,12 @@
     const maxTa = bonito(Math.max(...c.map(x => x.tasa || 0)));
     const X = escala(1, 53, P.l, w - P.r);
     const Ymp = escala(0, maxMp, h - P.b, P.t), Yta = escala(0, maxTa, h - P.b, P.t);
-    const AC = AU.css("--accent"), E4 = AU.css("--e4");
+    const AC = AU.css("--tinta"), E4 = AU.css("--senal");
     const traza = (campo, Y, color) => `<polyline points="${c.filter(x => x[campo] !== null)
       .map(x => X(x.semana).toFixed(1) + "," + Y(x[campo]).toFixed(1)).join(" ")}"
       fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round"/>`;
     const inv = `<rect x="${X(18).toFixed(1)}" y="${P.t}" width="${(X(35) - X(18)).toFixed(1)}"
-      height="${h - P.b - P.t}" fill="${AU.css("--accent-soft")}"/>`;
+      height="${h - P.b - P.t}" fill="${AU.css("--senal-suave")}"/>`;
     const xt = [1, 13, 26, 39, 52].map(s => ({ x: X(s), t: "S" + s }));
     const yt = [0, .5, 1].map(f => ({ y: Ymp(maxMp * f), t: (maxMp * f).toFixed(0), color: AC }));
     return `<svg class="grafico" viewBox="0 0 ${w} ${h}" role="img"
@@ -204,14 +207,14 @@
 
   function dispersion(par, anomalia) {
     const w = 340, h = 210;
-    if (par.x.length < 8) return '<p class="aviso-caja">Muy pocas semanas para graficar.</p>';
+    if (par.x.length < 8) return '<p class="aviso">Muy pocas semanas para graficar.</p>';
     const x0 = Math.min(...par.x), x1 = Math.max(...par.x);
     const y0 = Math.min(...par.y), y1 = Math.max(...par.y);
     const X = escala(x0, x1, P.l, w - P.r), Y = escala(y0, y1, h - P.b, P.t);
     const pts = par.x.map((v, i) => {
       const f = par.meta[i];
-      return `<circle cx="${X(v).toFixed(1)}" cy="${Y(par.y[i]).toFixed(1)}" r="2.4"
-        fill="${f.es_invierno ? AU.css("--e4") : AU.css("--accent")}" fill-opacity=".5"/>`;
+      return `<circle cx="${X(v).toFixed(1)}" cy="${Y(par.y[i]).toFixed(1)}" r="2.3"
+        fill="${f.es_invierno ? AU.css("--senal") : AU.css("--tinta-3")}" fill-opacity=".55"/>`;
     }).join("");
     // Recta de mínimos cuadrados, como resumen visual de la nube. No es un
     // modelo ajustado: no controla temperatura, pandemia ni circulación viral.
@@ -222,14 +225,14 @@
     const b = sxx ? sxy / sxx : 0, a = my - b * mx;
     const recta = `<line x1="${X(x0).toFixed(1)}" y1="${Y(a + b * x0).toFixed(1)}"
       x2="${X(x1).toFixed(1)}" y2="${Y(a + b * x1).toFixed(1)}"
-      stroke="${AU.css("--ink-2")}" stroke-width="1.5" stroke-dasharray="5 3"/>`;
+      stroke="${AU.css("--tinta-2")}" stroke-width="1.5" stroke-dasharray="5 3"/>`;
     const xt = [x0, (x0 + x1) / 2, x1].map(v => ({ x: X(v), t: v.toFixed(0) }));
     const yt = [y0, (y0 + y1) / 2, y1].map(v => ({ y: Y(v), t: v.toFixed(0) }));
     return `<svg class="grafico" viewBox="0 0 ${w} ${h}" role="img"
       aria-label="Dispersión entre MP2.5 y tasa de urgencias">
       ${ejes(w, h, xt, yt, anomalia ? "anomalía tasa" : "tasa /100k")}${pts}${recta}
       <text x="${w - P.r}" y="${h - P.b + 13}" text-anchor="end"
-        font-family="IBM Plex Mono,monospace" font-size="9" fill="${AU.css("--ink-3")}">
+        font-family="IBM Plex Mono,monospace" font-size="9" fill="${AU.css("--tinta-3")}">
         ${anomalia ? "anomalía MP2.5 (µg/m³)" : "MP2.5 (µg/m³)"}</text></svg>`;
   }
 
@@ -244,9 +247,9 @@
     const lim = Math.max(.35, ...todos.map(Math.abs));
     const Y = escala(-lim, lim, h - P.b, P.t);
     const anchoG = (w - P.l - P.r) / 3, aB = anchoG * 0.32;
-    const AC = AU.css("--accent"), I2 = AU.css("--ink-2");
+    const AC = AU.css("--senal"), I2 = AU.css("--tinta-2");
     let g = `<line x1="${P.l}" y1="${Y(0).toFixed(1)}" x2="${w - P.r}" y2="${Y(0).toFixed(1)}"
-      stroke="${AU.css("--line-2")}"/>`;
+      stroke="${AU.css("--linea-2")}"/>`;
     barras.forEach((b, i) => {
       const cx = P.l + anchoG * (i + .5);
       [[b.bruto, -aB * 1.05, I2], [b.anom, aB * 0.05, AC]].forEach(([v, dx, col]) => {
@@ -260,12 +263,12 @@
           fill="${col}">${v.toFixed(2)}</text>`;
       });
       g += `<text x="${cx.toFixed(1)}" y="${h - P.b + 14}" text-anchor="middle"
-        font-family="IBM Plex Mono,monospace" font-size="9" fill="${AU.css("--ink-3")}">
+        font-family="IBM Plex Mono,monospace" font-size="9" fill="${AU.css("--tinta-3")}">
         ${b.k === 0 ? "misma sem." : b.k + " sem. antes"}</text>`;
     });
     [-lim, 0, lim].forEach(v => { g += `<text x="${P.l - 5}" y="${(Y(v) + 3).toFixed(1)}"
       text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9"
-      fill="${AU.css("--ink-3")}">${v.toFixed(2)}</text>`; });
+      fill="${AU.css("--tinta-3")}">${v.toFixed(2)}</text>`; });
     return `<svg class="grafico" viewBox="0 0 ${w} ${h}" role="img"
       aria-label="Correlación por rezago, en bruto y en anomalía">${g}</svg>`;
   }
@@ -294,64 +297,64 @@
     const rTemp = pearson(tempPar.x, tempPar.y);
     const nom = NOMBRE.get(ciudad);
 
-    $("#kpis").innerHTML = `
-      <div class="kpi"><div class="k">Semanas</div><div class="v">${AU.miles(base.length)}</div>
+    $("#indicadores").innerHTML = `
+      <div><div class="k">Semanas</div><div class="v">${AU.miles(base.length)}</div>
         <div class="d">${base[0] ? base[0].semana_id : "—"} a
           ${base.length ? base[base.length - 1].semana_id : "—"}</div></div>
-      <div class="kpi"><div class="k">r · en bruto</div>
-        <div class="v" style="color:var(--ink-2)">${rBruto === null ? "—" : rBruto.toFixed(2)}</div>
+      <div><div class="k">r · en bruto</div>
+        <div class="v" style="color:var(--tinta-3)">${rBruto === null ? "—" : rBruto.toFixed(2)}</div>
         <div class="d">confundida por la estación del año</div></div>
-      <div class="kpi"><div class="k">r · en anomalía</div>
-        <div class="v" style="color:var(--accent)">${rAnom === null ? "—" : rAnom.toFixed(2)}</div>
+      <div><div class="k">r · en anomalía</div>
+        <div class="v" style="color:var(--senal)">${rAnom === null ? "—" : rAnom.toFixed(2)}</div>
         <div class="d">${icAnom
           ? `IC 95% ${icAnom[0].toFixed(2)} a ${icAnom[1].toFixed(2)}` +
             (icAnom[0] <= 0 && icAnom[1] >= 0 ? " — incluye el cero" : "")
           : "descontado el ciclo semanal"}</div></div>
-      <div class="kpi"><div class="k">r · temperatura</div>
-        <div class="v" style="color:var(--ink-2)">${rTemp === null ? "—" : rTemp.toFixed(2)}</div>
+      <div><div class="k">r · temperatura</div>
+        <div class="v" style="color:var(--tinta-3)">${rTemp === null ? "—" : rTemp.toFixed(2)}</div>
         <div class="d">el frío también acompaña a las dos</div></div>`;
 
-    $("#lienzos").innerHTML = `
-      <div class="lienzo ancho">
+    $("#paneles").innerHTML = `
+      <section class="full">
         <h3>Las dos series, semana a semana</h3>
         <p class="sub">${nom}, ${base.length} semanas. Bandas verticales = invierno.</p>
-        <div class="leyenda">
-          <span><i style="background:var(--accent)"></i>MP2.5 (µg/m³)</span>
-          <span><i style="background:var(--e4)"></i>urgencias respiratorias por 100.000</span></div>
+        <div class="clave">
+          <span><i style="background:var(--tinta)"></i>MP2.5 (µg/m³)</span>
+          <span><i style="background:var(--senal)"></i>urgencias respiratorias por 100.000</span></div>
         ${serieDoble(base)}
         <p class="lee">Suben y bajan juntas, pero <b>las dos siguen el calendario</b>: el MP2.5
           por calefacción e inversión térmica, las urgencias por circulación viral y frío.
           Leer eso como una relación directa sería confundir la asociación con la estación
           del año.</p>
-      </div>
+      </section>
 
-      <div class="lienzo">
+      <section>
         <h3>El problema, en un gráfico</h3>
         <p class="sub">Promedio de cada semana del año, todos los años juntos.</p>
         ${graficoClima(base)}
         <p class="lee">Las dos curvas tienen la misma joroba de invierno. Cualquier
           correlación calculada sobre las series crudas está midiendo, sobre todo,
           <b>esta coincidencia de calendario</b>.</p>
-      </div>
+      </section>
 
-      <div class="lienzo">
+      <section>
         <h3>Correlación por rezago</h3>
         <p class="sub">Pearson entre MP2.5 y tasa de urgencias, con y sin descuento estacional.</p>
-        <div class="leyenda">
-          <span><i style="background:var(--ink-2)"></i>serie en bruto</span>
-          <span><i style="background:var(--accent)"></i>en anomalía</span></div>
+        <div class="clave">
+          <span><i style="background:var(--tinta-3)"></i>serie en bruto</span>
+          <span><i style="background:var(--senal)"></i>en anomalía</span></div>
         ${graficoRezagos(filas)}
         <p class="lee">La barra gris se desploma al descontar la estación: <b>casi toda la
-          correlación aparente era el calendario</b>. Lo que queda en azul es la asociación
+          correlación aparente era el calendario</b>. Lo que queda en naranja es la asociación
           entre desviaciones respecto de lo normal para esa fecha, y en las tres ciudades es
           pequeña.</p>
-      </div>
+      </section>
 
-      <div class="lienzo ancho">
+      <section class="full">
         <h3>Semana a semana, ${anomalia ? "en anomalía" : "en bruto"}${
           rezago ? `, con ${rezago} semana${rezago > 1 ? "s" : ""} de rezago` : ""}</h3>
-        <p class="sub">Cada punto es una semana. Rojo = invierno. La recta punteada resume la
-          nube; no es un modelo ajustado.</p>
+        <p class="sub">Cada punto es una semana; las de invierno van marcadas. La recta
+          punteada resume la nube — no es un modelo ajustado.</p>
         ${dispersion(par, anomalia)}
         <p class="lee">${par.x.length} semanas con cobertura suficiente.
           r = <b>${r === null ? "—" : r.toFixed(3)}</b>${ic ? `, IC 95% ${ic[0].toFixed(2)} a
@@ -364,7 +367,7 @@
             : `El intervalo no cruza el cero.`}
           En cualquier caso describe una tendencia poblacional, no el riesgo de ninguna
           persona.</p>
-      </div>`;
+      </section>`;
   }
 
   /* ================= controles ================= */
@@ -381,7 +384,7 @@
     }));
   document.addEventListener("au:tema", pintar);
 
-  $("#pie-semanas").textContent = AU.miles(semanal.length);
-  $("#pie-corte").textContent = meta.ultimo_mes;
+  $("#e-semanas").textContent = AU.miles(semanal.length);
+  $("#e-corte").textContent = meta.ultimo_mes;
   pintar();
 })();

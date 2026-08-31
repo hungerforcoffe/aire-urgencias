@@ -46,7 +46,7 @@ const AU = (() => {
     { v: 25, n: "Meta 2" },   { v: 35, n: "Meta 1" },
   ];
   function nivel(v) { let i = 0; while (i < CORTES.length && v >= CORTES[i]) i++; return i; }
-  function tono(v) { return (v === null || v === undefined) ? css("--nodata") : css(TONOS[nivel(v)]); }
+  function tono(v) { return (v === null || v === undefined) ? css("--sindato") : css(TONOS[nivel(v)]); }
   function peldano(v) {
     if (v === null || v === undefined) return "—";
     if (v < 5) return "cumple la guía OMS";
@@ -80,7 +80,7 @@ const AU = (() => {
   function fallo(contenedor, err) {
     console.error(err);
     const el = typeof contenedor === "string" ? document.querySelector(contenedor) : contenedor;
-    if (el) el.innerHTML = '<p class="aviso-caja"><b>No se pudieron cargar los datos.</b> ' +
+    if (el) el.innerHTML = '<p class="aviso"><b>No se pudieron cargar los datos.</b> ' +
       'Los JSON se generan con <code>python -m src.sitio.exportar</code> y viven en ' +
       '<code>sitio/assets/datos/</code>. Detalle: ' + String(err.message || err) + '</p>';
   }

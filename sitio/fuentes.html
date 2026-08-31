@@ -3,44 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fuentes y método · Aire y Urgencias</title>
-<meta name="description" content="De dónde sale cada dato del sitio, qué APIs se consultan, qué reglas se aplican y qué limitaciones quedan declaradas.">
+<title>Fuentes y metodo &middot; Aire y Urgencias</title>
+<meta name="description" content="De donde sale cada dato del sitio, que APIs se consultan, que reglas se aplican y que limitaciones quedan declaradas.">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/css/estilo.css">
 </head>
 <body>
 
 <div class="barra">
- <div class="wrap">
-  <a class="marca" href="index.html"><b>Aire y Urgencias</b><span>MP2.5 · Chile</span></a>
-  <nav>
-   <a href="index.html">Mapa</a>
-   <a href="analisis.html">Análisis</a>
-   <a href="fuentes.html">Fuentes y método</a>
-  </nav>
-  <button class="tema" aria-label="Cambiar entre tema claro y oscuro">
-   <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-    <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.5v11a5.5 5.5 0 010-11z"/></svg>
-  </button>
- </div>
+ <a class="marca" href="index.html">Aire<s>&middot;</s>Urgencias</a>
+ <nav>
+  <a href="index.html">Red MP2.5</a>
+  <a href="analisis.html">An&aacute;lisis</a>
+  <a href="fuentes.html">Fuentes</a>
+ </nav>
+ <div class="estado"><span>documentaci&oacute;n del m&eacute;todo</span></div>
+ <button class="tema" aria-label="Cambiar entre tema claro y oscuro">
+  <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+   <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.5v11a5.5 5.5 0 010-11z"/></svg>
+ </button>
 </div>
 
-<div class="cabecera">
- <div class="wrap">
-  <div class="eyebrow">Cómo está hecho</div>
-  <h1>Fuentes y <em>método</em></h1>
-  <p class="dek">De dónde sale cada número, qué se consulta en vivo, qué reglas se aplican
-   antes de mostrar una cifra y qué queda fuera del alcance a propósito.</p>
- </div>
-</div>
-
-<main>
-<div class="wrap prosa">
+<div class="caja">
+<div class="prosa">
+<h1>Fuentes y m&eacute;todo</h1>
+<p class="bajada">De d&oacute;nde sale cada n&uacute;mero, qu&eacute; se consulta en vivo, qu&eacute; reglas se aplican
+ antes de mostrar una cifra y qu&eacute; queda fuera del alcance a prop&oacute;sito.</p>
 
 <h2>Las fuentes</h2>
 
-<div class="tabla-scroll">
+<div class="scroll-x">
 <table>
  <thead><tr><th>Fuente</th><th style="text-align:left">Qué aporta</th>
    <th style="text-align:left">Cómo llega</th></tr></thead>
@@ -131,7 +124,7 @@ calibración, y en las tres ciudades del estudio la cobertura es nula o casi.</p
 
 <h2>Las reglas que el sitio aplica</h2>
 
-<ol class="regla">
+<ol class="reglas">
  <li><strong>Asociación, nunca causalidad.</strong> Ningún texto, variable o gráfico afirma
   que la contaminación <em>causa</em> consultas. Es un estudio ecológico observacional.</li>
  <li><strong>Acotar al final, no al principio.</strong> La ingesta y el procesamiento operan
@@ -167,7 +160,7 @@ hacia arriba.</p>
 entre estaciones. Se probó, con la prueba que corresponde: predecir cada estación usando
 solo las demás (<em>leave-one-station-out</em>).</p>
 
-<div class="tabla-scroll">
+<div class="scroll-x">
 <table>
  <thead><tr><th style="text-align:left">Ciudad</th><th>R² del modelo</th>
    <th>R² del promedio de vecinas</th><th style="text-align:left">Veredicto</th></tr></thead>
@@ -225,15 +218,12 @@ python -m http.server 8000 --directory sitio</code></pre>
 (<code>~/.aws/credentials</code>). No hay ninguna llave en el código ni en el sitio.</p>
 
 </div>
-</main>
+</div>
 
 <footer>
- <div class="wrap">
-  Estudio ecológico observacional · <b>asociación, no causalidad</b> · capstone de Big Data<br>
-  Aire: SINCA (MMA) · Salud: DEIS (MINSAL) · Población: INE · Leña: CASEN ·
-  Meteorología en vivo: <a href="https://open-meteo.com/">Open-Meteo</a> ·
-  Cartografía: OpenStreetMap y CARTO
- </div>
+ Estudio ecol&oacute;gico observacional &middot; <b>asociaci&oacute;n, no causalidad</b><br>
+ Aire SINCA (MMA) &middot; salud DEIS (MINSAL) &middot; poblaci&oacute;n INE &middot; le&ntilde;a CASEN &middot;
+ meteorolog&iacute;a <a href="https://open-meteo.com/">Open-Meteo</a> &middot; cartograf&iacute;a OSM/CARTO
 </footer>
 
 <script src="assets/js/comun.js"></script>

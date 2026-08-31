@@ -3,130 +3,119 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mapa de MP2.5 · Aire y Urgencias</title>
-<meta name="description" content="Exposición a material particulado fino en Santiago, Talcahuano y Coyhaique, 2018-2026. Dieciséis estaciones SINCA con su rosa de contaminación.">
+<title>Red MP2.5 · Aire y Urgencias</title>
+<meta name="description" content="Dieciséis estaciones SINCA en Santiago, Talcahuano y Coyhaique. MP2.5 mensual 2018-2026 y rosa de contaminación por estación.">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="assets/css/estilo.css">
 </head>
 <body>
 
 <div class="barra">
- <div class="wrap">
-  <a class="marca" href="index.html"><b>Aire y Urgencias</b><span>MP2.5 · Chile</span></a>
-  <nav>
-   <a href="index.html">Mapa</a>
-   <a href="analisis.html">Análisis</a>
-   <a href="fuentes.html">Fuentes y método</a>
-  </nav>
-  <button class="tema" aria-label="Cambiar entre tema claro y oscuro">
-   <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-    <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.5v11a5.5 5.5 0 010-11z"/></svg>
-  </button>
+ <a class="marca" href="index.html">Aire<s>·</s>Urgencias</a>
+ <nav>
+  <a href="index.html">Red MP2.5</a>
+  <a href="analisis.html">Análisis</a>
+  <a href="fuentes.html">Fuentes</a>
+ </nav>
+ <div class="estado">
+  <span>SINCA/MMA</span>
+  <span>corte <b id="e-corte">—</b></span>
+  <span><b id="e-red">—</b></span>
+ </div>
+ <button class="tema" aria-label="Cambiar entre tema claro y oscuro">
+  <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+   <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.5v11a5.5 5.5 0 010-11z"/></svg>
+ </button>
+</div>
+
+<div class="consola">
+ <div class="riel">
+  <div class="riel-tit">
+   <h2>Estaciones</h2>
+   <span id="riel-mes">—</span>
+  </div>
+  <div id="lista"></div>
+ </div>
+
+ <div id="mapa"></div>
+
+ <div class="tira">
+  <div class="mando">
+   <div class="mes n" id="reloj">—</div>
+   <div class="sub" id="reloj-sub">—</div>
+   <div class="bs">
+    <button id="anterior" aria-label="Mes anterior">
+     <svg width="9" height="9" viewBox="0 0 9 9" aria-hidden="true">
+      <path d="M6.5 1L2.5 4.5l4 3.5z" fill="currentColor"/></svg></button>
+    <button id="play" aria-label="Reproducir la serie mensual">
+     <svg width="9" height="9" viewBox="0 0 9 9" aria-hidden="true">
+      <path id="icono-play" d="M2 1v7l6-3.5z" fill="currentColor"/></svg></button>
+    <button id="siguiente" aria-label="Mes siguiente">
+     <svg width="9" height="9" viewBox="0 0 9 9" aria-hidden="true">
+      <path d="M2.5 1l4 3.5-4 3.5z" fill="currentColor"/></svg></button>
+   </div>
+  </div>
+  <div class="lienzo" id="tira-lienzo" role="slider" tabindex="0"
+       aria-label="Mes mostrado en el mapa" aria-valuemin="0" aria-valuenow="0"></div>
  </div>
 </div>
 
-<div class="cabecera">
- <div class="wrap cab-grid">
-  <div>
-   <div class="eyebrow">Exposición medida · 2018–2026</div>
-   <h1>MP2.5 <em>según el viento</em></h1>
-   <p class="dek">Dieciséis estaciones de SINCA en tres ciudades. Haz clic en una y sobre
-    el mapa se abre su <strong>rosa de contaminación</strong>: la mediana de partículas
-    medida en invierno para cada dirección desde la que sopló el viento. Es medición,
-    no modelo — y por eso no dibuja hacia dónde se mueve el humo.</p>
-  </div>
-  <div class="sello">
-   aire&nbsp;&nbsp;&nbsp;&nbsp;<b>SINCA (MMA)</b><br>
-   corte&nbsp;&nbsp;&nbsp;<b id="pie-corte">—</b><br>
-   red&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b id="pie-conteo">—</b>
-  </div>
+<div class="escala">
+ <span class="et">Media mensual, µg/m³</span>
+ <div class="rampa" id="rampa"></div>
+ <span class="et" id="escala-peldano">guías anuales OMS 2021</span>
+ <p>Radio del círculo proporcional a la media del mes. Punteado = la estación no midió.
+  Bajo el zoom de ciudad los puntos se agrupan: a escala de Chile las diez estaciones de
+  Santiago caen en el mismo píxel.</p>
+</div>
+
+<div class="detalle">
+ <div class="det-cab">
+  <h2 id="d-nombre">Sin estación seleccionada</h2>
+  <span class="id" id="d-id"></span>
+  <div class="der" id="d-cifras"></div>
+ </div>
+ <div class="det-cuerpo">
+  <div class="meteograma" id="d-meteograma"></div>
+  <div class="lado" id="d-lado"></div>
  </div>
 </div>
 
-<main>
-<div class="wrap">
-
- <div class="ciudades" id="ciudades"></div>
-
- <div class="consola">
-  <div class="panel">
-   <div class="panel-h">
-    <h2>Dónde y cuánto</h2>
-    <div class="grupo"><button id="ver-pais" aria-pressed="false">Ver Chile completo</button></div>
-   </div>
-   <div id="mapa"></div>
-   <div class="repro">
-    <button class="play" id="play" aria-label="Reproducir la serie mensual">
-     <svg width="13" height="13" viewBox="0 0 13 13" aria-hidden="true">
-      <path id="icono-play" d="M3 1.5v10l8-5z" fill="currentColor"/></svg>
-    </button>
-    <input type="range" id="tiempo" min="0" value="0" aria-label="Mes mostrado en el mapa">
-    <span class="reloj" id="reloj">—</span>
-   </div>
-   <div class="escala">
-    <div class="eyebrow">Media mensual · guías anuales OMS 2021</div>
-    <div class="esc-row" id="escala-barra"></div>
-    <div class="esc-lab">
-     <span>0</span><span>5 guía</span><span>10 M4</span><span>15 M3</span>
-     <span>25 M2</span><span>35 M1</span><span>µg/m³</span></div>
-    <p class="esc-cap">El radio del círculo crece con la media del mes; el círculo punteado
-     y vacío es una estación que no midió. Bajo el zoom de ciudad se agrupa por ciudad,
-     porque a escala de Chile las diez estaciones de Santiago caen en el mismo píxel.</p>
-   </div>
-  </div>
-
-  <div class="panel">
-   <div class="det-h">
-    <div class="nom" id="detalle-nombre">Ninguna estación seleccionada</div>
-    <div class="met" id="detalle-meta">— · —</div>
-   </div>
-   <div class="det-b" id="detalle-cuerpo"></div>
-  </div>
- </div>
-
+<div class="franja">
  <div class="notas">
-  <div class="nota aviso">
-   <h3>Cobertura antes que cifra</h3>
-   <p>Una media anual con pocos días no es una media anual. <b>El Bosque midió 59 días en
-    2025</b> —enero a marzo, puro verano— y su promedio da <b>14,6 µg/m³</b> contra 26,2 el
-    año anterior. Leído sin mirar la cobertura parece que la comuna se limpió; lo que pasó
-    es que el equipo dejó de medir justo antes del invierno.</p>
-   <p>Por eso un año necesita <b>300 días con dato</b> para mostrar su promedio. Los que no
-    llegan salen marcados <span class="chip par">parcial</span> y quedan fuera de las cifras
-    de ciudad. Todo 2026 es parcial: llega hasta agosto, o sea trae el invierno completo y
-    ningún mes limpio de fin de año.</p>
-  </div>
-  <div class="nota">
-   <h3>Qué dice y qué no dice la rosa</h3>
+  <section>
+   <h3 class="alerta">Cobertura antes que cifra</h3>
+   <p>El Bosque midió <b>59 días en 2025</b> —enero a marzo, puro verano— y su promedio da
+    <b>14,6 µg/m³</b> contra 26,2 el año anterior. Leído sin mirar la cobertura parece que la
+    comuna se limpió; dejó de medir justo antes del invierno.</p>
+   <p>Un año necesita <b>300 días</b> para mostrar promedio. Los que no llegan van marcados y
+    quedan fuera de las cifras de ciudad. Todo 2026 es parcial: llega hasta agosto, o sea trae
+    el invierno completo y ningún mes limpio.</p>
+  </section>
+  <section>
+   <h3>Qué dice la rosa</h3>
    <p>Cada pétalo es la <b>mediana horaria de MP2.5 en invierno</b> de las horas en que el
-    viento venía de ese sector. Dos instrumentos en el mismo lugar y a la misma hora.</p>
-   <p>Un pétalo largo hacia el este dice <b>«cuando sopló del este, el sensor midió más»</b>
-    y nada más. No identifica la fuente ni predice hacia dónde va el material particulado:
-    para eso haría falta un inventario de emisiones y un modelo de dispersión, que están
-    fuera del alcance de este trabajo.</p>
-  </div>
-  <div class="nota">
-   <h3>Por qué son puntos y no una mancha</h3>
-   <p>Se probó rellenar el espacio entre estaciones. Prediciendo cada una desde las demás,
-    el modelo dio <b>R² 0,533</b> contra <b>0,750</b> del simple promedio de las vecinas:
-    pierde en las diez estaciones de Santiago.</p>
-   <p><b>Las Condes queda en −0,01</b>, o sea es impredecible desde el resto de la ciudad.
-    Pintar Santiago como una mancha continua sería inventar los píxeles del medio.</p>
-  </div>
+    viento venía de ese sector. Dos instrumentos en el mismo sitio a la misma hora.</p>
+   <p>Un pétalo largo al este dice <b>«cuando sopló del este, el sensor midió más»</b>. No
+    identifica la fuente ni predice hacia dónde va el material particulado: eso exigiría un
+    inventario de emisiones y un modelo de dispersión, fuera del alcance.</p>
+  </section>
+  <section>
+   <h3>Puntos, no una mancha</h3>
+   <p>Prediciendo cada estación desde las demás, el modelo dio <b>R² 0,533</b> contra
+    <b>0,750</b> del simple promedio de vecinas: pierde en las diez de Santiago.</p>
+   <p><b>Las Condes queda en −0,01</b> — impredecible desde el resto de la ciudad. Interpolar
+    una superficie continua sería inventar los píxeles del medio.</p>
+  </section>
  </div>
-
 </div>
-</main>
 
 <footer>
- <div class="wrap">
-  Estudio ecológico observacional · <b>asociación, no causalidad</b> · capstone de Big Data<br>
-  Aire: SINCA (Ministerio del Medio Ambiente) · Salud: DEIS (MINSAL) · Población: INE ·
-  Viento actual: <a href="https://open-meteo.com/">Open-Meteo</a> ·
-  Cartografía: OpenStreetMap y CARTO
- </div>
+ Estudio ecológico observacional · <b>asociación, no causalidad</b><br>
+ Aire SINCA (MMA) · Salud DEIS (MINSAL) · Población INE ·
+ viento actual <a href="https://open-meteo.com/">Open-Meteo</a> · cartografía OSM/CARTO
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
