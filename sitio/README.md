@@ -4,7 +4,7 @@ Sitio estático que se publica en GitHub Pages. Tres páginas:
 
 | Archivo | Qué muestra |
 |---|---|
-| `index.html` | Mapa de la red. Las 16 estaciones del estudio abren su rosa de contaminación al hacer clic; los puntos chicos son las otras 84 de SINCA, solo con media mensual. |
+| `index.html` | Mapa de la red y barra lateral **región → comuna → estación**, de norte a sur. Cualquier estación se abre con su meteograma y su tabla año por año; solo las 16 del estudio tienen además rosa de contaminación. Las comunas de las tres ciudades del estudio van marcadas. |
 | `analisis.html` | La asociación semanal entre MP2.5 y urgencias respiratorias, 1.350 semanas. |
 | `fuentes.html` | De dónde sale cada dato, qué APIs se usan, qué reglas se aplican y qué queda fuera. |
 

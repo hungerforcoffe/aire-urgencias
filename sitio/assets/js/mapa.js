@@ -89,6 +89,94 @@
     return d ? d[0] : null;
   };
 
+  /* ===================== geografía de la barra lateral ===================== */
+
+  /* Las dos colecciones nombran las regiones distinto: `estaciones.json` dice
+     «Aysén del General Carlos Ibáñez del Campo» y «del Biobío», y la nacional
+     dice «Aysén» y «Biobío». De las tres regiones del estudio solo coincide
+     una. Agrupar por la cadena tal cual partiría Biobío en dos grupos que se
+     ven iguales, así que la región se resuelve por una marca distintiva sobre
+     el texto sin tildes.
+
+     El orden es de norte a sur, que es como un chileno busca su región: por
+     dónde queda, no por su número romano. */
+  const sinTildes = s => (s || "").normalize("NFD")
+    .replace(/[̀-ͯ]/g, "").toLowerCase();
+
+  const REGIONES = [
+    { n: "Arica y Parinacota", re: /arica/ },
+    { n: "Tarapacá", re: /tarapac/ },
+    { n: "Antofagasta", re: /antofagasta/ },
+    { n: "Atacama", re: /atacama/ },
+    { n: "Coquimbo", re: /coquimbo/ },
+    { n: "Valparaíso", re: /valpara/ },
+    { n: "Metropolitana de Santiago", re: /metropolitana/ },
+    { n: "O'Higgins", re: /higgins/ },
+    { n: "Maule", re: /maule/ },
+    { n: "Ñuble", re: /nuble/ },
+    { n: "Biobío", re: /bio\s*-?\s*bio/ },
+    { n: "La Araucanía", re: /araucan/ },
+    { n: "Los Ríos", re: /los\s+rios/ },
+    { n: "Los Lagos", re: /los\s+lagos/ },
+    { n: "Aysén", re: /aysen/ },
+    { n: "Magallanes", re: /magallanes/ },
+  ];
+
+  function resolverRegion(e) {
+    const txt = sinTildes(e.region);
+    const i = REGIONES.findIndex(r => r.re.test(txt));
+    // Una región que no calza no se esconde ni se inventa: va a su propio grupo
+    // al final, con el nombre que traía, para que se note y se pueda arreglar.
+    if (i < 0) {
+      console.warn("región sin clasificar:", e.region, "en", e.nombre);
+      return { nombre: e.region || "Sin región", orden: 99 };
+    }
+    return { nombre: REGIONES[i].n, orden: i };
+  }
+
+  /* El árbol región -> comuna -> estación se arma UNA vez: las estaciones no
+     cambian al moverse el mes, solo sus valores. Lo que se recalcula en cada
+     repintado son los promedios, no la estructura. */
+  const arbol = (() => {
+    const porRegion = new Map();
+    for (const e of estaciones) {
+      const r = resolverRegion(e);
+      e.regNombre = r.nombre;
+      if (!porRegion.has(r.nombre)) {
+        porRegion.set(r.nombre, { nombre: r.nombre, orden: r.orden, comunas: new Map() });
+      }
+      const reg = porRegion.get(r.nombre);
+      const cm = e.comuna || "Sin comuna";
+      if (!reg.comunas.has(cm)) reg.comunas.set(cm, { nombre: cm, estaciones: [], estudio: false });
+      const com = reg.comunas.get(cm);
+      com.estaciones.push(e);
+      // La comuna se marca como del estudio si alguna de sus estaciones
+      // pertenece a una de las tres ciudades. Es solo una marca visual: no
+      // cambia ningún promedio ni entra en el análisis.
+      if (e.ciudad || e.ciudad_estudio) com.estudio = true;
+    }
+    return [...porRegion.values()]
+      .sort((a, b) => a.orden - b.orden)
+      .map(r => ({
+        ...r,
+        comunas: [...r.comunas.values()]
+          .sort((a, b) => a.nombre.localeCompare(b.nombre, "es"))
+          .map(c => ({ ...c, estaciones: c.estaciones.sort(
+            (x, y) => x.nombre.localeCompare(y.nombre, "es")) })),
+      }));
+  })();
+
+  // Regiones desplegadas. Arrancan abiertas las que tienen estaciones del
+  // estudio, que es de lo que trata el capstone; el resto del país se despliega
+  // a pedido para que la lista siga siendo recorrible.
+  const abiertas = new Set(
+    arbol.filter(r => r.comunas.some(c => c.estudio)).map(r => r.nombre));
+
+  const promedio = xs => {
+    const vs = xs.filter(v => v !== null && v !== undefined);
+    return vs.length ? vs.reduce((a, b) => a + b, 0) / vs.length : null;
+  };
+
   /* ===================== mapa ===================== */
   const mapa = L.map("mapa", { zoomControl: true, minZoom: 3, attributionControl: true });
   let capaBase = null, capaRot = null;
@@ -236,6 +324,17 @@
 
   function irA(cid) { mapa.flyToBounds(cajaCiudad(cid), { padding: [50, 50], maxZoom: 12,
     duration: .8 }); }
+
+  /* Zoom a una comuna. Con una sola estación `fitBounds` recibe un rectángulo de
+     área cero, así que se acota el acercamiento con `maxZoom`: sin eso el mapa
+     salta al nivel máximo y se queda mirando una manzana. */
+  function irAComuna(region, comuna) {
+    const reg = arbol.find(r => r.nombre === region);
+    const com = reg && reg.comunas.find(c => c.nombre === comuna);
+    if (!com || !com.estaciones.length) return;
+    mapa.flyToBounds(L.latLngBounds(com.estaciones.map(e => [e.lat, e.lon])),
+      { padding: [60, 60], maxZoom: 13, duration: .8 });
+  }
   function elegir(id) {
     const clave = String(id);
     sel = sel === clave ? null : clave;
@@ -272,36 +371,78 @@
     return `<svg width="${ancho}" height="${alto}" aria-hidden="true">${d}${punto}</svg>`;
   }
 
+  /* La barra lateral es la red entera, ordenada como está en el territorio:
+     región de norte a sur, comuna dentro de la región, estación dentro de la
+     comuna. Antes listaba solo las tres ciudades del estudio, y las otras 84
+     estaciones no tenían por dónde alcanzarse salvo cazándolas en el mapa.
+
+     Las comunas del estudio van marcadas con color en vez de sacadas a un
+     bloque aparte: siguen donde les corresponde geográficamente y se distinguen
+     igual.
+
+     Las estaciones de una región cerrada NO se dibujan. Son 101 estaciones con
+     su sparkline cada una y la lista se repinta entera en cada cambio de mes;
+     dibujar las cerradas es trabajo que nadie va a ver. */
+  const CHEVRON = '<svg class="chev" width="9" height="9" viewBox="0 0 9 9" '
+    + 'aria-hidden="true"><path d="M2 3l2.5 3L7 3z" fill="currentColor"/></svg>';
+
+  function filaEstacion(e) {
+    const val = valorDe(e.id, t);
+    return `<button class="fila-est${e.esEstudio ? "" : " es-red"}" data-id="${e.id}"
+        aria-pressed="${sel === String(e.id)}" title="${e.nombre} · ${e.comuna || ""}">
+      <span class="nom">${e.nombre}</span>
+      <span class="val">${val === null ? "<i>s/d</i>"
+        : punto(val) + AU.num(val, 0)}</span>
+      ${chispa(e.id, 62, 15)}
+    </button>`;
+  }
+
   function pintarLista() {
-    const html = ciudades.map(c => {
-      const de = estaciones.filter(e => e.ciudad === c.id);
-      const vs = de.map(e => valorDe(e.id, t)).filter(v => v !== null);
-      const v = vs.length ? vs.reduce((a, b) => a + b, 0) / vs.length : null;
-      const filas = de.map(e => {
-        const val = valorDe(e.id, t);
-        return `<button class="fila-est" data-id="${e.id}"
-            aria-pressed="${sel === String(e.id)}">
-          <span class="nom">${e.nombre}</span>
-          <span class="val">${val === null ? "<i>s/d</i>"
-            : punto(val) + AU.num(val, 0)}</span>
-          ${chispa(e.id, 62, 15)}
-        </button>`;
+    const html = arbol.map(reg => {
+      const abierta = abiertas.has(reg.nombre);
+      const vReg = promedio(reg.comunas.flatMap(
+        c => c.estaciones.map(e => valorDe(e.id, t))));
+      const nEst = reg.comunas.reduce((n, c) => n + c.estaciones.length, 0);
+
+      const cuerpo = !abierta ? "" : reg.comunas.map(com => {
+        const vCom = promedio(com.estaciones.map(e => valorDe(e.id, t)));
+        return `<div class="grupo-comuna${com.estudio ? " es-estudio" : ""}"
+            data-region="${reg.nombre}" data-comuna="${com.nombre}"
+            role="button" tabindex="0"
+            title="Ir a ${com.nombre}">
+          <h4>${com.nombre}</h4>
+          <span class="meta">${com.estaciones.length}</span>
+          <span class="cifra">${vCom === null ? "—" : punto(vCom) + AU.num(vCom, 1)}</span>
+        </div>${com.estaciones.map(filaEstacion).join("")}`;
       }).join("");
-      return `<div class="grupo-ciudad" data-ciudad="${c.id}" role="button" tabindex="0">
-          <h3>${c.nombre}</h3>
-          <span class="meta">${de.length} est · ${AU.miles(c.poblacion)} hab</span>
-          <span class="cifra">${punto(v)}${AU.num(v, 1)}</span>
-        </div>${filas}`;
+
+      return `<div class="grupo-region" data-region="${reg.nombre}" role="button"
+          tabindex="0" aria-expanded="${abierta}">
+        ${CHEVRON}
+        <span class="txt"><h3>${reg.nombre}</h3>
+          <span class="meta">${nEst} est · ${reg.comunas.length} com</span></span>
+        <span class="cifra">${vReg === null ? "—" : punto(vReg) + AU.num(vReg, 1)}</span>
+      </div>${cuerpo}`;
     }).join("");
+
     $("#lista").innerHTML = html;
+
     $("#lista").querySelectorAll(".fila-est").forEach(b =>
       b.addEventListener("click", () => elegir(b.dataset.id)));
-    $("#lista").querySelectorAll(".grupo-ciudad").forEach(g => {
-      const ir = () => irA(g.dataset.ciudad);
-      g.addEventListener("click", ir);
-      g.addEventListener("keydown", ev => {
-        if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); ir(); } });
-    });
+
+    const activar = (el, fn) => {
+      el.addEventListener("click", fn);
+      el.addEventListener("keydown", ev => {
+        if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); fn(); } });
+    };
+    $("#lista").querySelectorAll(".grupo-region").forEach(g => activar(g, () => {
+      const n = g.dataset.region;
+      if (abiertas.has(n)) abiertas.delete(n); else abiertas.add(n);
+      pintarLista();
+    }));
+    $("#lista").querySelectorAll(".grupo-comuna").forEach(g => activar(g, () =>
+      irAComuna(g.dataset.region, g.dataset.comuna)));
+
     $("#riel-mes").textContent = AU.mesLargo(claves[t]);
   }
 
