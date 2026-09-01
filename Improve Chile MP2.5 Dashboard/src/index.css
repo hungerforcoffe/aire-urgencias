@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Source+Sans+3:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import 'tailwindcss';
+
+html, body, #root {
+  height: 100%;
+}
+
+:root {
+  --navy:        #0d2240;
+  --azul:        #1a4a8a;
+  --azul-medio:  #2563eb;
+  --celeste:     #60a5fa;
+  --celeste-c:   #bfdbfe;
+  --alerta:      #e85d1e;
+
+  --fondo:       #f0f5fb;
+  --fondo-alt:   #e4edf8;
+  --panel:       #ffffff;
+  --panel-alt:   #f7faff;
+
+  --texto:       #0c1c30;
+  --texto-2:     #3d5a7a;
+  --texto-3:     #7a99b8;
+  --borde:       rgba(26,74,138,0.15);
+  --borde-f:     rgba(26,74,138,0.35);
+  --sombra:      0 2px 12px rgba(13,34,64,0.08);
+
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Source Sans 3', system-ui, sans-serif;
+  --serif: 'Fraunces', Georgia, serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.6;
+}

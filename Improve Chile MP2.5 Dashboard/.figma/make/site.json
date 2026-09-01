@@ -1,0 +1,10 @@
+{
+  "description": "Analyze and visualize MP2.5 data for Chile with an interactive dashboard featuring maps, analytics, and graphs, designed for users seeking environmental insights.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

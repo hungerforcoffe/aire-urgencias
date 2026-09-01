@@ -15,16 +15,28 @@
 (async function () {
   const $ = s => document.querySelector(s);
 
+  /* Cartografía: Esri Canvas (gris claro y gris oscuro), sin llave.
+
+     Antes se usaba CARTO. Dejó de servir: hoy responde HTTP 200 con una imagen
+     PNG válida de 6,7 kB que dice «API KEY REQUIRED» impreso sobre la tesela.
+     Es exactamente la regla 5 del proyecto —un fallo que parece un éxito— y
+     por eso no se notó desde el código: el `fetch` no falla, la capa se
+     agrega, y el error solo existe en los píxeles. Se ve al abrir el mapa.
+
+     El reemplazo se eligió por lo mismo que se descartó el anterior: no pide
+     llave. GitHub Pages no puede guardar un secreto, así que cualquier
+     proveedor que exija una clave queda fuera por diseño, no por precio. */
+  const ESRI = "https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/";
   const TESELAS = {
-    light: "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
-    dark:  "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png",
+    light: ESRI + "World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+    dark:  ESRI + "World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
   };
   const ROTULOS = {
-    light: "https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png",
-    dark:  "https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png",
+    light: ESRI + "World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+    dark:  ESRI + "World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
   };
-  const ATRIB = '<a href="https://www.openstreetmap.org/copyright">OSM</a> · '
-    + '<a href="https://carto.com/attributions">CARTO</a> · estaciones SINCA';
+  const ATRIB = '<a href="https://www.esri.com/">Esri</a>, HERE, Garmin, '
+    + '<a href="https://www.openstreetmap.org/copyright">OSM</a> · estaciones SINCA';
   const ZOOM_ESTACIONES = 9;
   const RADIO_ROSA = 1900;          // metros del pétalo más largo
 
@@ -36,6 +48,19 @@
 
   const porId = new Map(estaciones.map(e => [e.id, e]));
   let t = claves.length - 1, sel = null, tocando = false, reloj = null;
+
+  /* La red nacional es una capa de contexto y se carga aparte, a propósito.
+     Si `nacional.json` no está —porque nadie corrió el exportador todavía— el
+     mapa tiene que seguir funcionando con las 16 del estudio. Por eso el fallo
+     se traga acá y no aborta el arranque: es una capa opcional, no un dato que
+     el sitio prometa. El flujo de Pages tampoco lo exige entre sus archivos. */
+  let nacional = null;
+  try {
+    nacional = await AU.cargar("nacional");
+  } catch (e) {
+    console.info("capa nacional no disponible:", e.message);
+  }
+  let verNacional = true;
 
   const valorDe = (id, i) => {
     const m = meses[claves[i]]; const d = m && m[String(id)];
@@ -50,17 +75,24 @@
     if (capaBase) mapa.removeLayer(capaBase);
     if (capaRot) mapa.removeLayer(capaRot);
     capaBase = L.tileLayer(TESELAS[modo], { attribution: ATRIB, maxZoom: 18,
-      subdomains: "abcd" }).addTo(mapa);
+      maxNativeZoom: 16 }).addTo(mapa);
     // Los rótulos van en una capa aparte, encima de los datos: así los nombres
     // de comuna se leen sin que los círculos los tapen.
-    capaRot = L.tileLayer(ROTULOS[modo], { maxZoom: 18, subdomains: "abcd",
-      pane: "shadowPane", opacity: .85 }).addTo(mapa);
+    capaRot = L.tileLayer(ROTULOS[modo], { maxZoom: 18, maxNativeZoom: 16,
+      pane: "shadowPane", opacity: .9 }).addTo(mapa);
   }
   teselas();
 
+  // El orden importa: la nacional se agrega primero para quedar DEBAJO de las
+  // estaciones del estudio, que son las que tienen detalle y se pueden abrir.
+  const capaNacional = L.layerGroup().addTo(mapa);
   const capaPuntos = L.layerGroup().addTo(mapa);
   const capaRosa = L.layerGroup().addTo(mapa);
-  const limites = L.latLngBounds(estaciones.map(e => [e.lat, e.lon]));
+  // El encuadre inicial incluye la red nacional cuando está: mostrar Chile
+  // entero encuadrando solo tres ciudades dejaba el país vacío a los lados.
+  const limites = L.latLngBounds(
+    estaciones.map(e => [e.lat, e.lon])
+      .concat(nacional ? nacional.estaciones.map(e => [e.lat, e.lon]) : []));
   const verPais = () => mapa.fitBounds(limites, { padding: [40, 40] });
   const cajaCiudad = c => L.latLngBounds(
     estaciones.filter(e => e.ciudad === c).map(e => [e.lat, e.lon]));
@@ -144,11 +176,42 @@
     }
   }
 
+  /* La red nacional: el resto de las estaciones de SINCA que miden MP2.5.
+
+     Se dibujan deliberadamente en segundo plano —más chicas, con borde fino y
+     sin rótulo— porque no son lo mismo que las 16 del estudio. De estas hay
+     media mensual y nada más: no tienen rosa de contaminación, ni meteograma,
+     ni serie horaria, ni pasaron por la validación de cobertura del análisis.
+     Dibujarlas igual que las otras prometería un detalle que no existe.
+
+     Tampoco entran en ningún promedio de ciudad ni en el análisis semanal. Su
+     trabajo es responder «¿qué se mide en el resto de Chile?», que hasta ahora
+     el mapa contestaba con un país en blanco. */
+  function dibujarNacional() {
+    capaNacional.clearLayers();
+    if (!nacional || !verNacional) return;
+    const mes = nacional.mensual[claves[t]] || {};
+    for (const e of nacional.estaciones) {
+      const d = mes[e.id];
+      const v = d ? d[0] : null;
+      // Sin dato ese mes no se dibuja nada: un círculo hueco por cada estación
+      // apagada convertiría el mapa en ruido. La lista de abajo sí las cuenta.
+      if (v === null) continue;
+      L.circleMarker([e.lat, e.lon], {
+        radius: 3 + Math.sqrt(v) * 1.15, color: AU.tono(v), weight: 1,
+        fillColor: AU.tono(v), fillOpacity: .5, opacity: .75,
+      }).addTo(capaNacional)
+        .bindTooltip(`${e.n} · ${e.c || "—"} · ${AU.num(v)} µg/m³` +
+          `<br><i style="opacity:.6">red nacional · ${d[1]} días</i>`,
+          { direction: "top" });
+    }
+  }
+
   function irA(cid) { mapa.flyToBounds(cajaCiudad(cid), { padding: [50, 50], maxZoom: 12,
     duration: .8 }); }
   function elegir(id) {
     sel = sel === id ? null : id;
-    dibujarPuntos(); rosaEnMapa(porId.get(sel), true);
+    dibujarPuntos(); dibujarNacional(); rosaEnMapa(porId.get(sel), true);
     pintarLista(); pintarDetalle(); dibujarTira();
     if (sel) {
       const f = document.querySelector(`.fila-est[data-id="${sel}"]`);
@@ -238,7 +301,7 @@
       if (o.v > max) continue;
       g += `<line x1="0" y1="${Y(o.v).toFixed(1)}" x2="${w}" y2="${Y(o.v).toFixed(1)}"
         stroke="${L}" stroke-width="1"/>
-        <text x="3" y="${(Y(o.v) - 2).toFixed(1)}" font-family="IBM Plex Mono,monospace"
+        <text x="3" y="${(Y(o.v) - 2).toFixed(1)}" font-family="JetBrains Mono,ui-monospace,monospace"
           font-size="8" fill="${T3}">${o.v}</text>`;
     }
     // Área de la red, cortada donde no hay dato.
@@ -267,7 +330,7 @@
     claves.forEach((k, i) => { if (k.slice(5) === "01") {
       g += `<line x1="${X(i).toFixed(1)}" y1="${h - mb}" x2="${X(i).toFixed(1)}" y2="${h - mb + 3}"
         stroke="${T3}"/><text x="${(X(i) + 3).toFixed(1)}" y="${h - 3}"
-        font-family="IBM Plex Mono,monospace" font-size="8.5" fill="${T3}">${k.slice(0, 4)}</text>`;
+        font-family="JetBrains Mono,ui-monospace,monospace" font-size="8.5" fill="${T3}">${k.slice(0, 4)}</text>`;
     }});
     // Cursor.
     g += `<line x1="${X(t).toFixed(1)}" y1="0" x2="${X(t).toFixed(1)}" y2="${h - mb}"
@@ -288,7 +351,7 @@
     const mes = meses[claves[t]] || {};
     const n = Object.keys(mes).length;
     $("#reloj-sub").textContent = `${n} de ${estaciones.length} midieron`;
-    dibujarPuntos(); pintarLista(); dibujarTira();
+    dibujarPuntos(); dibujarNacional(); pintarLista(); dibujarTira();
   }
 
   (function scrub() {
@@ -329,7 +392,7 @@
     const alturas = [104, 46, 30], sep = 13;
     const h = mt + alturas.reduce((a, b) => a + b + sep, 0) + ejeAlto;
     const L = AU.css("--linea"), T3 = AU.css("--tinta-3"), T2 = AU.css("--tinta-2");
-    const M = 'font-family="IBM Plex Mono,monospace"';
+    const M = 'font-family="JetBrains Mono,ui-monospace,monospace"';
     const X = i => ml + i / (claves.length - 1) * (w - ml - mr);
 
     const serie = claves.map((k, i) => {
@@ -421,7 +484,7 @@
     const R = 88, C = 112, inv = e.rosa.invierno;
     const max = Math.max(...inv.filter(v => v !== null));
     const L = AU.css("--linea"), T3 = AU.css("--tinta-3");
-    const M = 'font-family="IBM Plex Mono,monospace"';
+    const M = 'font-family="JetBrains Mono,ui-monospace,monospace"';
     let g = "";
     // Anillos rotulados: una rosa sin escala no se puede leer.
     for (const f of [1 / 3, 2 / 3, 1]) {
@@ -435,7 +498,7 @@
         y2="${(C + Math.sin(a) * R).toFixed(1)}" stroke="${L}"/>
         <text x="${(C + Math.cos(a) * (R + 13)).toFixed(1)}"
           y="${(C + Math.sin(a) * (R + 13) + 3.5).toFixed(1)}" text-anchor="middle"
-          font-family="IBM Plex Sans Condensed,Arial,sans-serif" font-size="10"
+          font-family="Source Sans 3,system-ui,sans-serif" font-size="10"
           font-weight="600" fill="${T3}">${s}</text>`;
     }).join("");
     g += inv.map((v, i) => v === null ? "" :
@@ -539,12 +602,33 @@
     + `${meta.conteos.estaciones_con_viento} con viento`;
 
   document.addEventListener("au:tema", () => {
-    teselas(); dibujarPuntos(); rosaEnMapa(porId.get(sel), false);
+    teselas(); dibujarPuntos(); dibujarNacional(); rosaEnMapa(porId.get(sel), false);
     pintarLista(); dibujarTira(); pintarDetalle();
     $("#rampa").innerHTML = AU.TONOS.map((v, i) =>
       `<div style="background:${AU.css(v)}">${i ? `<span>${AU.CORTES[i - 1]}</span>` : ""}</div>`).join("");
   });
   addEventListener("resize", () => { dibujarTira(); mapa.invalidateSize(); });
+
+  /* Interruptor de la capa nacional. Si el JSON no está, el control queda
+     desactivado en vez de desaparecer: así se ve que la capa existe y que lo
+     que falta es correr el exportador, en vez de parecer que nunca hubo tal
+     cosa. */
+  const chkNacional = $("#ver-nacional");
+  if (chkNacional) {
+    if (!nacional) {
+      chkNacional.checked = false;
+      chkNacional.disabled = true;
+      chkNacional.closest(".interruptor").title =
+        "Falta assets/datos/nacional.json — se genera con "
+        + "python -m src.sitio.exportar_nacional";
+    } else {
+      $("#n-nacional").textContent = `${nacional.conteos.estaciones} est`;
+      chkNacional.addEventListener("change", () => {
+        verNacional = chkNacional.checked;
+        dibujarNacional();
+      });
+    }
+  }
 
   irAMes(t); pintarDetalle();
 })();

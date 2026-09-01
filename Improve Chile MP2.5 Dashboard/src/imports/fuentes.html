@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="es" data-tema="claro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metodología y Stack · Aire y Urgencias</title>
+<meta name="description" content="Fuentes de datos, stack tecnológico, reglas de limpieza y limitaciones declaradas del proyecto Aire·Urgencias Chile.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="assets/css/estilo.css">
+</head>
+<body>
+
+<!-- ── Barra de navegación ─────────────────────────────────────────── -->
+<div class="barra">
+ <a class="marca" href="index.html">
+  Aire<s>·</s>Urgencias
+ </a>
+ <nav>
+  <a href="index.html">Red MP2.5</a>
+  <a href="analisis.html">Análisis</a>
+  <a href="fuentes.html" class="activo">Metodología</a>
+ </nav>
+ <div class="estado"><span>documentación del método</span></div>
+ <button class="tema" id="btn-tema" aria-label="Cambiar entre tema claro y oscuro">
+  <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+   <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.5v11a5.5 5.5 0 010-11z"/></svg>
+ </button>
+</div>
+
+<!-- ── Hero de sección ───────────────────────────────────────────── -->
+<div style="background:var(--navy); color:#fff; padding:32px 24px 28px;">
+ <div style="max-width:800px; margin:0 auto;">
+  <div style="font-family:var(--mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.1em; color:var(--celeste); margin-bottom:8px;">
+   Reproducibilidad · Transparencia · Trazabilidad
+  </div>
+  <h1 style="font-family:var(--serif); font-size:1.7rem; font-weight:700; line-height:1.2; margin-bottom:10px;">
+   Metodología y Stack
+  </h1>
+  <p style="font-size:.9rem; color:rgba(255,255,255,0.65); max-width:540px; line-height:1.6; margin:0;">
+   De dónde sale cada número, qué se consulta en vivo, qué reglas se aplican antes
+   de mostrar una cifra y qué queda fuera del alcance a propósito.
+  </p>
+ </div>
+</div>
+
+<div class="caja">
+<div class="prosa">
+
+<!-- ── Stack tecnológico ─────────────────────────────────────────── -->
+<h2>Stack del proyecto</h2>
+<p>El proyecto combina un pipeline de procesamiento en la nube con un sitio estático
+ que no necesita servidor. Cada capa tiene una responsabilidad única y no sobrescribe
+ la anterior.</p>
+
+<div class="stack-grid">
+ <div class="stack-card">
+  <div class="stack-icon">py</div>
+  <div class="stack-nombre">Python 3.12</div>
+  <div class="stack-desc">Ingesta, limpieza, consultas a Athena y exportación de JSON.</div>
+  <span class="tag tag-azul" style="margin-top:4px;">procesamiento</span>
+ </div>
+ <div class="stack-card">
+  <div class="stack-icon">AWS</div>
+  <div class="stack-nombre">Amazon Athena + S3</div>
+  <div class="stack-desc">74 M filas en Parquet. Consultas SQL sobre datos crudos inmutables.</div>
+  <span class="tag tag-azul" style="margin-top:4px;">almacenamiento</span>
+ </div>
+ <div class="stack-card">
+  <div class="stack-icon">🗺</div>
+  <div class="stack-nombre">Leaflet 1.9</div>
+  <div class="stack-desc">Mapa interactivo de estaciones sobre teselas OSM / CARTO.</div>
+  <span class="tag tag-gris" style="margin-top:4px;">frontend</span>
+ </div>
+ <div class="stack-card">
+  <div class="stack-icon">JS</div>
+  <div class="stack-nombre">JavaScript vanilla</div>
+  <div class="stack-desc">Sin framework. SVG generado dinámicamente para series y rosas.</div>
+  <span class="tag tag-gris" style="margin-top:4px;">frontend</span>
+ </div>
+ <div class="stack-card">
+  <div class="stack-icon">🌤</div>
+  <div class="stack-nombre">Open-Meteo</div>
+  <div class="stack-desc">Viento actual y reanálisis ERA5. Sin llave, CORS abierto.</div>
+  <span class="tag tag-azul" style="margin-top:4px;">API externa</span>
+ </div>
+ <div class="stack-card">
+  <div class="stack-icon">gh</div>
+  <div class="stack-nombre">GitHub Pages</div>
+  <div class="stack-desc">Despliegue de archivos estáticos. Sin servidor, sin secretos expuestos.</div>
+  <span class="tag tag-gris" style="margin-top:4px;">despliegue</span>
+ </div>
+</div>
+
+<!-- ── Las fuentes ───────────────────────────────────────────────── -->
+<h2>Las fuentes de datos</h2>
+
+<div class="scroll-x">
+<table>
+ <thead>
+  <tr>
+   <th>Fuente</th>
+   <th>Qué aporta</th>
+   <th>Cómo llega</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>SINCA (MMA)</td>
+   <td>MP2.5 horario y meteorología, 16 estaciones</td>
+   <td>descarga por estación y año</td>
+  </tr>
+  <tr>
+   <td>DEIS (MINSAL)</td>
+   <td>urgencias respiratorias por establecimiento, causa y día</td>
+   <td>descarga de archivos</td>
+  </tr>
+  <tr>
+   <td>INE</td>
+   <td>proyecciones de población comunal, denominador de las tasas</td>
+   <td>descarga de archivos</td>
+  </tr>
+  <tr>
+   <td>CASEN</td>
+   <td>porcentaje de hogares que calefaccionan con leña</td>
+   <td>microdatos públicos</td>
+  </tr>
+  <tr>
+   <td>Open-Meteo</td>
+   <td>viento y temperatura actuales; reanálisis ERA5 para rellenar</td>
+   <td><strong>API, sin llave</strong></td>
+  </tr>
+ </tbody>
+</table>
+</div>
+
+<p><strong>SINCA es la única fuente de aire para Chile en este proyecto.</strong> OpenAQ
+es un agregador que cosecha los datos chilenos <em>desde</em> SINCA: usarlo para MP2.5
+chileno sería contar la misma medición dos veces.</p>
+
+<!-- ── Los datos y las APIs ──────────────────────────────────────── -->
+<h2>Los datos y las APIs</h2>
+
+<h3>Lo que viene de la base del proyecto</h3>
+
+<p>La base vive en <strong>Amazon Athena</strong> sobre archivos Parquet en S3: 11 tablas
+y unos 74 millones de filas, de las cuales 66 millones son urgencias del DEIS. Nada de
+eso se consulta desde el navegador. Un script en Python corre las consultas y deja los
+agregados en archivos JSON:</p>
+
+<pre><code>python -m src.sitio.exportar</code></pre>
+
+<p><strong>GitHub Pages sirve archivos y nada más.</strong> No ejecuta Python, no abre
+conexiones a AWS y no puede guardar un secreto. Lo que se publica son
+<strong>agregados</strong> —medias mensuales por estación, medianas por sector de viento,
+la tabla semanal por ciudad—, unos 900 kB en total. Ningún registro individual.</p>
+
+<h3>Lo que se consulta en vivo</h3>
+
+<p>Desde el navegador solo se puede llamar a una API que cumpla dos condiciones: que
+<strong>no exija llave</strong> y que <strong>permita CORS</strong>. Eso deja pocas,
+y <a href="https://open-meteo.com/">Open-Meteo</a> es la que sirve:</p>
+
+<ul>
+ <li><strong>Viento y temperatura actuales</strong> en cada estación, para poder leer
+  la rosa hoy.</li>
+ <li><strong>Reanálisis ERA5</strong>: la red meteorológica de Santiago se apagó el
+  8 de mayo de 2025 y la estación que la reemplazó empezó el 19 de agosto. No hubo
+  traslape. <strong>81.216 de las 90.029 horas-estación no tienen viento medido.</strong>
+  ERA5 es la única forma de llenar ese hueco.</li>
+</ul>
+
+<p>La capa de calidad del aire modelada de Open-Meteo <strong>no se usa</strong>: es
+salida de modelo, no medición, y mezclarla con SINCA rompería la comparabilidad.</p>
+
+<h3>Otras APIs que sí calzan para ampliar</h3>
+<ul>
+ <li><strong>SatPM2.5</strong> (bucket público S3, grilla 0,01° para Sudamérica): contexto satelital.</li>
+ <li><strong>Geoportal del INE</strong>: polígonos de comuna para mapas coropléticos.</li>
+ <li><strong>OpenAQ</strong>: solo para posicionar las tres ciudades frente al mundo.
+  Pide llave, va del lado de Python.</li>
+</ul>
+
+<!-- ── Reglas ─────────────────────────────────────────────────────── -->
+<h2>Las reglas que el sitio aplica</h2>
+
+<ol class="reglas">
+ <li><strong>Asociación, nunca causalidad.</strong> Ningún texto, variable o gráfico afirma
+  que la contaminación <em>causa</em> consultas.</li>
+ <li><strong>Acotar al final, no al principio.</strong> El filtro a tres ciudades ocurre en
+  la última etapa; si se filtrara en la ingesta, el proyecto dejaría de ser Big Data.</li>
+ <li><strong>Nunca sobrescribir la zona cruda.</strong> Los archivos descargados son
+  inmutables y todo reproceso parte de ahí.</li>
+ <li><strong>Toda decisión de limpieza se documenta</strong>, con su umbral y su
+  justificación.</li>
+ <li><strong>Un fallo nunca puede parecer un éxito.</strong> El exportador valida cada
+  consulta: si vuelve vacía o con columnas en nulo, aborta y deja intactos los archivos
+  anteriores.</li>
+</ol>
+
+<h3>La reja de cobertura</h3>
+
+<p>Un año necesita <strong>300 días con dato</strong> para mostrar su media anual, y un
+día necesita 18 horas válidas para contar. El caso que obligó a escribir la regla:
+<strong>El Bosque midió 59 días en 2025</strong> —enero a marzo, puro verano— y su
+promedio da 14,6 µg/m³ contra 26,2 el año anterior. Sin la reja, el mapa habría anunciado
+que la comuna se limpió un 44 %.</p>
+
+<!-- ── Por qué puntos ─────────────────────────────────────────────── -->
+<h2>Por qué el mapa muestra puntos y no una mancha</h2>
+
+<p>Se probó interpolar una superficie continua con la prueba que corresponde: predecir
+cada estación usando solo las demás (<em>leave-one-station-out</em>).</p>
+
+<div class="scroll-x">
+<table>
+ <thead>
+  <tr>
+   <th>Ciudad</th>
+   <th>R² del modelo</th>
+   <th>R² promedio vecinas</th>
+   <th>Veredicto</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>Santiago (mediana de 10)</td>
+   <td>0,533</td>
+   <td>0,750</td>
+   <td>el modelo pierde en las diez</td>
+  </tr>
+  <tr>
+   <td>Talcahuano</td>
+   <td>0,326</td>
+   <td>0,403</td>
+   <td>también pierde</td>
+  </tr>
+  <tr>
+   <td>Las Condes</td>
+   <td>−0,010</td>
+   <td>−0,091</td>
+   <td>impredecible por cualquiera</td>
+  </tr>
+ </tbody>
+</table>
+</div>
+
+<p>Las Condes está más alto y contra la cordillera. Rellenar el espacio entre puntos
+habría inventado justo la parte que no se puede saber.</p>
+
+<!-- ── Fuera del alcance ──────────────────────────────────────────── -->
+<h2>Lo que queda fuera, a propósito</h2>
+
+<p style="font-style:italic; color:var(--texto-2);">
+ Causalidad · inferencia individual · app para ciudadanos · otros contaminantes ·
+ pronóstico · atribución de fuentes · cobertura nacional · valorización económica ·
+ mortalidad · datos clínicos individuales.
+</p>
+
+<p><strong>Pronóstico y atribución de fuentes</strong> son la razón de que la rosa no
+anime hacia dónde va el humo: harían falta un inventario de emisiones georreferenciado y
+un modelo de dispersión, y este proyecto tiene viento en 13 puntos.</p>
+
+<p><strong>Mortalidad</strong> es la razón de que no haya cifra de muertes atribuibles:
+ese cálculo parte de un riesgo relativo importado de estudios de cohorte — un
+contrafactual, o sea una afirmación causal, que choca de frente con la regla 1.</p>
+
+<h3>La limitación principal</h3>
+
+<p>El proyecto <strong>no controla por circulación viral</strong>. Las urgencias de
+invierno están dominadas por VRS e influenza, y el MP2.5 también sube en invierno por
+calefacción. El descuento estacional atenúa el problema, pero no lo elimina. Queda
+<strong>declarado y sin corregir</strong>.</p>
+
+<!-- ── Reproducir ─────────────────────────────────────────────────── -->
+<h2>Reproducir el sitio</h2>
+
+<pre><code># 1. datos: consulta Athena y escribe los JSON del sitio
+python -m src.sitio.exportar
+
+# 2. revisar lo escrito sin volver a consultar
+python -m src.sitio.exportar --verificar
+
+# 3. ver el sitio en local
+python -m http.server 8000 --directory sitio</code></pre>
+
+<p>El paso 1 es el único que necesita credenciales de AWS, leídas del perfil local
+(<code>~/.aws/credentials</code>). No hay ninguna llave en el código ni en el sitio.</p>
+
+</div>
+</div>
+
+<!-- ── Footer ─────────────────────────────────────────────────────── -->
+<footer>
+ Estudio ecológico observacional · <b>asociación, no causalidad</b><br>
+ Aire <a href="https://sinca.mma.gob.cl/">SINCA (MMA)</a> ·
+ Salud <a href="https://deis.minsal.cl/">DEIS (MINSAL)</a> ·
+ Población INE · Leña CASEN ·
+ Meteorología <a href="https://open-meteo.com/">Open-Meteo</a> ·
+ Cartografía OSM / CARTO
+</footer>
+
+<script>
+ const html = document.documentElement;
+ const btn = document.getElementById('btn-tema');
+ btn && btn.addEventListener('click', () => {
+  html.dataset.tema = html.dataset.tema === 'oscuro' ? 'claro' : 'oscuro';
+ });
+</script>
+<script src="assets/js/comun.js"></script>
+</body>
+</html>

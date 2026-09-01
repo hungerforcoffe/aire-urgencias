@@ -47,6 +47,17 @@ jobs:
           done
           echo "los cinco JSON están presentes"
 
+          # nacional.json es la capa de contexto del mapa y es OPCIONAL: sin él
+          # el sitio funciona con las 16 del estudio y el interruptor de la capa
+          # queda desactivado. No se corta el despliegue por esto, pero sí se
+          # dice en voz alta: un mapa al que le faltan 84 estaciones no debería
+          # publicarse sin que nadie lo note.
+          if [ -s sitio/assets/datos/nacional.json ]; then
+            echo "capa nacional presente"
+          else
+            echo "::warning::falta sitio/assets/datos/nacional.json — el mapa se publica solo con las 16 del estudio. Se genera con 'python -m src.sitio.exportar_nacional'"
+          fi
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

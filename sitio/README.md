@@ -4,7 +4,7 @@ Sitio estático que se publica en GitHub Pages. Tres páginas:
 
 | Archivo | Qué muestra |
 |---|---|
-| `index.html` | Mapa de las 16 estaciones. Clic en una abre su rosa de contaminación sobre la cartografía. |
+| `index.html` | Mapa de la red. Las 16 estaciones del estudio abren su rosa de contaminación al hacer clic; los puntos chicos son las otras 84 de SINCA, solo con media mensual. |
 | `analisis.html` | La asociación semanal entre MP2.5 y urgencias respiratorias, 1.350 semanas. |
 | `fuentes.html` | De dónde sale cada dato, qué APIs se usan, qué reglas se aplican y qué queda fuera. |
 
@@ -13,8 +13,24 @@ Sitio estático que se publica en GitHub Pages. Tres páginas:
 Los datos **no** se editan a mano. Salen de Athena con:
 
 ```bash
-python -m src.sitio.exportar            # consulta y escribe assets/datos/*.json
+python -m src.sitio.exportar            # consulta Athena y escribe assets/datos/*.json
 python -m src.sitio.exportar --verificar # relee lo escrito, sin volver a consultar
+
+python -m src.sitio.exportar_nacional            # capa nacional -> assets/datos/nacional.json
+python -m src.sitio.exportar_nacional --verificar
+```
+
+`nacional.json` es la capa de contexto del mapa: las 84 estaciones de SINCA que miden MP2.5
+fuera de las tres ciudades. Sale de `data/processed/red_nacional_*` y **no pasa por Athena**
+— se construye entera en local desde la zona cruda, así que no necesita credenciales. Es
+**opcional**: si el archivo no está, el mapa sigue funcionando con las 16 del estudio y el
+interruptor de la capa queda desactivado, con la instrucción de cómo generarla. Para
+reconstruirla desde cero:
+
+```bash
+python -m src.ingesta.red_nacional catalogo      # 16 regiones, coordenadas de cada ficha
+python -m src.ingesta.red_nacional descargar     # serie diaria de MP2.5 por estación
+python -m src.procesamiento.red_nacional construir
 ```
 
 El exportador valida antes de escribir: si una consulta vuelve vacía, con menos filas de
@@ -57,9 +73,15 @@ del perfil local (`~/.aws/credentials`) únicamente en el paso de exportación.
 | Qué | De dónde | Para qué |
 |---|---|---|
 | Leaflet 1.9.4 | cdnjs | el mapa |
-| Teselas | CARTO + OpenStreetMap | la cartografía de fondo |
-| Archivo, IBM Plex Sans/Mono | Google Fonts | tipografía |
+| Teselas | Esri Canvas (gris claro / gris oscuro) | la cartografía de fondo |
+| Fraunces, Source Sans 3, JetBrains Mono | Google Fonts | tipografía |
 | Open-Meteo | `api.open-meteo.com` | viento y temperatura actuales |
+
+**Ninguna de las cuatro pide llave, y esa es la condición de entrada.** CARTO servía las
+teselas hasta que empezó a exigir una: no falla con un error, responde **HTTP 200 con un PNG
+válido que dice «API KEY REQUIRED» impreso encima**. El `fetch` no se queja, la capa se
+agrega y el mapa se ve roto solo al mirarlo. Es la regla 5 del proyecto aplicada a una
+imagen, y la razón de que la cartografía se revise a ojo y no solo por código de estado.
 
 Open-Meteo entrega **meteorología**. Su capa de calidad del aire modelada no se usa: es
 salida de un modelo, no medición, y mezclarla con SINCA rompería la comparabilidad de la

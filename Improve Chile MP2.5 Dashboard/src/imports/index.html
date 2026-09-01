@@ -1,36 +1,42 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-tema="claro">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Red MP2.5 · Aire y Urgencias</title>
 <meta name="description" content="Dieciséis estaciones SINCA en Santiago, Talcahuano y Coyhaique. MP2.5 mensual 2018-2026 y rosa de contaminación por estación.">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;700&family=Source+Sans+3:wght@400;500;600&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="assets/css/estilo.css">
 </head>
 <body>
 
+<!-- ── Barra de navegación ─────────────────────────────────────────── -->
 <div class="barra">
- <a class="marca" href="index.html">Aire<s>·</s>Urgencias</a>
+ <a class="marca" href="index.html">
+  Aire<s>·</s>Urgencias
+ </a>
  <nav>
-  <a href="index.html">Red MP2.5</a>
+  <a href="index.html" class="activo">Red MP2.5</a>
   <a href="analisis.html">Análisis</a>
-  <a href="fuentes.html">Metodolog&iacute;a</a>
+  <a href="fuentes.html">Metodología</a>
  </nav>
  <div class="estado">
-  <span>SINCA/MMA</span>
+  <span>SINCA / MMA</span>
   <span>corte <b id="e-corte">—</b></span>
-  <span><b id="e-red">—</b></span>
+  <span><b id="e-red">—</b> estaciones</span>
  </div>
- <button class="tema" aria-label="Cambiar entre tema claro y oscuro">
+ <button class="tema" id="btn-tema" aria-label="Cambiar entre tema claro y oscuro">
   <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
    <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.5v11a5.5 5.5 0 010-11z"/></svg>
  </button>
 </div>
 
+<!-- ── Consola principal: estaciones + mapa + línea de tiempo ─────── -->
 <div class="consola">
+
+ <!-- Panel lateral de estaciones -->
  <div class="riel">
   <div class="riel-tit">
    <h2>Estaciones</h2>
@@ -39,12 +45,14 @@
   <div id="lista"></div>
  </div>
 
+ <!-- Mapa interactivo -->
  <div id="mapa"></div>
 
+ <!-- Línea de tiempo y controles -->
  <div class="tira">
   <div class="mando">
    <div class="mes n" id="reloj">—</div>
-   <div class="sub" id="reloj-sub">—</div>
+   <div class="sub" id="reloj-sub">media mensual</div>
    <div class="bs">
     <button id="anterior" aria-label="Mes anterior">
      <svg width="9" height="9" viewBox="0 0 9 9" aria-hidden="true">
@@ -60,24 +68,23 @@
   <div class="lienzo" id="tira-lienzo" role="slider" tabindex="0"
        aria-label="Mes mostrado en el mapa" aria-valuemin="0" aria-valuenow="0"></div>
  </div>
+
 </div>
 
+<!-- ── Leyenda y escala de colores ────────────────────────────────── -->
 <div class="escala">
- <span class="et">Media mensual, µg/m³</span>
+ <span class="et">Media mensual · µg/m³</span>
  <div class="rampa" id="rampa"></div>
  <span class="et" id="escala-peldano">guías anuales OMS 2021</span>
- <label class="interruptor">
-  <input type="checkbox" id="ver-nacional" checked>
-  <span>Red nacional <b id="n-nacional">—</b></span>
- </label>
- <p>Radio del círculo proporcional a la media del mes. Punteado = la estación no midió.
+ <p>Radio del círculo proporcional a la media del mes. Punteado = la estación no midió ese mes.
   Bajo el zoom de ciudad los puntos se agrupan: a escala de Chile las diez estaciones de
-  Santiago caen en el mismo píxel. Los puntos chicos son el <b>resto de la red de SINCA</b>:
-  tienen media mensual y nada más — no entran en el análisis ni tienen rosa ni meteograma.</p>
+  Santiago caen en el mismo píxel.</p>
 </div>
 
+<!-- ── Detalle de estación seleccionada ──────────────────────────── -->
 <div class="detalle">
  <div class="det-cab">
+  <span class="icono-placeholder">icono</span>
   <h2 id="d-nombre">Sin estación seleccionada</h2>
   <span class="id" id="d-id"></span>
   <div class="der" id="d-cifras"></div>
@@ -88,6 +95,7 @@
  </div>
 </div>
 
+<!-- ── Notas metodológicas ────────────────────────────────────────── -->
 <div class="franja">
  <div class="notas">
   <section>
@@ -96,16 +104,14 @@
     <b>14,6 µg/m³</b> contra 26,2 el año anterior. Leído sin mirar la cobertura parece que la
     comuna se limpió; dejó de medir justo antes del invierno.</p>
    <p>Un año necesita <b>300 días</b> para mostrar promedio. Los que no llegan van marcados y
-    quedan fuera de las cifras de ciudad. Todo 2026 es parcial: llega hasta agosto, o sea trae
-    el invierno completo y ningún mes limpio.</p>
+    quedan fuera de las cifras de ciudad. Todo 2026 es parcial.</p>
   </section>
   <section>
    <h3>Qué dice la rosa</h3>
    <p>Cada pétalo es la <b>mediana horaria de MP2.5 en invierno</b> de las horas en que el
     viento venía de ese sector. Dos instrumentos en el mismo sitio a la misma hora.</p>
-   <p>Un pétalo largo al este dice <b>«cuando sopló del este, el sensor midió más»</b>. No
-    identifica la fuente ni predice hacia dónde va el material particulado: eso exigiría un
-    inventario de emisiones y un modelo de dispersión, fuera del alcance.</p>
+   <p>Un pétalo largo al este dice <b>"cuando sopló del este, el sensor midió más"</b>. No
+    identifica la fuente ni predice hacia dónde va el material particulado.</p>
   </section>
   <section>
    <h3>Puntos, no una mancha</h3>
@@ -117,13 +123,24 @@
  </div>
 </div>
 
+<!-- ── Footer ─────────────────────────────────────────────────────── -->
 <footer>
  Estudio ecológico observacional · <b>asociación, no causalidad</b><br>
- Aire SINCA (MMA) · Salud DEIS (MINSAL) · Población INE ·
- viento actual <a href="https://open-meteo.com/">Open-Meteo</a> · cartografía Esri/OSM
+ Aire <a href="https://sinca.mma.gob.cl/">SINCA (MMA)</a> ·
+ Salud <a href="https://deis.minsal.cl/">DEIS (MINSAL)</a> ·
+ Población INE · viento actual <a href="https://open-meteo.com/">Open-Meteo</a> ·
+ cartografía OSM / CARTO
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+ /* Tema claro/oscuro */
+ const html = document.documentElement;
+ const btn = document.getElementById('btn-tema');
+ btn && btn.addEventListener('click', () => {
+  html.dataset.tema = html.dataset.tema === 'oscuro' ? 'claro' : 'oscuro';
+ });
+</script>
 <script src="assets/js/comun.js"></script>
 <script src="assets/js/mapa.js"></script>
 </body>

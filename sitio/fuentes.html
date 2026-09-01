@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fuentes y metodo &middot; Aire y Urgencias</title>
+<title>Metodolog&iacute;a &middot; Aire y Urgencias</title>
 <meta name="description" content="De donde sale cada dato del sitio, que APIs se consultan, que reglas se aplican y que limitaciones quedan declaradas.">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;700&family=Source+Sans+3:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/css/estilo.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
  <nav>
   <a href="index.html">Red MP2.5</a>
   <a href="analisis.html">An&aacute;lisis</a>
-  <a href="fuentes.html">Fuentes</a>
+  <a href="fuentes.html">Metodolog&iacute;a</a>
  </nav>
  <div class="estado"><span>documentaci&oacute;n del m&eacute;todo</span></div>
  <button class="tema" aria-label="Cambiar entre tema claro y oscuro">
@@ -25,11 +25,62 @@
  </button>
 </div>
 
+<header class="hero">
+ <div>
+  <div class="ojo">Reproducibilidad &middot; Trazabilidad &middot; Alcance</div>
+  <h1>Metodolog&iacute;a y stack</h1>
+  <p>De d&oacute;nde sale cada n&uacute;mero, qu&eacute; se consulta en vivo, qu&eacute; reglas se aplican
+   antes de mostrar una cifra y qu&eacute; queda fuera del alcance a prop&oacute;sito.</p>
+ </div>
+</header>
+
 <div class="caja">
 <div class="prosa">
-<h1>Fuentes y m&eacute;todo</h1>
-<p class="bajada">De d&oacute;nde sale cada n&uacute;mero, qu&eacute; se consulta en vivo, qu&eacute; reglas se aplican
- antes de mostrar una cifra y qu&eacute; queda fuera del alcance a prop&oacute;sito.</p>
+
+<h2>Stack del proyecto</h2>
+
+<div class="stack">
+ <article>
+  <div class="icono" aria-hidden="true">py</div>
+  <h3>Python 3.12</h3>
+  <p>Ingesta, limpieza, consultas a Athena y exportaci&oacute;n de los JSON que lee el sitio.</p>
+  <span class="pastilla">procesamiento</span>
+ </article>
+ <article>
+  <div class="icono" aria-hidden="true">AWS</div>
+  <h3>Athena + S3</h3>
+  <p>Once tablas en Parquet sobre S3, unos 74 millones de filas. SQL sobre la zona cruda
+   inmutable, sin copiar los datos a ninguna parte.</p>
+  <span class="pastilla">almacenamiento</span>
+ </article>
+ <article>
+  <div class="icono" aria-hidden="true">&#9673;</div>
+  <h3>Leaflet 1.9.4</h3>
+  <p>Mapa de estaciones sobre teselas de Esri Canvas sobre datos de OpenStreetMap. Sin llave de API.</p>
+  <span class="pastilla">frontend</span>
+ </article>
+ <article>
+  <div class="icono" aria-hidden="true">JS</div>
+  <h3>JavaScript, sin framework</h3>
+  <p>SVG generado a mano para el meteograma, las rosas de contaminaci&oacute;n y las series
+   del an&aacute;lisis. Nada que compilar.</p>
+  <span class="pastilla">frontend</span>
+ </article>
+ <article>
+  <div class="icono" aria-hidden="true">&#9788;</div>
+  <h3>Open-Meteo</h3>
+  <p>Viento y temperatura actuales, y reanálisis ERA5 para los huecos. Sin llave y con
+   CORS abierto, que es lo que permite llamarla desde el navegador.</p>
+  <span class="pastilla">API</span>
+ </article>
+ <article>
+  <div class="icono" aria-hidden="true">gh</div>
+  <h3>GitHub Pages</h3>
+  <p>Archivos est&aacute;ticos y nada m&aacute;s: sin servidor que mantener y sin ning&uacute;n
+   secreto que se pueda filtrar.</p>
+  <span class="pastilla">despliegue</span>
+ </article>
+</div>
 
 <h2>Las fuentes</h2>
 
@@ -39,7 +90,8 @@
    <th style="text-align:left">Cómo llega</th></tr></thead>
  <tbody>
   <tr><td>SINCA (MMA)</td>
-    <td style="text-align:left">MP2.5 horario y meteorología, 16 estaciones</td>
+    <td style="text-align:left">MP2.5 horario y meteorología en las 16 estaciones del estudio;
+     MP2.5 diario en las otras 84 del país</td>
     <td style="text-align:left">descarga por estación y año</td></tr>
   <tr><td>DEIS (MINSAL)</td>
     <td style="text-align:left">urgencias respiratorias por establecimiento, causa y día</td>
@@ -122,6 +174,25 @@ calibración, y en las tres ciudades del estudio la cobertura es nula o casi.</p
   ciudades del mundo. Pide llave, así que va del lado de Python.</li>
 </ul>
 
+<h3>Las 16 del estudio y las 84 del mapa</h3>
+
+<p>El mapa muestra dos cosas distintas y conviene no confundirlas. Las
+<strong>16 estaciones del estudio</strong> traen serie horaria, los tres estados de
+validación de SINCA por separado, meteorología, rosa de contaminación y meteograma: son
+las que sostienen el análisis. Los <strong>puntos chicos son las otras 84 estaciones de
+la red nacional</strong> que miden MP2.5, y de ellas hay una sola cosa: la media mensual.
+No tienen rosa, no tienen meteograma y <strong>no entran en ningún promedio de ciudad ni
+en el análisis semanal</strong>.</p>
+
+<p>Están porque un mapa de Chile con tres puntos no dice «el estudio son tres ciudades»,
+dice «en el resto del país no se mide». SINCA tiene <strong>213 estaciones en las 16
+regiones y 111 miden MP2.5</strong>; 10 de esas declaran el parámetro y devuelven la serie
+completa vacía, y 17 ya son del estudio. Quedan 84.</p>
+
+<p>El detalle de los umbrales —20 días para que un mes se muestre, 300 metros para decidir
+que dos coordenadas son la misma estación— está en
+<code>docs/calidad/red_nacional_mapa.md</code>.</p>
+
 <h2>Las reglas que el sitio aplica</h2>
 
 <ol class="reglas">
@@ -165,11 +236,11 @@ solo las demás (<em>leave-one-station-out</em>).</p>
  <thead><tr><th style="text-align:left">Ciudad</th><th>R² del modelo</th>
    <th>R² del promedio de vecinas</th><th style="text-align:left">Veredicto</th></tr></thead>
  <tbody>
-  <tr><td>Santiago (mediana de 10)</td><td>0,533</td><td>0,750</td>
+  <tr><td>Santiago (mediana de 10)</td><td class="n">0,533</td><td class="n">0,750</td>
     <td style="text-align:left">el modelo pierde en las diez</td></tr>
-  <tr><td>Talcahuano</td><td>0,326</td><td>0,403</td>
+  <tr><td>Talcahuano</td><td class="n">0,326</td><td class="n">0,403</td>
     <td style="text-align:left">también pierde</td></tr>
-  <tr><td>Las Condes</td><td>−0,010</td><td>−0,091</td>
+  <tr><td>Las Condes</td><td class="n">−0,010</td><td class="n">−0,091</td>
     <td style="text-align:left">impredecible por cualquiera de los dos</td></tr>
  </tbody>
 </table>
@@ -223,7 +294,7 @@ python -m http.server 8000 --directory sitio</code></pre>
 <footer>
  Estudio ecol&oacute;gico observacional &middot; <b>asociaci&oacute;n, no causalidad</b><br>
  Aire SINCA (MMA) &middot; salud DEIS (MINSAL) &middot; poblaci&oacute;n INE &middot; le&ntilde;a CASEN &middot;
- meteorolog&iacute;a <a href="https://open-meteo.com/">Open-Meteo</a> &middot; cartograf&iacute;a OSM/CARTO
+ meteorolog&iacute;a <a href="https://open-meteo.com/">Open-Meteo</a> &middot; cartograf&iacute;a Esri/OSM
 </footer>
 
 <script src="assets/js/comun.js"></script>

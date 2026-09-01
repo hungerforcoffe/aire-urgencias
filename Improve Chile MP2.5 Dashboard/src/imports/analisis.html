@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es" data-tema="claro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Análisis estadístico · Aire y Urgencias</title>
+<meta name="description" content="Asociación entre MP2.5 y consultas de urgencia respiratoria en Santiago, Talcahuano y Coyhaique, 1.350 semanas entre 2018 y 2026.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="assets/css/estilo.css">
+</head>
+<body>
+
+<!-- ── Barra de navegación ─────────────────────────────────────────── -->
+<div class="barra">
+ <a class="marca" href="index.html">
+  Aire<s>·</s>Urgencias
+ </a>
+ <nav>
+  <a href="index.html">Red MP2.5</a>
+  <a href="analisis.html" class="activo">Análisis</a>
+  <a href="fuentes.html">Metodología</a>
+ </nav>
+ <div class="estado">
+  <span>DEIS + SINCA</span>
+  <span><b id="e-semanas">—</b> semanas</span>
+  <span>corte <b id="e-corte">—</b></span>
+ </div>
+ <button class="tema" id="btn-tema" aria-label="Cambiar entre tema claro y oscuro">
+  <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+   <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.5v11a5.5 5.5 0 010-11z"/></svg>
+ </button>
+</div>
+
+<!-- ── Encabezado de sección ─────────────────────────────────────── -->
+<div style="background:var(--navy); color:#fff; padding:28px 24px 24px;">
+ <div style="max-width:900px; margin:0 auto;">
+  <div style="font-family:var(--mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.1em; color:var(--celeste); margin-bottom:8px;">
+   Estudio ecológico observacional · 2018–2026
+  </div>
+  <h1 style="font-family:var(--serif); font-size:1.7rem; font-weight:700; line-height:1.2; margin-bottom:10px;">
+   MP2.5 y urgencias respiratorias
+  </h1>
+  <p style="font-size:.9rem; color:rgba(255,255,255,0.65); max-width:560px; line-height:1.6; margin:0;">
+   Correlación semanal entre concentración de material particulado fino y consultas de
+   urgencia en tres ciudades chilenas. Anomalía estacional para aislar el calendario.
+  </p>
+ </div>
+</div>
+
+<!-- ── Controles ─────────────────────────────────────────────────── -->
+<div class="controles">
+ <div class="campo">
+  <label for="sel-ciudad">Ciudad</label>
+  <select id="sel-ciudad"></select>
+ </div>
+ <div class="campo">
+  <label for="sel-rezago">Rezago del MP2.5</label>
+  <select id="sel-rezago">
+   <option value="0">misma semana</option>
+   <option value="1" selected>1 semana antes</option>
+   <option value="2">2 semanas antes</option>
+  </select>
+ </div>
+ <div class="campo">
+  <label>Serie</label>
+  <div class="conmutador" id="modo">
+   <button data-modo="anomalia" aria-pressed="true">Anomalía</button>
+   <button data-modo="bruto" aria-pressed="false">Bruto</button>
+  </div>
+ </div>
+ <div style="margin-left:auto; display:flex; align-items:flex-end;">
+  <span class="tag tag-azul">1.350 semanas · 3 ciudades</span>
+ </div>
+</div>
+
+<!-- ── Indicadores KPI ───────────────────────────────────────────── -->
+<div class="indicadores" id="indicadores">
+ <!-- KPI de ejemplo (serán reemplazados por JS) -->
+ <div class="indicador">
+  <div class="kpi-etiq">Correlación r · Santiago</div>
+  <div class="kpi-val">0,04</div>
+  <div class="kpi-sub">anomalía · IC 95% −0,06 a 0,13</div>
+ </div>
+ <div class="indicador">
+  <div class="kpi-etiq">Correlación r · Talcahuano</div>
+  <div class="kpi-val">−0,01</div>
+  <div class="kpi-sub">anomalía · IC 95% incl. cero</div>
+ </div>
+ <div class="indicador">
+  <div class="kpi-etiq">Correlación r · Coyhaique</div>
+  <div class="kpi-val">0,08</div>
+  <div class="kpi-sub">anomalía · IC 95% incl. cero</div>
+ </div>
+ <div class="indicador">
+  <div class="kpi-etiq">Semanas analizadas</div>
+  <div class="kpi-val" id="kpi-semanas">—</div>
+  <div class="kpi-sub">2018 – 2026</div>
+ </div>
+</div>
+
+<!-- ── Paneles de gráficos ───────────────────────────────────────── -->
+<div class="paneles" id="paneles">
+ <!-- Placeholder: serie temporal -->
+ <div class="panel-grafico" style="grid-column: span 2;">
+  <h3>
+   <span class="icono-placeholder" style="width:28px;height:28px;font-size:.55rem;">SVG</span>
+   Serie temporal · MP2.5 y urgencias (anomalía)
+  </h3>
+  <div style="height:220px; background:var(--fondo-alt); border-radius:var(--radio); border:1px solid var(--borde); display:flex; align-items:center; justify-content:center;">
+   <span style="font-family:var(--mono); font-size:.72rem; color:var(--texto-3);">
+    Gráfico de series temporales · generado por analisis.js
+   </span>
+  </div>
+ </div>
+
+ <!-- Placeholder: dispersión -->
+ <div class="panel-grafico">
+  <h3>
+   <span class="icono-placeholder" style="width:28px;height:28px;font-size:.55rem;">SVG</span>
+   Dispersión MP2.5 vs urgencias
+  </h3>
+  <div style="height:200px; background:var(--fondo-alt); border-radius:var(--radio); border:1px solid var(--borde); display:flex; align-items:center; justify-content:center;">
+   <span style="font-family:var(--mono); font-size:.72rem; color:var(--texto-3);">
+    Scatterplot · generado por analisis.js
+   </span>
+  </div>
+ </div>
+
+ <!-- Placeholder: distribución mensual -->
+ <div class="panel-grafico">
+  <h3>
+   <span class="icono-placeholder" style="width:28px;height:28px;font-size:.55rem;">SVG</span>
+   Ciclo estacional · mediana por mes
+  </h3>
+  <div style="height:200px; background:var(--fondo-alt); border-radius:var(--radio); border:1px solid var(--borde); display:flex; align-items:center; justify-content:center;">
+   <span style="font-family:var(--mono); font-size:.72rem; color:var(--texto-3);">
+    Box-plot mensual · generado por analisis.js
+   </span>
+  </div>
+ </div>
+</div>
+
+<!-- ── Notas metodológicas ────────────────────────────────────────── -->
+<div class="franja">
+ <div class="notas">
+  <section>
+   <h3 class="alerta">El resultado, de frente</h3>
+   <p>En bruto Santiago da <b>r = 0,27</b>: parece asociación. Descontado el ciclo estacional
+    cae a <b>0,04</b> (IC 95% −0,06 a 0,13). Talcahuano queda en −0,01 y Coyhaique en 0,08.
+    <b>Los tres intervalos incluyen el cero.</b></p>
+   <p>Casi toda la correlación aparente era el calendario. A resolución semanal y con este
+    descuento, el dato <b>no distingue la asociación de su ausencia</b>.</p>
+  </section>
+  <section>
+   <h3>Por qué anomalía y no bruto</h3>
+   <p>En invierno sube el MP2.5 —leña más inversión térmica— y suben las urgencias
+    respiratorias —virus y frío—. Correlacionar las series crudas mide sobre todo que
+    <b>las dos conocen el calendario</b>.</p>
+   <p>La anomalía resta a cada semana el promedio histórico de esa misma semana del año.
+    La pregunta pasa a ser: cuando una semana trae <b>más MP2.5 que lo normal para esa
+    fecha</b>, ¿trae también más urgencias?</p>
+  </section>
+  <section>
+   <h3>El confusor sin controlar</h3>
+   <p>Las urgencias de invierno están dominadas por <b>virus respiratorios</b> (VRS,
+    influenza). No se incorporó la vigilancia del ISP, así que queda <b>declarado y
+    no corregido</b>.</p>
+   <p>Un año de epidemia fuerte aparece como anomalía positiva sin relación con el aire.</p>
+  </section>
+  <section>
+   <h3>Qué es una fila</h3>
+   <p><b>Una ciudad en una semana</b>: el MP2.5 promedio de sus estaciones y las urgencias
+    de sus establecimientos, divididas por la población proyectada del INE.</p>
+   <p>Es un <b>estudio ecológico</b>. Que una ciudad con más MP2.5 tenga más urgencias no
+    implica que las personas expuestas sean las que consultaron — eso es la falacia
+    ecológica.</p>
+  </section>
+ </div>
+</div>
+
+<!-- ── Footer ─────────────────────────────────────────────────────── -->
+<footer>
+ Estudio ecológico observacional · <b>asociación, no causalidad</b><br>
+ Urgencias <a href="https://deis.minsal.cl/">DEIS (MINSAL)</a> ·
+ Aire <a href="https://sinca.mma.gob.cl/">SINCA (MMA)</a> ·
+ Población proyecciones comunales INE
+</footer>
+
+<script>
+ const html = document.documentElement;
+ const btn = document.getElementById('btn-tema');
+ btn && btn.addEventListener('click', () => {
+  html.dataset.tema = html.dataset.tema === 'oscuro' ? 'claro' : 'oscuro';
+ });
+</script>
+<script src="assets/js/comun.js"></script>
+<script src="assets/js/analisis.js"></script>
+</body>
+</html>

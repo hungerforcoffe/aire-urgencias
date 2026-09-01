@@ -247,3 +247,92 @@ def parsear(crudo: bytes, macro: str = "") -> Serie:
             "no_validado": _num(fila[4]) if len(fila) > 4 else None,
         })
     return Serie(macro=macro, filas=filas)
+
+
+# ---------------------------------------------------------------------------
+# Coordenadas de la ficha de estacion
+# ---------------------------------------------------------------------------
+
+FICHA = "https://sinca.mma.gob.cl/index.php/estacion/index/id/{}"
+
+# Chile continental mas islas oceanicas. No es un adorno: sirve para rechazar
+# una coordenada que se leyo mal antes de que llegue al mapa. Nueva Libertad ya
+# aparecio una vez en Argentina por un huso UTM equivocado
+# (docs/calidad/correccion_coordenadas.md); la reja existe por eso.
+CAJA_CHILE = {"lat_min": -56.0, "lat_max": -17.3, "lon_min": -110.0, "lon_max": -66.0}
+
+
+def coordenadas_estacion(ficha_id: str, sesion: requests.Session | None = None
+                         ) -> tuple[float, float] | None:
+    """Latitud y longitud declaradas en la ficha de la estacion.
+
+    La ficha no publica las coordenadas como texto ni en una tabla: las pasa al
+    mapa incrustado en la propia pagina, en una llamada
+    `new google.maps.LatLng(lat, lon)`. Se leen de ahi porque es el unico sitio
+    donde SINCA las expone; el resto de la ficha habla de la estacion en prosa.
+
+    Devuelve None si la ficha no trae mapa o si el par cae fuera de Chile. Un
+    None es un dato ausente y se registra como tal: no se inventa una posicion
+    ni se reutiliza la de la comuna.
+    """
+    import re
+
+    s = sesion or requests.Session()
+    s.headers.setdefault("User-Agent", UA)
+    r = s.get(FICHA.format(ficha_id), timeout=60)
+    r.raise_for_status()
+
+    m = re.search(r"google\.maps\.LatLng\(\s*(-?\d+\.\d+)\s*,\s*(-?\d+\.\d+)\s*\)", r.text)
+    if not m:
+        log.warning("ficha %s sin coordenadas en el mapa incrustado", ficha_id)
+        return None
+
+    lat, lon = float(m.group(1)), float(m.group(2))
+    c = CAJA_CHILE
+    if not (c["lat_min"] <= lat <= c["lat_max"] and c["lon_min"] <= lon <= c["lon_max"]):
+        log.warning("ficha %s: coordenada fuera de Chile (%.5f, %.5f); se descarta",
+                    ficha_id, lat, lon)
+        return None
+    return lat, lon
+
+
+def catalogo_nacional(sesion: requests.Session | None = None, pausa: float = 0.4,
+                      solo_parametro: str | None = None) -> list[dict]:
+    """Las estaciones de las 16 regiones, con comuna, parametros y coordenadas.
+
+    Es el catalogo completo de la red, no el de las tres ciudades del estudio.
+    Con `solo_parametro="PM25"` se queda con las que miden ese contaminante.
+
+    Una region que falle no aborta el recorrido: se registra y se sigue, porque
+    perder las 15 restantes por una caida puntual seria peor que quedarse con un
+    catalogo incompleto y declarado como tal.
+    """
+    s = sesion or requests.Session()
+    s.headers.setdefault("User-Agent", UA)
+
+    out: list[dict] = []
+    for romana in REGIONES:
+        try:
+            estaciones = catalogo_region(romana, s)
+        except Exception as e:  # noqa: BLE001 — se registra y se continua
+            log.error("region %s: no se pudo listar (%s: %s)", romana, type(e).__name__, e)
+            continue
+        for e in estaciones:
+            if solo_parametro and solo_parametro not in e.parametros:
+                continue
+            coord = coordenadas_estacion(e.ficha_id, s) if e.ficha_id else None
+            out.append({
+                "region_romana": romana,
+                "region_macro": e.region,
+                "codigo": e.codigo,
+                "ficha_id": e.ficha_id,
+                "nombre": e.nombre,
+                "comuna": e.comuna,
+                "parametros": list(e.parametros),
+                "lat": coord[0] if coord else None,
+                "lon": coord[1] if coord else None,
+            })
+            if pausa:
+                time.sleep(pausa)
+        log.info("region %s: %d estaciones", romana, len(estaciones))
+    return out

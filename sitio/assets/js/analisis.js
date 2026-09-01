@@ -126,10 +126,12 @@
   }
 
   /* ================= dibujo ================= */
-  const P = { l: 46, r: 14, t: 12, b: 26 };
+  // El margen superior deja sitio para la unidad del eje: con 12 px, «µg/m³»
+  // caía encima de la marca más alta del eje y se leían las dos superpuestas.
+  const P = { l: 46, r: 14, t: 24, b: 34 };
   function ejes(w, h, xt, yt, ylab) {
     const L = AU.css("--linea"), I3 = AU.css("--tinta-3");
-    const M = 'font-family="IBM Plex Mono,monospace" font-size="9"';
+    const M = 'font-family="JetBrains Mono,ui-monospace,monospace" font-size="9"';
     let g = `<line x1="${P.l}" y1="${h - P.b}" x2="${w - P.r}" y2="${h - P.b}" stroke="${L}"/>`;
     for (const t of yt) g += `<line x1="${P.l}" y1="${t.y.toFixed(1)}" x2="${w - P.r}"
       y2="${t.y.toFixed(1)}" stroke="${L}"/>
@@ -137,7 +139,7 @@
         fill="${t.color || I3}">${t.t}</text>`;
     for (const t of xt) g += `<text x="${t.x.toFixed(1)}" y="${h - P.b + 13}"
       text-anchor="middle" ${M} fill="${I3}">${t.t}</text>`;
-    if (ylab) g += `<text x="10" y="${(P.t + 8)}" ${M} fill="${I3}">${ylab}</text>`;
+    if (ylab) g += `<text x="4" y="10" ${M} fill="${I3}">${ylab}</text>`;
     return g;
   }
   const escala = (v0, v1, p0, p1) => v => p0 + (v - v0) / (v1 - v0 || 1) * (p1 - p0);
@@ -152,10 +154,12 @@
     const maxMp = bonito(Math.max(...mps)), maxTa = bonito(Math.max(...tas));
     const X = escala(0, filas.length - 1, P.l, w - P.r);
     const Ymp = escala(0, maxMp, h - P.b, P.t), Yta = escala(0, maxTa, h - P.b, P.t);
-    // Dos magnitudes distintas sobre un mismo marco: el MP2.5 va en tinta
-    // neutra —es la serie medida— y las urgencias en el naranja de señal, que
-    // es el único color de interfaz de todo el sitio.
-    const AC = AU.css("--tinta"), E4 = AU.css("--senal");
+    // Dos magnitudes distintas sobre un mismo marco: el MP2.5 en azul (--s1) y
+    // las urgencias en naranja (--s2). Es el par categórico del sitio, elegido
+    // para seguir distinguiéndose con daltonismo y en los dos temas; el eje
+    // izquierdo se rotula en el color de su propia serie para que no haya que
+    // adivinar cuál escala corresponde a cuál línea.
+    const AC = AU.css("--s1"), E4 = AU.css("--s2");
 
     let bandas = "";
     filas.forEach((f, i) => {
@@ -181,7 +185,7 @@
       ${bandas}${ejes(w, h, xt, yt, "µg/m³")}
       ${linea("tasa_resp_100k", Yta, E4)}${linea("mp25_media", Ymp, AC)}
       <text x="${w - P.r}" y="${P.t + 8}" text-anchor="end"
-        font-family="IBM Plex Mono,monospace" font-size="9" fill="${E4}">
+        font-family="JetBrains Mono,ui-monospace,monospace" font-size="9" fill="${E4}">
         tasa /100k · máx ${maxTa.toFixed(0)}</text></svg>`;
   }
 
@@ -192,7 +196,7 @@
     const maxTa = bonito(Math.max(...c.map(x => x.tasa || 0)));
     const X = escala(1, 53, P.l, w - P.r);
     const Ymp = escala(0, maxMp, h - P.b, P.t), Yta = escala(0, maxTa, h - P.b, P.t);
-    const AC = AU.css("--tinta"), E4 = AU.css("--senal");
+    const AC = AU.css("--s1"), E4 = AU.css("--s2");
     const traza = (campo, Y, color) => `<polyline points="${c.filter(x => x[campo] !== null)
       .map(x => X(x.semana).toFixed(1) + "," + Y(x[campo]).toFixed(1)).join(" ")}"
       fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round"/>`;
@@ -206,7 +210,10 @@
   }
 
   function dispersion(par, anomalia) {
-    const w = 340, h = 210;
+    // Este panel ocupa el ancho completo, así que el lienzo se dibuja ancho. Con
+    // el viewBox de 340 de los paneles chicos, el navegador lo estiraba al
+    // cuádruple y con él las tipografías: los rótulos del eje salían enormes.
+    const w = 700, h = 320;
     if (par.x.length < 8) return '<p class="aviso">Muy pocas semanas para graficar.</p>';
     const x0 = Math.min(...par.x), x1 = Math.max(...par.x);
     const y0 = Math.min(...par.y), y1 = Math.max(...par.y);
@@ -231,8 +238,8 @@
     return `<svg class="grafico" viewBox="0 0 ${w} ${h}" role="img"
       aria-label="Dispersión entre MP2.5 y tasa de urgencias">
       ${ejes(w, h, xt, yt, anomalia ? "anomalía tasa" : "tasa /100k")}${pts}${recta}
-      <text x="${w - P.r}" y="${h - P.b + 13}" text-anchor="end"
-        font-family="IBM Plex Mono,monospace" font-size="9" fill="${AU.css("--tinta-3")}">
+      <text x="${w - P.r}" y="${h - 4}" text-anchor="end"
+        font-family="JetBrains Mono,ui-monospace,monospace" font-size="9" fill="${AU.css("--tinta-3")}">
         ${anomalia ? "anomalía MP2.5 (µg/m³)" : "MP2.5 (µg/m³)"}</text></svg>`;
   }
 
@@ -259,15 +266,15 @@
           width="${aB.toFixed(1)}" height="${Math.abs(y - y0).toFixed(1)}" fill="${col}"
           fill-opacity=".85"/>
           <text x="${(cx + dx + aB / 2).toFixed(1)}" y="${(v >= 0 ? y - 4 : y + 11).toFixed(1)}"
-          text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9"
+          text-anchor="middle" font-family="JetBrains Mono,ui-monospace,monospace" font-size="9"
           fill="${col}">${v.toFixed(2)}</text>`;
       });
       g += `<text x="${cx.toFixed(1)}" y="${h - P.b + 14}" text-anchor="middle"
-        font-family="IBM Plex Mono,monospace" font-size="9" fill="${AU.css("--tinta-3")}">
+        font-family="JetBrains Mono,ui-monospace,monospace" font-size="9" fill="${AU.css("--tinta-3")}">
         ${b.k === 0 ? "misma sem." : b.k + " sem. antes"}</text>`;
     });
     [-lim, 0, lim].forEach(v => { g += `<text x="${P.l - 5}" y="${(Y(v) + 3).toFixed(1)}"
-      text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9"
+      text-anchor="end" font-family="JetBrains Mono,ui-monospace,monospace" font-size="9"
       fill="${AU.css("--tinta-3")}">${v.toFixed(2)}</text>`; });
     return `<svg class="grafico" viewBox="0 0 ${w} ${h}" role="img"
       aria-label="Correlación por rezago, en bruto y en anomalía">${g}</svg>`;
@@ -319,8 +326,8 @@
         <h3>Las dos series, semana a semana</h3>
         <p class="sub">${nom}, ${base.length} semanas. Bandas verticales = invierno.</p>
         <div class="clave">
-          <span><i style="background:var(--tinta)"></i>MP2.5 (µg/m³)</span>
-          <span><i style="background:var(--senal)"></i>urgencias respiratorias por 100.000</span></div>
+          <span><i style="background:var(--s1)"></i>MP2.5 (µg/m³)</span>
+          <span><i style="background:var(--s2)"></i>urgencias respiratorias por 100.000</span></div>
         ${serieDoble(base)}
         <p class="lee">Suben y bajan juntas, pero <b>las dos siguen el calendario</b>: el MP2.5
           por calefacción e inversión térmica, las urgencias por circulación viral y frío.
