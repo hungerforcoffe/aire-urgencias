@@ -295,6 +295,11 @@ a{color:inherit}
 .lado svg{display:block;width:100%;height:auto;max-width:236px;margin:0 auto}
 .viento{margin-top:12px;padding-top:12px;border-top:1px solid var(--linea);
   display:flex;gap:10px;align-items:flex-start}
+/* La regla de arriba está hecha para la rosa, que sí ocupa la columna entera.
+   La brújula del viento actual vive dentro del mismo panel y quedaba estirada a
+   236 px, aplastando el texto que la explica. Es la aguja de un indicador, no
+   una figura: se queda del tamaño que declara su marcado. */
+.viento svg{width:28px;height:28px;max-width:none;margin:0;flex:none}
 .viento .txt{font-size:12.5px;color:var(--tinta-2);line-height:1.5;min-width:0}
 .viento .txt b{color:var(--tinta);font-weight:600}
 .viento .txt em{font-style:normal;display:block;font-family:var(--mono);font-size:9.5px;

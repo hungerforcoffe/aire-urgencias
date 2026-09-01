@@ -182,9 +182,11 @@ validación de SINCA por separado, meteorología, rosa de contaminación y meteo
 las que sostienen el análisis. Los <strong>puntos chicos son las otras 84 estaciones de
 la red nacional</strong> que miden MP2.5. Estas se abren igual —tienen su meteograma y su
 tabla año por año— pero salen de la serie <em>diaria</em> que publica SINCA, no de la
-horaria: por eso <strong>no tienen rosa de contaminación</strong>, que necesita cruzar cada
-hora de MP2.5 con la dirección del viento de esa misma hora. Tampoco entran en ningún
-promedio de ciudad ni en el análisis semanal.</p>
+horaria. <strong>66 de esas 84 sí tienen rosa de contaminación</strong>: para dibujarla se
+bajó aparte el par horario que hace falta —MP2.5 y dirección del viento hora por hora—, 165
+peticiones y 221 MB que no pasan por <code>hecho_medicion</code> ni por Athena. Las otras 18
+no tienen anemómetro y lo dicen. Ninguna entra en un promedio de ciudad ni en el análisis
+semanal.</p>
 
 <p>Están porque un mapa de Chile con tres puntos no dice «el estudio son tres ciudades»,
 dice «en el resto del país no se mide». SINCA tiene <strong>213 estaciones en las 16
@@ -262,7 +264,7 @@ mortalidad · datos clínicos individuales.</p>
 comercial sí hace. <strong>Pronóstico y atribución de fuentes</strong> son la razón de que la
 rosa no anime hacia dónde va el humo: para eso harían falta un inventario de emisiones
 georreferenciado y un modelo de dispersión sobre un campo de viento en grilla, y este
-proyecto tiene viento en 13 puntos. <strong>Mortalidad</strong> es la razón de que no haya
+proyecto tiene viento medido en 79 puntos sueltos. <strong>Mortalidad</strong> es la razón de que no haya
 cifra de muertes atribuibles: ese cálculo parte de un riesgo relativo importado de estudios
 de cohorte y su resultado —«N muertes que no habrían ocurrido»— es un contrafactual, o sea
 una afirmación causal, que choca de frente con la regla 1.</p>

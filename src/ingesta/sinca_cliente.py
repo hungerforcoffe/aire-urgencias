@@ -87,13 +87,46 @@ class Serie:
 
 
 def construir_macro(region: str, estacion: str, parametro: str,
-                    resolucion: str = "horario", agregacion: str = "horario") -> str:
-    """Arma el identificador de serie de Airviro.
+                    resolucion: str = "horario", agregacion: str = "horario",
+                    grupo: str = "Cal") -> str:
+    """Arma el identificador de serie de Airviro para un contaminante.
 
     Ej.: ('RM', 'D14', 'PM25') -> './RM/D14/Cal/PM25//PM25.horario.horario.ic'
     El doble slash es parte del formato, no una errata.
+
+    `grupo` separa los dos arboles de Airviro: 'Cal' son los contaminantes y
+    'Met' la meteorologia. La meteorologia NO usa el sufijo
+    `.<resolucion>.<agregacion>` de los contaminantes, asi que para esas series
+    hay que usar `macro_serie` con lo que declara la ficha, no esta funcion.
     """
-    return f"./{region}/{estacion}/Cal/{parametro}//{parametro}.{resolucion}.{agregacion}.ic"
+    return f"./{region}/{estacion}/{grupo}/{parametro}//{parametro}.{resolucion}.{agregacion}.ic"
+
+
+def macro_serie(macropath: str, macro: str) -> str:
+    """El identificador de descarga que corresponde a una serie de la ficha.
+
+    La ficha publica `macropath` y `macro` por separado —'./RM/D14/Met/WDIR' y
+    'horario_010'— y el descargador los quiere pegados con doble barra y
+    extension `.ic`.
+
+    En meteorologia hay que agregar ademas el sufijo `_spec`, y esto no es un
+    detalle: sin el, WDIR **no devuelve la serie horaria sino la rosa de
+    frecuencias** de 16 sectores, 400 bytes con HTTP 200, `application/csv` y la
+    misma cabecera `FECHA (YYMMDD);HORA (HHMM)` que una serie buena. Es la
+    regla 5 en su forma mas pura: solo se distingue mirando que la primera
+    columna sea una fecha. El nombre del sufijo sale del propio selector de
+    Airviro, que ofrece las dos variantes con estas etiquetas:
+
+        ./RM/D14/Met/WDIR//horario_010.ic        -> "rosa de los vientos"
+        ./RM/D14/Met/WDIR//horario_010_spec.ic   -> "serie de tiempo"
+
+    El numero del macro es la altura del sensor en metros ('_010' = 10 m,
+    '_000' = sin informar), y cambia de estacion en estacion. Por eso se lee de
+    la ficha y no se construye: adivinarlo es asumir esquema.
+    """
+    partes = macropath.split("/")
+    grupo = partes[3] if len(partes) > 4 else ""
+    return f"{macropath}//{macro}{'_spec' if grupo == 'Met' else ''}.ic"
 
 
 def construir_url(macro: str, desde: str, hasta: str, outtype: str = OUTTYPE_CSV) -> str:
@@ -294,6 +327,76 @@ def coordenadas_estacion(ficha_id: str, sesion: requests.Session | None = None
                     ficha_id, lat, lon)
         return None
     return lat, lon
+
+
+@dataclass(frozen=True)
+class SerieDisponible:
+    """Una serie que la ficha de estacion declara, con su rango real de fechas.
+
+    La ficha es mas informativa que el listado de region: dice de que arbol
+    cuelga la serie ('Cal' o 'Met'), con que macro se pide, y **entre que fechas
+    hay dato**. Ese rango permite saber sin descargar nada si una estacion tuvo
+    anemometro y hasta cuando, que es lo que decide si vale la pena pedirla.
+    """
+
+    grupo: str            # 'Cal' (contaminantes) o 'Met' (meteorologia)
+    parametro: str        # 'PM25', 'WDIR', 'WSPD', 'TEMP'...
+    macropath: str        # './RM/D14/Met/WDIR'
+    macro: str            # 'horario_010' o 'PM25.horario.horario'
+    desde: str            # AAMMDD
+    hasta: str            # AAMMDD
+    celdas: tuple[str, ...]  # el texto de la fila, tal como lo publica la ficha
+
+    @property
+    def macro_descarga(self) -> str:
+        return macro_serie(self.macropath, self.macro)
+
+
+def series_estacion(ficha_id: str, sesion: requests.Session | None = None
+                    ) -> list[SerieDisponible]:
+    """Todas las series que declara la ficha de una estacion.
+
+    El listado por region (`catalogo_region`) solo mira `/Cal/` y por eso la
+    meteorologia no aparecia en el catalogo: WDIR y WSPD cuelgan de `/Met/`, con
+    otro formato de macro. Esta funcion no filtra por arbol y devuelve lo que
+    haya, para que quien llame decida.
+    """
+    import html as _html
+    import re
+
+    s = sesion or requests.Session()
+    s.headers.setdefault("User-Agent", UA)
+    r = s.get(FICHA.format(ficha_id), timeout=60)
+    r.raise_for_status()
+    crudo = _html.unescape(r.text)
+
+    enlace = re.compile(
+        r"macropath=(\./[^&\"']+)&macro=([^&\"']+)&from=(\d{6})&to=(\d{6})")
+    etiqueta = re.compile(r"<[^>]+>")
+
+    vistas: set[tuple[str, str]] = set()
+    out: list[SerieDisponible] = []
+    for fila in re.split(r"<tr[^>]*>", crudo):
+        m = enlace.search(fila)
+        if not m:
+            continue
+        macropath, macro, desde, hasta = m.groups()
+        # La misma serie puede aparecer dos veces en la ficha (la fila diaria y
+        # el pie con el rango horario). Se guarda una sola vez por par.
+        if (macropath, macro) in vistas:
+            continue
+        vistas.add((macropath, macro))
+        partes = macropath.split("/")
+        if len(partes) < 5:
+            log.warning("ficha %s: macropath inesperado %r", ficha_id, macropath)
+            continue
+        celdas = tuple(
+            etiqueta.sub("", c).strip()
+            for c in re.findall(r"<td[^>]*>(.*?)</td>", fila, re.S))
+        out.append(SerieDisponible(
+            grupo=partes[3], parametro=partes[4], macropath=macropath, macro=macro,
+            desde=desde, hasta=hasta, celdas=celdas))
+    return out
 
 
 def catalogo_nacional(sesion: requests.Session | None = None, pausa: float = 0.4,

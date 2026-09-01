@@ -392,14 +392,14 @@
 
   /* La red nacional: el resto de las estaciones de SINCA que miden MP2.5.
 
-     Se dibujan más chicas y sin rótulo porque traen menos: de estas hay serie
-     diaria agregada a mes y año, pero no rosa de contaminación ni serie horaria,
-     y no pasaron por la validación de cobertura del análisis. Tampoco entran en
-     ningún promedio de ciudad ni en el análisis semanal.
+     Se dibujan más chicas y sin rótulo porque traen menos: su media mensual sale
+     de la serie diaria agregada, no pasaron por la validación de cobertura del
+     análisis, y no entran en ningún promedio de ciudad ni en el análisis semanal.
 
-     Lo que sí hacen desde la etapa 2 es **abrirse**: tienen su meteograma y su
-     tabla año por año como cualquier otra. El tamaño dice que traen menos, no
-     que sean otra clase de cosa. */
+     Pero se abren como cualquier otra —meteograma, tabla año por año— y 66 de
+     las 84 traen además su rosa de contaminación, construida con el par horario
+     de MP2.5 y dirección del viento que se bajó para eso. El tamaño dice que
+     traen menos, no que sean otra clase de cosa. */
   function dibujarNacional() {
     capaNacional.clearLayers();
     // Alejado, estas estaciones ya están dentro de las marcas agrupadas que
@@ -899,8 +899,14 @@
   }
   pintarRampa();
   $("#e-corte").textContent = meta.ultimo_mes;
-  $("#e-red").textContent = `${meta.conteos.estaciones} est · `
-    + `${meta.conteos.estaciones_con_viento} con viento`;
+  /* El recuento es el de lo que se ve, no el del estudio. Decía «16 est · 13 con
+     viento» leyendo `meta.json`, que solo describe las 16; con la red nacional
+     encima, el mapa dibuja cien estaciones y setenta y nueve tienen rosa. */
+  const conRosa = estaciones.filter(e => e.rosa).length;
+  $("#e-red").textContent = `${estaciones.length} est · ${conRosa} con viento`;
+  $("#e-red").title = `${estudio.length} del estudio `
+    + `(${meta.conteos.estaciones_con_viento} con viento) y `
+    + `${estaciones.length - estudio.length} del resto de la red`;
 
   document.addEventListener("au:tema", () => {
     teselas(); dibujarPuntos(); dibujarNacional(); rosaEnMapa(porId.get(sel), false);

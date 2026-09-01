@@ -4,7 +4,7 @@ Sitio estático que se publica en GitHub Pages. Tres páginas:
 
 | Archivo | Qué muestra |
 |---|---|
-| `index.html` | Mapa de la red y barra lateral **región → comuna → estación**, de norte a sur. El mapa se agrupa según el zoom —por región, por comuna, por estación— y cada marca lleva al nivel siguiente. Cualquier estación se abre con su meteograma y su tabla año por año; solo las 16 del estudio tienen además rosa de contaminación. Las comunas de las tres ciudades del estudio van marcadas. |
+| `index.html` | Mapa de la red y barra lateral **región → comuna → estación**, de norte a sur. El mapa se agrupa según el zoom —por región, por comuna, por estación— y cada marca lleva al nivel siguiente. Cualquier estación se abre con su meteograma y su tabla año por año, y **79 de las 100 tienen además rosa de contaminación** (13 del estudio y 66 de la red nacional); las demás dicen «sin anemómetro». Las comunas de las tres ciudades del estudio van marcadas. |
 | `analisis.html` | La asociación semanal entre MP2.5 y urgencias respiratorias, 1.350 semanas. |
 | `fuentes.html` | De dónde sale cada dato, qué APIs se usan, qué reglas se aplican y qué queda fuera. |
 
@@ -32,6 +32,22 @@ python -m src.ingesta.red_nacional catalogo      # 16 regiones, coordenadas de c
 python -m src.ingesta.red_nacional descargar     # serie diaria de MP2.5 por estación
 python -m src.procesamiento.red_nacional construir
 ```
+
+La rosa de contaminación de esas estaciones se construye aparte, porque necesita dos series
+**horarias** por estación —MP2.5 y dirección del viento— que la capa mensual no usa:
+
+```bash
+python -m src.ingesta.red_nacional sondeo        # qué series declara cada ficha, con su rango
+python -m src.ingesta.red_nacional viento        # el par horario: 164 peticiones, ~221 MB
+python -m src.procesamiento.red_nacional_rosa construir
+python -m src.procesamiento.red_nacional_rosa verificar
+```
+
+`sondeo` es un paso de metadatos que no baja ni una medición: dice, sin gastar ancho de
+banda, cuántas estaciones tienen anemómetro y hasta cuándo. También es donde se lee el macro
+exacto de cada serie, que **no se puede construir a plantilla**: lleva la altura del sensor
+y cambia de estación en estación. Los umbrales están en
+[`docs/calidad/rosa_red_nacional.md`](../docs/calidad/rosa_red_nacional.md).
 
 El exportador valida antes de escribir: si una consulta vuelve vacía, con menos filas de
 las esperadas o con una columna entera en nulo, aborta y **deja intactos los JSON
