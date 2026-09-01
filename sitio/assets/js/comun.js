@@ -35,24 +35,130 @@ const AU = (() => {
     });
   }
 
-  /* ---------- color ---------- */
+  /* ---------- color: la escala legal de MP2.5 ---------- */
   const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-  // Guías anuales OMS 2021. La escala no es decorativa: cada corte es un umbral
-  // publicado, así que el color dice en qué peldaño está la ciudad.
-  const CORTES = [5, 10, 15, 25, 35];
-  const TONOS = ["--e0", "--e1", "--e2", "--e3", "--e4", "--e5"];
-  const OMS = [
-    { v: 5,  n: "Guía OMS" }, { v: 10, n: "Meta 4" }, { v: 15, n: "Meta 3" },
-    { v: 25, n: "Meta 2" },   { v: 35, n: "Meta 1" },
+
+  /* El color de una concentración no es una escala inventada por este sitio: es
+     el ICAP2,5, el Índice de Calidad del Aire referido a Partículas que define
+     el D.S. N°12/2011 del Ministerio del Medio Ambiente en su artículo 2º letra
+     l), como una función lineal por tramos anclada en tres puntos:
+
+         ICAP   0  ->    0 µg/m³N
+         ICAP 100  ->   50
+         ICAP 500  ->  170
+
+     de donde   ICAP = 2·C                 si C <= 50
+                ICAP = 100 + (C - 50)·10/3  si C > 50
+
+     Los niveles de episodio del artículo 5º —Alerta 80, Preemergencia 110,
+     Emergencia 170— caen justo en ICAP 200, 300 y 500. Los colores son los que
+     publica SINCA para cada categoría.
+
+     ADVERTENCIA DE PERÍODO, y es la parte importante: el decreto define el ICAP
+     sobre la concentración de VEINTICUATRO HORAS. El mapa de este sitio pinta
+     MEDIAS MENSUALES, que no son la magnitud que la ley regula. Una media
+     mensual de 45 µg/m³ se pinta verde —«bueno» en la escala de 24 h— y sin
+     embargo es más del doble de la norma ANUAL, que el mismo decreto fija en 20
+     µg/m³ en su artículo 3º. El color ubica el valor en la escala legal; no
+     afirma que la estación cumpla la norma. Ver docs/calidad/escala_icap.md. */
+
+  const NORMA_ANUAL = 20;   // D.S. 12/2011 art. 3º
+  const NORMA_24H = 50;     // idem
+
+  // Categorías del art. 5º. `c` es la concentración de 24 h donde empieza cada
+  // una, `icap` su valor en el índice, `token` el color oficial de SINCA.
+  const CATEGORIAS = [
+    { c:   0, icap:   0, n: "Bueno",         token: "--icap-bueno" },
+    { c:  50, icap: 100, n: "Regular",       token: "--icap-regular" },
+    { c:  80, icap: 200, n: "Alerta",        token: "--icap-alerta" },
+    { c: 110, icap: 300, n: "Preemergencia", token: "--icap-preemergencia" },
+    { c: 170, icap: 500, n: "Emergencia",    token: "--icap-emergencia" },
   ];
-  function nivel(v) { let i = 0; while (i < CORTES.length && v >= CORTES[i]) i++; return i; }
-  function tono(v) { return (v === null || v === undefined) ? css("--sindato") : css(TONOS[nivel(v)]); }
+
+  // Líneas de referencia de los gráficos: los umbrales que la ley nombra, no
+  // una retícula decorativa elegida por ser redonda.
+  const REFERENCIAS = [
+    { v: NORMA_ANUAL, n: "norma anual" },
+    { v: NORMA_24H,   n: "norma 24 h" },
+    { v: 80,          n: "alerta" },
+    { v: 110,         n: "preemergencia" },
+    { v: 170,         n: "emergencia" },
+  ];
+
+  function icap(c) {
+    if (c === null || c === undefined || Number.isNaN(c)) return null;
+    if (c <= 0) return 0;
+    return c <= 50 ? 2 * c : 100 + (c - 50) * 10 / 3;
+  }
+
+  /* Interpolación en OKLab y no en sRGB. Mezclar el verde con el amarillo en
+     sRGB pasa por un oliva sucio que no está en la paleta de nadie; en OKLab la
+     transición conserva el croma y se ve como la rampa de SINCA. */
+  const _lin = c => (c /= 255) <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  const _gam = x => Math.round(255 * Math.min(1, Math.max(0,
+    x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(x, 1 / 2.4) - 0.055)));
+
+  function _leerRGB(txt) {
+    const t = (txt || "").trim();
+    const m = t.match(/^#?([0-9a-f]{3}|[0-9a-f]{6})$/i);
+    if (m) {
+      const h = m[1].length === 3 ? m[1].replace(/./g, c => c + c) : m[1];
+      return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16));
+    }
+    const r = t.match(/rgba?\(([^)]+)\)/i);
+    if (r) return r[1].split(/[,\s/]+/).filter(Boolean).slice(0, 3).map(x => parseInt(x, 10));
+    return [0, 0, 0];
+  }
+
+  function _aOklab(txt) {
+    const [R, G, B] = _leerRGB(txt).map(_lin);
+    const l = Math.cbrt(0.4122214708 * R + 0.5363325363 * G + 0.0514459929 * B);
+    const m = Math.cbrt(0.2119034982 * R + 0.6806995451 * G + 0.1073969566 * B);
+    const s = Math.cbrt(0.0883024619 * R + 0.2817188376 * G + 0.6299787005 * B);
+    return [0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
+            1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
+            0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s];
+  }
+
+  function _deOklab(lab) {
+    const [L, A, B] = lab;
+    const l = (L + 0.3963377774 * A + 0.2158037573 * B) ** 3;
+    const m = (L - 0.1055613458 * A - 0.0638541728 * B) ** 3;
+    const s = (L - 0.0894841775 * A - 1.2914855480 * B) ** 3;
+    return "#" + [
+      _gam( 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s),
+      _gam(-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s),
+      _gam(-0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s),
+    ].map(v => v.toString(16).padStart(2, "0")).join("");
+  }
+
+  // `getComputedStyle` es caro y `tono` se llama una vez por estación y por
+  // repintado. Las paradas se resuelven una vez por tema y se rehacen cuando el
+  // tema cambia; el listener de más abajo invalida la caché.
+  let _paradas = null;
+  const _resolverParadas = () =>
+    (_paradas ||= CATEGORIAS.map(k => [k.icap, _aOklab(css(k.token))]));
+
+  function tono(v) {
+    if (v === null || v === undefined || Number.isNaN(v)) return css("--sindato");
+    const p = _resolverParadas(), x = icap(v);
+    if (x <= p[0][0]) return _deOklab(p[0][1]);
+    for (let i = 1; i < p.length; i++) {
+      if (x <= p[i][0]) {
+        const u = (x - p[i - 1][0]) / (p[i][0] - p[i - 1][0]);
+        const a = p[i - 1][1], b = p[i][1];
+        return _deOklab([0, 1, 2].map(k => a[k] + (b[k] - a[k]) * u));
+      }
+    }
+    return _deOklab(p[p.length - 1][1]);
+  }
+
+  // La categoría legal a la que pertenece una concentración de 24 h.
   function peldano(v) {
     if (v === null || v === undefined) return "—";
-    if (v < 5) return "cumple la guía OMS";
-    for (let i = OMS.length - 1; i >= 0; i--) if (v >= OMS[i].v)
-      return i === OMS.length - 1 ? "sobre la meta 1" : "entre meta " + (5 - i) + " y meta " + (4 - i);
-    return "—";
+    let n = CATEGORIAS[0].n;
+    for (const k of CATEGORIAS) if (v >= k.c) n = k.n;
+    return n;
   }
 
   /* ---------- números y fechas ---------- */
@@ -129,6 +235,12 @@ const AU = (() => {
     document.addEventListener("DOMContentLoaded", iniciar);
   else iniciar();
 
-  return { css, tono, nivel, peldano, num, miles, MESES, mesLargo, cargar, fallo,
-           SECTORES, arco, sectorDe, vientoAhora, temaActual, CORTES, TONOS, OMS };
+  // La caché de color depende del tema, así que se invalida antes de que nadie
+  // repinte: este listener se registra al evaluar comun.js, o sea antes que los
+  // de mapa.js, que es quien redibuja al recibir el mismo evento.
+  document.addEventListener("au:tema", () => { _paradas = null; });
+
+  return { css, tono, peldano, icap, num, miles, MESES, mesLargo, cargar, fallo,
+           SECTORES, arco, sectorDe, vientoAhora, temaActual,
+           CATEGORIAS, REFERENCIAS, NORMA_ANUAL, NORMA_24H };
 })();

@@ -6,17 +6,20 @@
    títulos, Source Sans 3 para el texto y JetBrains Mono para todo número.
 
    El color sigue siendo funcional. La interfaz es azul y neutra; los únicos
-   colores que significan algo son la escala de MP2.5 (--e0..--e5, un peldaño
-   por guía anual de la OMS), las dos series del análisis (--s1 MP2.5,
-   --s2 urgencias) y el naranja de alerta (--senal).
+   colores que significan algo son la escala de MP2.5 (--icap-*), las dos series
+   del análisis (--s1 MP2.5, --s2 urgencias) y el naranja de alerta (--senal).
 
-   La escala de MP2.5 es un semáforo ordenado, no una paleta categórica: su
-   luminosidad es monótona dentro de cada tema —descendente en claro, para que
-   el peor peldaño sea el más oscuro sobre fondo blanco; ascendente en oscuro,
-   para que sea el más brillante sobre fondo marino—. Así el orden se lee
-   incluso sin distinguir los tonos, y cada peldaño va rotulado con su corte.
-   El par de series (#2563eb / #e85d1e claro, #3f86e0 / #e06a2e oscuro) está
-   verificado para daltonismo y contraste en ambos temas. */
+   La escala de MP2.5 NO la eligió este proyecto: son los cinco colores del
+   ICAP2,5 que publica SINCA, y sus cortes son los del D.S. N°12/2011 del MMA.
+   El sitio los interpola de forma continua según el índice; la fórmula y la
+   advertencia sobre el período de promediación están en comun.js y en
+   docs/calidad/escala_icap.md.
+
+   Como esos colores son fills y no tinta, NUNCA se usan como color de texto:
+   el amarillo de «Regular» sobre panel blanco da 1,33:1. Donde hay que mostrar
+   un valor coloreado se pone un punto de color junto al número, y el número va
+   en tinta. El par de series (#2563eb / #e85d1e claro, #3f86e0 / #e06a2e
+   oscuro) sí está verificado para daltonismo y contraste en ambos temas. */
 
 :root {
   /* Azules de la identidad. */
@@ -34,9 +37,24 @@
   --senal:#e85d1e; --senal-suave:rgba(232,93,30,.10);
   /* Series del análisis. Azul = MP2.5 (lo medido), naranja = urgencias. */
   --s1:#2563eb; --s2:#e85d1e;
-  /* Escala MP2.5 — guías anuales OMS 2021: 5 / 10 / 15 / 25 / 35 µg/m³. */
-  --e0:#5fb68b; --e1:#84993a; --e2:#a8781a; --e3:#b45a18; --e4:#9d2f26; --e5:#7a1f3f;
-  --sindato:#b9c6d6;
+  /* Escala MP2.5: los cinco colores oficiales del ICAP2,5 que publica SINCA.
+     Son su paleta de MARCADORES de mapa (la de la leyenda de sinca.mma.gob.cl),
+     no la de estado de estación. Las dos son oficiales; se eligió esta porque la
+     otra tiene el amarillo en #fbff00, que sobre fondo claro da 1,08:1 y
+     desaparece, y el morado en #46016b, que sobre el azul marino del tema
+     oscuro da 1,14:1 y también desaparece. Con esta, el peor caso en tema
+     oscuro es 3,78:1 y el color sirve en los dos temas sin bifurcarse.
+     Ver docs/calidad/escala_icap.md. */
+  --icap-bueno:#2eae00;          /* ICAP   0 · 0 µg/m³ 24 h */
+  --icap-regular:#f5e23d;        /* ICAP 100 · 50  — norma de 24 h */
+  --icap-alerta:#f5713d;         /* ICAP 200 · 80  — art. 5º */
+  --icap-preemergencia:#f52424;  /* ICAP 300 · 110 */
+  --icap-emergencia:#b33df5;     /* ICAP 500 · 170 */
+  --sindato:#b4b4b4;             /* «no disponible» de SINCA */
+  /* Cobertura y episodios NO son concentración y por eso no usan la escala del
+     ICAP: pintar «cobertura buena» con el verde de «aire bueno» hace que el
+     mismo color signifique dos cosas en el mismo gráfico. */
+  --cobertura-ok:#2563eb; --cobertura-baja:#e85d1e;
   /* Tipografías. */
   --serif:"Fraunces",Georgia,"Times New Roman",serif;
   --sans:"Source Sans 3",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
@@ -56,8 +74,13 @@
   --sombra:0 2px 14px rgba(0,0,0,.35);
   --senal:#ff8a4d; --senal-suave:rgba(255,138,77,.14);
   --s1:#3f86e0; --s2:#e06a2e;
-  --e0:#3a7a63; --e1:#6d8c39; --e2:#b08a28; --e3:#d98a3e; --e4:#f47a6a; --e5:#ffa3bb;
-  --sindato:#2a4368;
+  /* Los cinco del ICAP no cambian con el tema: son los oficiales y funcionan
+     sobre el azul marino (peor caso 3,78:1). Solo se ajusta el gris de «sin
+     dato», que sobre fondo oscuro tiene que ser tenue y no gris claro. */
+  --icap-bueno:#2eae00; --icap-regular:#f5e23d; --icap-alerta:#f5713d;
+  --icap-preemergencia:#f52424; --icap-emergencia:#b33df5;
+  --sindato:#3d5878;
+  --cobertura-ok:#3f86e0; --cobertura-baja:#ff8a4d;
   color-scheme: dark;
 }}
 :root[data-theme="dark"] {
@@ -70,8 +93,13 @@
   --sombra:0 2px 14px rgba(0,0,0,.35);
   --senal:#ff8a4d; --senal-suave:rgba(255,138,77,.14);
   --s1:#3f86e0; --s2:#e06a2e;
-  --e0:#3a7a63; --e1:#6d8c39; --e2:#b08a28; --e3:#d98a3e; --e4:#f47a6a; --e5:#ffa3bb;
-  --sindato:#2a4368;
+  /* Los cinco del ICAP no cambian con el tema: son los oficiales y funcionan
+     sobre el azul marino (peor caso 3,78:1). Solo se ajusta el gris de «sin
+     dato», que sobre fondo oscuro tiene que ser tenue y no gris claro. */
+  --icap-bueno:#2eae00; --icap-regular:#f5e23d; --icap-alerta:#f5713d;
+  --icap-preemergencia:#f52424; --icap-emergencia:#b33df5;
+  --sindato:#3d5878;
+  --cobertura-ok:#3f86e0; --cobertura-baja:#ff8a4d;
   color-scheme: dark;
 }
 
@@ -141,9 +169,9 @@ a{color:inherit}
 .grupo-ciudad:hover{background:var(--fondo-alt)}
 .grupo-ciudad h3{font-family:var(--serif);font-size:14px;font-weight:600}
 .grupo-ciudad .cifra{margin-left:auto;font-family:var(--mono);font-size:13px;
-  font-weight:500;font-variant-numeric:tabular-nums}
+  font-weight:500;font-variant-numeric:tabular-nums;color:var(--tinta);white-space:nowrap}
 .grupo-ciudad .meta{font-family:var(--mono);font-size:10px;color:var(--tinta-3)}
-.fila-est{display:grid;grid-template-columns:1fr 46px 62px;align-items:center;gap:8px;
+.fila-est{display:grid;grid-template-columns:1fr 58px 62px;align-items:center;gap:8px;
   padding:8px 16px;border-bottom:1px solid var(--linea);cursor:pointer;width:100%;
   background:none;border-left:2px solid transparent;text-align:left;color:inherit;
   font:inherit;transition:background .12s}
@@ -152,7 +180,14 @@ a{color:inherit}
 .fila-est .nom{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;
   text-overflow:ellipsis}
 .fila-est .val{font-family:var(--mono);font-size:12.5px;font-weight:500;text-align:right;
-  font-variant-numeric:tabular-nums}
+  font-variant-numeric:tabular-nums;color:var(--tinta);white-space:nowrap}
+/* El punto de color. Lleva borde propio porque el amarillo y el verde claro de
+   la escala oficial se pierden sobre el panel blanco sin un contorno. */
+.punto{display:inline-block;width:7px;height:7px;border-radius:50%;flex-shrink:0;
+  margin-right:5px;vertical-align:middle;border:1px solid rgba(0,0,0,.28)}
+:root[data-theme="dark"] .punto{border-color:rgba(255,255,255,.35)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .punto{
+  border-color:rgba(255,255,255,.35)}}
 .fila-est .val i{font-style:normal;font-size:9.5px;color:var(--tinta-3);font-weight:400}
 .fila-est svg{display:block}
 .sin-viento{font-family:var(--mono);font-size:8.5px;color:var(--tinta-3);letter-spacing:.04em}
@@ -262,16 +297,17 @@ tr.parcial td:first-child::after{content:" parcial";font-size:9px;letter-spacing
   border-bottom:1px solid var(--linea);flex-wrap:wrap}
 .escala .et{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;
   text-transform:uppercase;color:var(--tinta-3);white-space:nowrap}
-/* Sin `overflow:hidden`: las etiquetas de los cortes (5/10/15/25/35) cuelgan
-   por debajo de la barra y ese recorte se las comía. La esquina redondeada se
-   consigue en los peldaños de los extremos. */
-.rampa{display:flex;flex:1;min-width:190px;max-width:300px;border-radius:5px;
-  border:1px solid var(--linea)}
-.rampa div{flex:1;height:10px;position:relative}
-.rampa div:first-child{border-radius:4px 0 0 4px}
-.rampa div:last-child{border-radius:0 4px 4px 0}
-.rampa div span{position:absolute;top:14px;left:0;transform:translateX(-50%);
-  font-family:var(--mono);font-size:9px;color:var(--tinta-3)}
+/* `text-transform:uppercase` convierte la µ de «µg/m³» en M y deja escrito
+   «MG/M³», que son miligramos: mil veces la unidad real. La unidad va marcada
+   con <u> para quedar fuera de la transformación. */
+.escala .et u{text-transform:none;text-decoration:none}
+/* La rampa es un degradado continuo con las marcas de los umbrales legales
+   colgando por debajo. Nada de `overflow:hidden` acá: recortaría las etiquetas. */
+.rampa{position:relative;flex:1;min-width:200px;max-width:320px;height:10px;
+  margin-bottom:13px}
+.rampa i{display:block;height:10px;border-radius:5px;border:1px solid var(--linea)}
+.rampa span{position:absolute;top:12px;transform:translateX(-50%);
+  font-family:var(--mono);font-size:9px;color:var(--tinta-3);white-space:nowrap}
 .escala p{margin:0;font-size:12.5px;color:var(--tinta-3);flex-basis:100%;line-height:1.5}
 /* Interruptor de la capa nacional. Cuando el JSON no está queda desactivado y
    atenuado, no oculto: que se vea que la capa existe y falta generarla. */

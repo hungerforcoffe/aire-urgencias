@@ -140,6 +140,12 @@
 
   const radio = v => v === null ? 4 : 4 + Math.sqrt(v) * 2.5;
 
+  /* Un punto de color junto al número, y NUNCA el número coloreado. Los cinco
+     colores del ICAP son de relleno: el amarillo de «Regular» sobre panel
+     blanco da 1,33:1 y como tinta no se lee. El color va en la marca, el valor
+     en tinta. Ver la cabecera de estilo.css. */
+  const punto = v => `<b class="punto" style="background:${AU.tono(v)}"></b>`;
+
   function dibujarPuntos() {
     capaPuntos.clearLayers();
     const porCiudad = mapa.getZoom() < ZOOM_ESTACIONES;
@@ -254,8 +260,8 @@
         return `<button class="fila-est" data-id="${e.id}"
             aria-pressed="${sel === e.id}">
           <span class="nom">${e.nombre}</span>
-          <span class="val" style="color:${val === null ? "var(--tinta-3)" : AU.tono(val)}">
-            ${val === null ? "<i>s/d</i>" : AU.num(val, 0)}</span>
+          <span class="val">${val === null ? "<i>s/d</i>"
+            : punto(val) + AU.num(val, 0)}</span>
           ${e.rosa ? chispa(e.id, 62, 15)
                    : '<span class="sin-viento">sin viento</span>'}
         </button>`;
@@ -263,7 +269,7 @@
       return `<div class="grupo-ciudad" data-ciudad="${c.id}" role="button" tabindex="0">
           <h3>${c.nombre}</h3>
           <span class="meta">${de.length} est · ${AU.miles(c.poblacion)} hab</span>
-          <span class="cifra" style="color:${AU.tono(v)}">${AU.num(v, 1)}</span>
+          <span class="cifra">${punto(v)}${AU.num(v, 1)}</span>
         </div>${filas}`;
     }).join("");
     $("#lista").innerHTML = html;
@@ -296,8 +302,8 @@
     const L = AU.css("--linea"), T3 = AU.css("--tinta-3");
 
     let g = "";
-    // Retícula: solo las guías OMS que caben. Números en el borde, sin caja.
-    for (const o of AU.OMS) {
+    // Retícula: los umbrales legales que caben. Números en el borde, sin caja.
+    for (const o of AU.REFERENCIAS) {
       if (o.v > max) continue;
       g += `<line x1="0" y1="${Y(o.v).toFixed(1)}" x2="${w}" y2="${Y(o.v).toFixed(1)}"
         stroke="${L}" stroke-width="1"/>
@@ -416,7 +422,7 @@
     let a = alturas[0];
     const Y1 = v => y0 + (1 - v / maxV) * a;
     g += banda(a);
-    for (const o of AU.OMS) {
+    for (const o of AU.REFERENCIAS) {
       if (o.v > maxV) continue;
       g += `<line x1="${ml}" y1="${Y1(o.v).toFixed(1)}" x2="${w - mr}" y2="${Y1(o.v).toFixed(1)}"
         stroke="${L}"/><text x="${ml - 4}" y="${(Y1(o.v) + 3).toFixed(1)}" text-anchor="end"
@@ -444,7 +450,7 @@
     serie.forEach(p => { if (!p.ep) return;
       const alto = (p.ep / maxEp) * a;
       g += `<rect x="${(X(p.i) - anchoB / 2).toFixed(1)}" y="${(y0 + a - alto).toFixed(1)}"
-        width="${anchoB.toFixed(1)}" height="${alto.toFixed(1)}" fill="${AU.css("--e4")}"
+        width="${anchoB.toFixed(1)}" height="${alto.toFixed(1)}" fill="${AU.css("--icap-alerta")}"
         fill-opacity=".8"/>`; });
     g += `<text x="${ml}" y="${y0 - 1}" ${M} font-size="8.5" fill="${T3}">días &gt; 50 µg/m³
       · máx ${maxEp}</text>`;
@@ -457,7 +463,7 @@
       const u = Math.min(1, p.dias / 30);
       const alto = Math.max(1, u * a);
       const col = p.dias === 0 ? AU.css("--sindato")
-                : (p.dias >= 24 ? AU.css("--e1") : AU.css("--e3"));
+                : (p.dias >= 24 ? AU.css("--cobertura-ok") : AU.css("--cobertura-baja"));
       g += `<rect x="${(X(p.i) - anchoB / 2).toFixed(1)}" y="${(y0 + a - alto).toFixed(1)}"
         width="${anchoB.toFixed(1)}" height="${alto.toFixed(1)}" fill="${col}"
         fill-opacity="${p.dias === 0 ? .35 : .75}"/>`;
@@ -529,9 +535,9 @@
     const a = ult.length ? e.anual[ult[ult.length - 1]] : null;
     const vAhora = valorDe(e.id, t);
     let cifras = `<div><div class="k">${AU.mesLargo(claves[t])}</div>
-      <div class="v" style="color:${AU.tono(vAhora)}">${AU.num(vAhora)}</div></div>`;
+      <div class="v">${punto(vAhora)}${AU.num(vAhora)}</div></div>`;
     if (a) cifras += `<div><div class="k">Media ${ult[ult.length - 1]}</div>
-      <div class="v" style="color:${AU.tono(a.media)}">${AU.num(a.media)}</div></div>
+      <div class="v">${punto(a.media)}${AU.num(a.media)}</div></div>
       <div><div class="k">Días &gt;50</div><div class="v">${a.sobre50}</div></div>`;
     if (e.rosa) {
       const inv = e.rosa.invierno, vs = inv.filter(v => v !== null);
@@ -549,8 +555,8 @@
       lado = `<h3>Rosa de contaminación</h3>${rosaSVG(e)}
         <p style="font-size:11px;color:var(--tinta-3);margin:6px 0 0;line-height:1.45">
           Mediana horaria de invierno por sector de procedencia.
-          Máximo <b style="color:${AU.tono(mx)}">${AU.SECTORES[inv.indexOf(mx)]} ${AU.num(mx)}</b>,
-          mínimo <b style="color:${AU.tono(mn)}">${AU.SECTORES[inv.indexOf(mn)]} ${AU.num(mn)}</b>,
+          Máximo ${punto(mx)}<b>${AU.SECTORES[inv.indexOf(mx)]} ${AU.num(mx)}</b>,
+          mínimo ${punto(mn)}<b>${AU.SECTORES[inv.indexOf(mn)]} ${AU.num(mn)}</b>,
           sobre ${AU.miles(e.rosa.horas_invierno.reduce((x, y) => x + y, 0))} horas.</p>
         <div class="viento" id="viento"><div class="txt"><em>Viento ahora</em>consultando…</div></div>`;
     } else {
@@ -563,7 +569,7 @@
     for (const y of Object.keys(e.anual).map(Number).sort((p, q) => p - q)) {
       const d = e.anual[y];
       lado += `<tr class="${d.completo ? "" : "parcial"}"><td>${y}</td><td>${d.dias}</td>
-        <td style="${d.completo ? "color:" + AU.tono(d.media) : ""}">${AU.num(d.media)}</td>
+        <td>${d.completo ? punto(d.media) : ""}${AU.num(d.media)}</td>
         <td>${d.sobre50}</td></tr>`;
     }
     $("#d-lado").innerHTML = lado + "</tbody></table></div>";
@@ -595,8 +601,23 @@
   }
 
   /* ===================== arranque ===================== */
-  $("#rampa").innerHTML = AU.TONOS.map((v, i) =>
-    `<div style="background:${AU.css(v)}">${i ? `<span>${AU.CORTES[i - 1]}</span>` : ""}</div>`).join("");
+  /* La rampa es un degradado continuo del ICAP, no una fila de escalones: la
+     escala legal es una función continua y pintarla a peldaños insinuaría
+     saltos que el decreto no tiene. Se muestrea `AU.tono()` a lo largo del eje
+     de concentración —de 0 a 170, que es donde el art. 2º pone su última ancla—
+     y se rotulan los umbrales que la ley nombra. */
+  const RAMPA_MAX = 170;
+  function pintarRampa() {
+    const n = 32;
+    const paradas = Array.from({ length: n + 1 }, (_, i) =>
+      `${AU.tono(i / n * RAMPA_MAX)} ${(i / n * 100).toFixed(1)}%`).join(",");
+    const marcas = AU.REFERENCIAS.map(r =>
+      `<span style="left:${(r.v / RAMPA_MAX * 100).toFixed(1)}%" title="${r.n}">${r.v}</span>`
+    ).join("");
+    $("#rampa").innerHTML =
+      `<i style="background:linear-gradient(to right,${paradas})"></i>${marcas}`;
+  }
+  pintarRampa();
   $("#e-corte").textContent = meta.ultimo_mes;
   $("#e-red").textContent = `${meta.conteos.estaciones} est · `
     + `${meta.conteos.estaciones_con_viento} con viento`;
@@ -604,8 +625,7 @@
   document.addEventListener("au:tema", () => {
     teselas(); dibujarPuntos(); dibujarNacional(); rosaEnMapa(porId.get(sel), false);
     pintarLista(); dibujarTira(); pintarDetalle();
-    $("#rampa").innerHTML = AU.TONOS.map((v, i) =>
-      `<div style="background:${AU.css(v)}">${i ? `<span>${AU.CORTES[i - 1]}</span>` : ""}</div>`).join("");
+    pintarRampa();
   });
   addEventListener("resize", () => { dibujarTira(); mapa.invalidateSize(); });
 
