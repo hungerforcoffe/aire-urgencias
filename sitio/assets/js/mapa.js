@@ -200,11 +200,17 @@
   const capaRosa = L.layerGroup().addTo(mapa);
   // El encuadre inicial incluye la red nacional cuando está: mostrar Chile
   // entero encuadrando solo tres ciudades dejaba el país vacío a los lados.
-  const limites = L.latLngBounds(estaciones.map(e => [e.lat, e.lon]));
-  const verPais = () => mapa.fitBounds(limites, { padding: [40, 40] });
-  const cajaCiudad = c => L.latLngBounds(
-    estaciones.filter(e => e.ciudad === c).map(e => [e.lat, e.lon]));
+  const caja = xs => L.latLngBounds(xs.map(e => [e.lat, e.lon]));
+  const verPais = () => mapa.fitBounds(caja(estaciones), { padding: [40, 40] });
   verPais();
+
+  /* Volar a un conjunto de estaciones. Con una sola, `flyToBounds` recibe un
+     rectángulo de área cero y el mapa salta al zoom máximo a mirar una manzana;
+     `maxZoom` es lo que lo impide. */
+  function volarA(b, maxZoom) {
+    if (!b || !b.isValid()) return;
+    mapa.flyToBounds(b, { padding: [60, 60], maxZoom, duration: .8 });
+  }
 
   function petalo(lat, lon, sector, metros) {
     const p = [[lat, lon]];
@@ -254,27 +260,121 @@
      en tinta. Ver la cabecera de estilo.css. */
   const punto = v => `<b class="punto" style="background:${AU.tono(v)}"></b>`;
 
+  /* ===================== agregación por zoom =====================
+
+     Chile entero cabe en el zoom 4, donde un píxel son ocho kilómetros: ahí las
+     siete estaciones de Coronel caen dentro del mismo punto, y las diez de
+     Santiago también. Dibujarlas una por una a esa escala no muestra más
+     información, solo apila circunferencias sobre el mismo píxel.
+
+     Por eso el mapa tiene tres escalas y el zoom decide cuál se ve:
+
+        zoom < 7   una marca por región     — el país, 16 marcas
+        7 y 8      una marca por comuna     — las tres ciudades del estudio
+                                              cuentan como una: Santiago son
+                                              diez comunas pegadas
+        zoom ≥ 9   una marca por estación
+
+     Cada marca lleva al nivel siguiente al pincharla, así que del país a una
+     estación se llega en tres clics sin tocar el control de zoom.
+
+     La cifra de una marca agrupada es el promedio simple de las estaciones que
+     contiene: es una ayuda para leer el mapa y NUNCA una cifra del estudio. Los
+     promedios de ciudad del análisis viven en `ciudades.json`, salen de las
+     estaciones validadas y no mezclan la red nacional. */
+  const ZOOM_COMUNAS = 7;
+  const nombreCiudad = new Map(ciudades.map(c => [c.id, c.nombre]));
+
+  const nivelZoom = () => {
+    const z = mapa.getZoom();
+    return z >= ZOOM_ESTACIONES ? "estacion" : z >= ZOOM_COMUNAS ? "comuna" : "region";
+  };
+
+  /* Lo que se agrupa depende del interruptor de la capa nacional: apagada, sus
+     estaciones tampoco pueden entrar en el promedio de un grupo. Si no, el mapa
+     mostraría una cifra calculada con puntos que el usuario no está viendo. */
+  const visibles = () => (nacional && verNacional) ? estaciones : estudio;
+
+  function grupos(nivel) {
+    const g = new Map();
+    for (const e of visibles()) {
+      // Una estación del estudio pertenece a su ciudad, no a su comuna: a
+      // escala regional Santiago es un punto, no diez. `ciudad_estudio` hace lo
+      // mismo con las de la red nacional que caen dentro de una de las tres.
+      const ciudad = e.ciudad || e.ciudad_estudio || null;
+      const clave = nivel === "region" ? "r:" + e.regNombre
+        : ciudad ? "c:" + ciudad
+        : "m:" + e.regNombre + "|" + (e.comuna || "sin comuna");
+      let gr = g.get(clave);
+      if (!gr) {
+        g.set(clave, gr = {
+          nombre: nivel === "region" ? e.regNombre
+            : ciudad ? (nombreCiudad.get(ciudad) || ciudad) : (e.comuna || "Sin comuna"),
+          ciudad: nivel === "region" ? null : ciudad,
+          ests: [],
+        });
+      }
+      gr.ests.push(e);
+    }
+    for (const gr of g.values()) gr.estudio = gr.ests.some(e => e.esEstudio);
+    return [...g.values()];
+  }
+
+  function dibujarGrupos(nivel) {
+    const gs = grupos(nivel).map(gr => {
+      const vs = gr.ests.map(e => valorDe(e.id, t));
+      return Object.assign(gr, { v: promedio(vs), con: vs.filter(x => x !== null).length,
+        b: caja(gr.ests) });
+    });
+
+    for (const gr of gs) {
+      // Un grupo se marca cuando contiene la estación elegida: así, al abrir una
+      // estación desde la barra lateral con el mapa alejado, se ve dónde cayó.
+      const on = gr.ests.some(e => String(e.id) === sel), v = gr.v;
+      L.circleMarker(gr.b.getCenter(), {
+        radius: 5 + Math.sqrt(v || 0) * 1.7,
+        color: on ? AU.css("--senal") : AU.tono(v), weight: on ? 2.5 : 1.5,
+        fillColor: v === null ? "transparent" : AU.tono(v),
+        fillOpacity: v === null ? 0 : .55, dashArray: v === null ? "2 3" : null,
+      }).addTo(capaPuntos)
+        .bindTooltip(`${gr.nombre} · ${v === null ? "s/d" : AU.num(v) + " µg/m³"} · `
+          + `${gr.ests.length} est.`
+          + (gr.con < gr.ests.length ? ` · ${gr.con} midieron` : ""), { direction: "top" })
+        .on("click", () => volarA(gr.b, nivel === "region" ? ZOOM_COMUNAS + 1 : 12));
+    }
+
+    /* Rótulos, y solo donde la cartografía no los pone ya: los nombres de región
+       a escala de país, y las tres ciudades del estudio en la escala intermedia.
+       Los nombres de comuna ya vienen impresos en la capa de rótulos de Esri a
+       ese zoom, y repetirlos sería escribir dos veces lo mismo.
+
+       Van con antichoque. A escala de país las regiones del centro caen a siete
+       píxeles una de otra —Valparaíso y la Metropolitana son medio grado— y sus
+       nombres se pisan hasta que no se lee ninguno. Se colocan por prioridad,
+       primero las tres del estudio y después de norte a sur, y el que no
+       encuentra hueco se descarta: un nombre tapado no informa más que ninguno,
+       y el que se cae sigue estando en el tooltip y en la barra lateral. */
+    const puestos = [];
+    for (const gr of gs.filter(x => nivel === "region" || x.ciudad)
+      .sort((a, b) => (Number(b.estudio) - Number(a.estudio))
+        || (b.b.getCenter().lat - a.b.getCenter().lat))) {
+      const centro = gr.b.getCenter();
+      const p = mapa.latLngToContainerPoint(centro);
+      // Ancho estimado de la etiqueta: mono de 10 px más su relleno lateral.
+      const r = { x1: p.x + 11, x2: p.x + 23 + gr.nombre.length * 6,
+                  y1: p.y - 7, y2: p.y + 7 };
+      if (puestos.some(q => r.x1 < q.x2 && r.x2 > q.x1 && r.y1 < q.y2 && r.y2 > q.y1)) continue;
+      puestos.push(r);
+      L.marker(centro, { interactive: false, icon: L.divIcon({ className: "rotulo",
+        html: `<span>${gr.nombre}</span>`, iconSize: [110, 13], iconAnchor: [-11, 6] }) })
+        .addTo(capaPuntos);
+    }
+  }
+
   function dibujarPuntos() {
     capaPuntos.clearLayers();
-    const porCiudad = mapa.getZoom() < ZOOM_ESTACIONES;
-    if (porCiudad) {
-      for (const c of ciudades) {
-        const de = estaciones.filter(e => e.ciudad === c.id);
-        const vs = de.map(e => valorDe(e.id, t)).filter(v => v !== null);
-        const v = vs.length ? vs.reduce((a, b) => a + b, 0) / vs.length : null;
-        const centro = cajaCiudad(c.id).getCenter();
-        L.circleMarker(centro, { radius: 7 + Math.sqrt(v || 0) * 2, color: AU.tono(v),
-          weight: 1.5, fillColor: AU.tono(v), fillOpacity: .55 })
-          .addTo(capaPuntos)
-          .bindTooltip(`${c.nombre} · ${v === null ? "s/d" : AU.num(v) + " µg/m³"} · ` +
-            `${de.length} est.`, { direction: "top" })
-          .on("click", () => irA(c.id));
-        L.marker(centro, { interactive: false, icon: L.divIcon({ className: "rotulo",
-          html: `<span>${c.nombre}</span>`, iconSize: [88, 13], iconAnchor: [-11, 6] }) })
-          .addTo(capaPuntos);
-      }
-      return;
-    }
+    const nivel = nivelZoom();
+    if (nivel !== "estacion") { dibujarGrupos(nivel); return; }
     for (const e of estudio) {
       const v = valorDe(e.id, t), on = sel === String(e.id), r = radio(v);
       L.circleMarker([e.lat, e.lon], { radius: r, color: on ? AU.css("--senal") : AU.tono(v),
@@ -302,7 +402,10 @@
      que sean otra clase de cosa. */
   function dibujarNacional() {
     capaNacional.clearLayers();
-    if (!nacional || !verNacional) return;
+    // Alejado, estas estaciones ya están dentro de las marcas agrupadas que
+    // dibuja `dibujarPuntos`. Pintarlas además sueltas sería contar dos veces
+    // el mismo punto y devolver justo el amontonamiento que la agregación evita.
+    if (!nacional || !verNacional || nivelZoom() !== "estacion") return;
     for (const e of nacionales) {
       const v = valorDe(e.id, t);
       const on = sel === String(e.id);
@@ -322,30 +425,35 @@
     }
   }
 
-  function irA(cid) { mapa.flyToBounds(cajaCiudad(cid), { padding: [50, 50], maxZoom: 12,
-    duration: .8 }); }
-
-  /* Zoom a una comuna. Con una sola estación `fitBounds` recibe un rectángulo de
-     área cero, así que se acota el acercamiento con `maxZoom`: sin eso el mapa
-     salta al nivel máximo y se queda mirando una manzana. */
+  /* Zoom a una comuna desde la barra lateral. Va derecho a las estaciones y no
+     al nivel de comuna: quien pincha un nombre en la lista ya sabe dónde quiere
+     mirar, y dejarlo en un punto agrupado le costaría un clic de más. */
   function irAComuna(region, comuna) {
     const reg = arbol.find(r => r.nombre === region);
     const com = reg && reg.comunas.find(c => c.nombre === comuna);
     if (!com || !com.estaciones.length) return;
-    mapa.flyToBounds(L.latLngBounds(com.estaciones.map(e => [e.lat, e.lon])),
-      { padding: [60, 60], maxZoom: 13, duration: .8 });
+    volarA(caja(com.estaciones), 13);
   }
+
   function elegir(id) {
     const clave = String(id);
     sel = sel === clave ? null : clave;
-    dibujarPuntos(); dibujarNacional(); rosaEnMapa(porId.get(sel), true);
+    const e = porId.get(sel);
+    // Elegir una estación con el mapa alejado la dejaba dentro de una marca
+    // agrupada, sin nada que mirar. Si no está dibujada a esta escala, el mapa
+    // baja a buscarla.
+    if (e && nivelZoom() !== "estacion") volarA(L.latLngBounds([[e.lat, e.lon]]), 12);
+    dibujarPuntos(); dibujarNacional(); rosaEnMapa(e, true);
     pintarLista(); pintarDetalle(); dibujarTira();
     if (sel) {
       const f = document.querySelector(`.fila-est[data-id="${sel}"]`);
       if (f) f.scrollIntoView({ block: "nearest" });
     }
   }
-  mapa.on("zoomend", dibujarPuntos);
+
+  // Las dos capas dependen del zoom: la de estaciones porque decide entre región,
+  // comuna y estación, y la nacional porque a escala agrupada no se dibuja.
+  mapa.on("zoomend", () => { dibujarPuntos(); dibujarNacional(); });
 
   /* ===================== riel de estaciones ===================== */
   function chispa(id, ancho, alto) {
@@ -817,7 +925,9 @@
       $("#n-nacional").textContent = `${nacional.conteos.estaciones} est`;
       chkNacional.addEventListener("change", () => {
         verNacional = chkNacional.checked;
-        dibujarNacional();
+        // También las marcas agrupadas: dejan de contar la red nacional en su
+        // promedio, así que hay que rehacerlas, no solo esconder los puntos.
+        dibujarPuntos(); dibujarNacional();
       });
     }
   }
