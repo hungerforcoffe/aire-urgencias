@@ -40,20 +40,15 @@
   const ZOOM_ESTACIONES = 9;
   const RADIO_ROSA = 1900;          // metros del pétalo más largo
 
-  let meta, estaciones, meses, ciudades, claves;
-  try { [meta, estaciones, meses, ciudades] =
+  let meta, estudio, meses, ciudades, claves;
+  try { [meta, estudio, meses, ciudades] =
           await AU.cargar("meta", "estaciones", "mensual", "ciudades"); }
   catch (e) { AU.fallo("#d-meteograma", e); return; }
-  claves = Object.keys(meses).sort();
 
-  const porId = new Map(estaciones.map(e => [e.id, e]));
-  let t = claves.length - 1, sel = null, tocando = false, reloj = null;
-
-  /* La red nacional es una capa de contexto y se carga aparte, a propósito.
-     Si `nacional.json` no está —porque nadie corrió el exportador todavía— el
-     mapa tiene que seguir funcionando con las 16 del estudio. Por eso el fallo
-     se traga acá y no aborta el arranque: es una capa opcional, no un dato que
-     el sitio prometa. El flujo de Pages tampoco lo exige entre sus archivos. */
+  /* La red nacional se carga aparte y su fallo no aborta el arranque: es una
+     capa opcional. Si `nacional.json` no está —porque nadie corrió el
+     exportador— el mapa sigue funcionando con las 16 del estudio, y el flujo de
+     Pages tampoco lo exige entre sus archivos. */
   let nacional = null;
   try {
     nacional = await AU.cargar("nacional");
@@ -61,6 +56,33 @@
     console.info("capa nacional no disponible:", e.message);
   }
   let verNacional = true;
+
+  /* UNA sola colección de estaciones. Las 16 del estudio y las 84 del resto de
+     la red tienen la misma forma en el JSON —mismos campos, mismo bloque
+     `anual`— y la diferencia entre ellas es qué datos traen, no qué clase de
+     objeto son. `esEstudio` es lo único que las distingue, y sirve para
+     marcarlas, nunca para decidir si se pueden abrir. */
+  const nacionales = nacional ? nacional.estaciones : [];
+  for (const e of estudio) e.esEstudio = true;
+  for (const e of nacionales) e.esEstudio = false;
+  const estaciones = estudio.concat(nacionales);
+
+  /* Un solo índice mensual. Las claves de mensual.json son numéricas como
+     cadena ("238") y las de nacional.json llevan región y código ("RXV:F01"),
+     así que los dos espacios de identificadores son disjuntos y se pueden
+     fundir sin que uno pise al otro. Ambos guardan [media, días, sobre50]. */
+  if (nacional) {
+    for (const [k, m] of Object.entries(nacional.mensual)) {
+      meses[k] = Object.assign(meses[k] || {}, m);
+    }
+  }
+  claves = Object.keys(meses).sort();
+
+  // El id se normaliza a cadena en todo el mapa: las del estudio lo traen como
+  // número y las nacionales como texto, y mezclar los dos tipos en una misma
+  // Map produce búsquedas que fallan sin lanzar error.
+  const porId = new Map(estaciones.map(e => [String(e.id), e]));
+  let t = claves.length - 1, sel = null, tocando = false, reloj = null;
 
   const valorDe = (id, i) => {
     const m = meses[claves[i]]; const d = m && m[String(id)];
@@ -90,9 +112,7 @@
   const capaRosa = L.layerGroup().addTo(mapa);
   // El encuadre inicial incluye la red nacional cuando está: mostrar Chile
   // entero encuadrando solo tres ciudades dejaba el país vacío a los lados.
-  const limites = L.latLngBounds(
-    estaciones.map(e => [e.lat, e.lon])
-      .concat(nacional ? nacional.estaciones.map(e => [e.lat, e.lon]) : []));
+  const limites = L.latLngBounds(estaciones.map(e => [e.lat, e.lon]));
   const verPais = () => mapa.fitBounds(limites, { padding: [40, 40] });
   const cajaCiudad = c => L.latLngBounds(
     estaciones.filter(e => e.ciudad === c).map(e => [e.lat, e.lon]));
@@ -167,8 +187,8 @@
       }
       return;
     }
-    for (const e of estaciones) {
-      const v = valorDe(e.id, t), on = sel === e.id, r = radio(v);
+    for (const e of estudio) {
+      const v = valorDe(e.id, t), on = sel === String(e.id), r = radio(v);
       L.circleMarker([e.lat, e.lon], { radius: r, color: on ? AU.css("--senal") : AU.tono(v),
         weight: on ? 2 : 1.2, fillColor: v === null ? "transparent" : AU.tono(v),
         fillOpacity: v === null ? 0 : .72, dashArray: v === null ? "2 3" : null })
@@ -184,39 +204,41 @@
 
   /* La red nacional: el resto de las estaciones de SINCA que miden MP2.5.
 
-     Se dibujan deliberadamente en segundo plano —más chicas, con borde fino y
-     sin rótulo— porque no son lo mismo que las 16 del estudio. De estas hay
-     media mensual y nada más: no tienen rosa de contaminación, ni meteograma,
-     ni serie horaria, ni pasaron por la validación de cobertura del análisis.
-     Dibujarlas igual que las otras prometería un detalle que no existe.
+     Se dibujan más chicas y sin rótulo porque traen menos: de estas hay serie
+     diaria agregada a mes y año, pero no rosa de contaminación ni serie horaria,
+     y no pasaron por la validación de cobertura del análisis. Tampoco entran en
+     ningún promedio de ciudad ni en el análisis semanal.
 
-     Tampoco entran en ningún promedio de ciudad ni en el análisis semanal. Su
-     trabajo es responder «¿qué se mide en el resto de Chile?», que hasta ahora
-     el mapa contestaba con un país en blanco. */
+     Lo que sí hacen desde la etapa 2 es **abrirse**: tienen su meteograma y su
+     tabla año por año como cualquier otra. El tamaño dice que traen menos, no
+     que sean otra clase de cosa. */
   function dibujarNacional() {
     capaNacional.clearLayers();
     if (!nacional || !verNacional) return;
-    const mes = nacional.mensual[claves[t]] || {};
-    for (const e of nacional.estaciones) {
-      const d = mes[e.id];
-      const v = d ? d[0] : null;
+    for (const e of nacionales) {
+      const v = valorDe(e.id, t);
+      const on = sel === String(e.id);
       // Sin dato ese mes no se dibuja nada: un círculo hueco por cada estación
       // apagada convertiría el mapa en ruido. La lista de abajo sí las cuenta.
       if (v === null) continue;
+      const d = (meses[claves[t]] || {})[String(e.id)] || [];
       L.circleMarker([e.lat, e.lon], {
-        radius: 3 + Math.sqrt(v) * 1.15, color: AU.tono(v), weight: 1,
-        fillColor: AU.tono(v), fillOpacity: .5, opacity: .75,
+        radius: (on ? 5 : 3) + Math.sqrt(v) * 1.15,
+        color: on ? AU.css("--senal") : AU.tono(v), weight: on ? 2 : 1,
+        fillColor: AU.tono(v), fillOpacity: on ? .75 : .5, opacity: on ? 1 : .75,
       }).addTo(capaNacional)
-        .bindTooltip(`${e.n} · ${e.c || "—"} · ${AU.num(v)} µg/m³` +
-          `<br><i style="opacity:.6">red nacional · ${d[1]} días</i>`,
-          { direction: "top" });
+        .bindTooltip(`${e.nombre} · ${e.comuna || "—"} · ${AU.num(v)} µg/m³` +
+          `<br><i style="opacity:.6">red nacional · ${d[1] || 0} días</i>`,
+          { direction: "top" })
+        .on("click", () => elegir(e.id));
     }
   }
 
   function irA(cid) { mapa.flyToBounds(cajaCiudad(cid), { padding: [50, 50], maxZoom: 12,
     duration: .8 }); }
   function elegir(id) {
-    sel = sel === id ? null : id;
+    const clave = String(id);
+    sel = sel === clave ? null : clave;
     dibujarPuntos(); dibujarNacional(); rosaEnMapa(porId.get(sel), true);
     pintarLista(); pintarDetalle(); dibujarTira();
     if (sel) {
@@ -258,12 +280,11 @@
       const filas = de.map(e => {
         const val = valorDe(e.id, t);
         return `<button class="fila-est" data-id="${e.id}"
-            aria-pressed="${sel === e.id}">
+            aria-pressed="${sel === String(e.id)}">
           <span class="nom">${e.nombre}</span>
           <span class="val">${val === null ? "<i>s/d</i>"
             : punto(val) + AU.num(val, 0)}</span>
-          ${e.rosa ? chispa(e.id, 62, 15)
-                   : '<span class="sin-viento">sin viento</span>'}
+          ${chispa(e.id, 62, 15)}
         </button>`;
       }).join("");
       return `<div class="grupo-ciudad" data-ciudad="${c.id}" role="button" tabindex="0">
@@ -274,7 +295,7 @@
     }).join("");
     $("#lista").innerHTML = html;
     $("#lista").querySelectorAll(".fila-est").forEach(b =>
-      b.addEventListener("click", () => elegir(+b.dataset.id)));
+      b.addEventListener("click", () => elegir(b.dataset.id)));
     $("#lista").querySelectorAll(".grupo-ciudad").forEach(g => {
       const ir = () => irA(g.dataset.ciudad);
       g.addEventListener("click", ir);
@@ -292,7 +313,7 @@
     const w = Math.max(320, caja.clientWidth), h = caja.clientHeight || 86;
     const mt = 8, mb = 13;
     const red = claves.map((k, i) => {
-      const vs = estaciones.map(e => valorDe(e.id, i)).filter(v => v !== null);
+      const vs = estudio.map(e => valorDe(e.id, i)).filter(v => v !== null);
       return vs.length ? vs.reduce((a, b) => a + b, 0) / vs.length : null;
     });
     const todos = red.filter(v => v !== null);
@@ -357,6 +378,8 @@
     const mes = meses[claves[t]] || {};
     const n = Object.keys(mes).length;
     $("#reloj-sub").textContent = `${n} de ${estaciones.length} midieron`;
+    $("#reloj-sub").title = `${estudio.length} del estudio y `
+      + `${estaciones.length - estudio.length} del resto de la red`;
     dibujarPuntos(); dibujarNacional(); pintarLista(); dibujarTira();
   }
 
@@ -531,8 +554,9 @@
     $("#d-id").textContent = `${e.comuna} · est. ${e.id} · `
       + `${e.lat.toFixed(4)}° ${e.lon.toFixed(4)}°`;
 
-    const ult = Object.keys(e.anual).map(Number).filter(a => e.anual[a].completo).sort();
-    const a = ult.length ? e.anual[ult[ult.length - 1]] : null;
+    const anual = e.anual || {};
+    const ult = Object.keys(anual).map(Number).filter(a => anual[a].completo).sort();
+    const a = ult.length ? anual[ult[ult.length - 1]] : null;
     const vAhora = valorDe(e.id, t);
     let cifras = `<div><div class="k">${AU.mesLargo(claves[t])}</div>
       <div class="v">${punto(vAhora)}${AU.num(vAhora)}</div></div>`;
@@ -564,15 +588,22 @@
         Registra MP2.5 pero no tiene anemómetro ni veleta, así que no hay rosa que dibujar.
         Sigue en el mapa porque su serie de partículas es válida.</p>`;
     }
-    lado += `<h3 style="margin-top:14px">Año por año</h3><div class="scroll-x"><table><thead>
-      <tr><th>Año</th><th>Días</th><th>Media</th><th>&gt;50</th></tr></thead><tbody>`;
-    for (const y of Object.keys(e.anual).map(Number).sort((p, q) => p - q)) {
-      const d = e.anual[y];
-      lado += `<tr class="${d.completo ? "" : "parcial"}"><td>${y}</td><td>${d.dias}</td>
-        <td>${d.completo ? punto(d.media) : ""}${AU.num(d.media)}</td>
-        <td>${d.sobre50}</td></tr>`;
+    const anios = Object.keys(anual).map(Number).sort((p, q) => p - q);
+    lado += `<h3 style="margin-top:14px">Año por año</h3>`;
+    if (!anios.length) {
+      lado += `<p class="aviso">Sin resumen anual para esta estación.</p>`;
+      $("#d-lado").innerHTML = lado;
+    } else {
+      lado += `<div class="scroll-x"><table><thead>
+        <tr><th>Año</th><th>Días</th><th>Media</th><th>&gt;50</th></tr></thead><tbody>`;
+      for (const y of anios) {
+        const d = anual[y];
+        lado += `<tr class="${d.completo ? "" : "parcial"}"><td>${y}</td><td>${d.dias}</td>
+          <td>${d.completo ? punto(d.media) : ""}${AU.num(d.media)}</td>
+          <td>${d.sobre50}</td></tr>`;
+      }
+      $("#d-lado").innerHTML = lado + "</tbody></table></div>";
     }
-    $("#d-lado").innerHTML = lado + "</tbody></table></div>";
     if (e.rosa) mostrarViento(e);
   }
 
@@ -581,7 +612,7 @@
     if (!caja) return;
     try {
       const c = await AU.vientoAhora(e.lat, e.lon);
-      if (sel !== e.id) return;
+      if (sel !== String(e.id)) return;
       const dir = c.wind_direction_10m, sec = AU.sectorDe(dir);
       const v = e.rosa.invierno[AU.SECTORES.indexOf(sec)];
       caja.innerHTML = `<svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"
@@ -594,7 +625,7 @@
           ${AU.num(c.temperature_2m)} °C. Con ese sector la mediana histórica de invierno
           aquí es <b>${AU.num(v)} µg/m³</b>.</div>`;
     } catch (err) {
-      if (sel !== e.id) return;
+      if (sel !== String(e.id)) return;
       caja.innerHTML = '<div class="txt"><em>Viento ahora</em>No se pudo consultar. '
         + 'La rosa no depende de esto: sale de las mediciones ya guardadas.</div>';
     }

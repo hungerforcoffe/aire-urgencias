@@ -15,9 +15,14 @@ a `processed/` y declararse en Glue como las demás. Hoy es contexto del mapa.
 Qué sale
 --------
 Solo las estaciones que **no** son del estudio. Las 16 del estudio ya viajan en
-`estaciones.json` con su rosa, su meteograma y su serie horaria; repetirlas acá
-sería publicar dos veces el mismo dato y arriesgar que las dos copias se
-contradigan.
+`estaciones.json`; repetirlas acá sería publicar dos veces el mismo dato y
+arriesgar que las dos copias se contradigan.
+
+El registro de cada estación tiene **la misma forma que en `estaciones.json`**
+—mismos campos, mismo bloque `anual`, `rosa` en null— para que el mapa no tenga
+que saber de qué colección viene la estación que está dibujando. La serie mensual
+también guarda las mismas tres posiciones `[media, días, sobre50]`, que es lo que
+lee el panel de episodios del meteograma.
 
 Uso
 ---
@@ -38,6 +43,7 @@ import pyarrow.parquet as pq
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from src.procesamiento.red_nacional import (  # noqa: E402
     MIN_DIAS_MES,
+    SALIDA_ANIO,
     SALIDA_EST,
     SALIDA_MES,
 )
@@ -54,6 +60,7 @@ ARCHIVO = "nacional.json"
 # vacío sin que nadie se enterara.
 MIN_ESTACIONES = 40
 MIN_FILAS_MES = 2000
+MIN_FILAS_ANIO = 300
 
 
 class Vacio(Exception):
@@ -61,7 +68,7 @@ class Vacio(Exception):
 
 
 def cmd_exportar(args) -> int:
-    for ruta in (SALIDA_EST, SALIDA_MES):
+    for ruta in (SALIDA_EST, SALIDA_MES, SALIDA_ANIO):
         if not ruta.exists():
             raise SystemExit(
                 f"Falta {ruta}.\n"
@@ -69,10 +76,12 @@ def cmd_exportar(args) -> int:
 
     est = pq.read_table(SALIDA_EST).to_pandas()
     mes = pq.read_table(SALIDA_MES).to_pandas()
+    anio = pq.read_table(SALIDA_ANIO).to_pandas()
 
     nuevas = est[~est["en_estudio"]].copy()
-    mes = mes[mes["estacion_id"].isin(set(nuevas["estacion_id"]))]
-    mes = mes[mes["suficiente"]]
+    ids = set(nuevas["estacion_id"])
+    mes = mes[mes["estacion_id"].isin(ids) & mes["suficiente"]]
+    anio = anio[anio["estacion_id"].isin(ids)]
 
     # Regla 5, en el último paso: un vacío silencioso publicado es peor que un
     # error visible. Se aborta ANTES de escribir, así el archivo anterior queda
@@ -81,26 +90,56 @@ def cmd_exportar(args) -> int:
         raise Vacio(f"solo {len(nuevas)} estaciones nuevas (mínimo {MIN_ESTACIONES})")
     if len(mes) < MIN_FILAS_MES:
         raise Vacio(f"solo {len(mes)} filas estación-mes (mínimo {MIN_FILAS_MES})")
+    if len(anio) < MIN_FILAS_ANIO:
+        raise Vacio(f"solo {len(anio)} filas estación-año (mínimo {MIN_FILAS_ANIO})")
     if nuevas["lat"].isna().any() or nuevas["lon"].isna().any():
         raise Vacio("hay estaciones sin coordenada; el mapa no puede ubicarlas")
 
+    # El bloque `anual` por estación, con la misma forma que en estaciones.json.
+    anual: dict[str, dict] = {}
+    for r in anio.itertuples():
+        anual.setdefault(r.estacion_id, {})[str(int(r.anio))] = {
+            "dias": int(r.dias), "media": round(float(r.media), 1),
+            "sobre50": int(r.sobre50), "p98": round(float(r.p98), 1),
+            "completo": bool(r.completo),
+        }
+
     estaciones = [
-        {"id": r.estacion_id, "n": r.nombre, "c": r.comuna, "r": r.region_romana,
-         "lat": round(float(r.lat), 5), "lon": round(float(r.lon), 5),
-         "dias": int(r.dias_totales)}
-        for r in nuevas.sort_values("nombre").itertuples()
+        {
+            "id": r.estacion_id,
+            "nombre": r.nombre,
+            # `ciudad` es null a propósito: estas estaciones NO son del estudio y
+            # no deben entrar en ningún promedio de ciudad. `ciudad_estudio` dice
+            # si su comuna pertenece a una de las tres, y existe solo para
+            # marcarlas en la barra lateral — nunca para agregar.
+            "ciudad": None,
+            "ciudad_estudio": r.ciudad_estudio if isinstance(r.ciudad_estudio, str) else None,
+            "comuna": r.comuna,
+            "region": r.region,
+            "orden_region": int(r.orden_region),
+            "lat": round(float(r.lat), 5),
+            "lon": round(float(r.lon), 5),
+            # Sin datos horarios de viento no hay rosa. El sitio ya sabe dibujar
+            # este caso: tres de las 16 del estudio están igual.
+            "mide_viento": False,
+            "rosa": None,
+            "anual": anual.get(r.estacion_id, {}),
+        }
+        for r in nuevas.sort_values(["orden_region", "comuna", "nombre"]).itertuples()
     ]
 
+    # Tercera posición = días sobre 50 µg/m³, igual que en mensual.json, que es
+    # lo que lee el panel de episodios del meteograma.
     mensual: dict[str, dict[str, list]] = {}
     for r in mes.itertuples():
         clave = f"{int(r.anio):04d}-{int(r.mes):02d}"
-        mensual.setdefault(clave, {})[r.estacion_id] = [round(float(r.media), 1),
-                                                        int(r.dias)]
+        mensual.setdefault(clave, {})[r.estacion_id] = [
+            round(float(r.media), 1), int(r.dias), int(r.sobre50)]
 
     payload = {
         "generado": __import__("datetime").datetime.now(
             __import__("datetime").UTC).strftime("%Y-%m-%d %H:%M UTC"),
-        "fuente": "SINCA — red nacional, serie diaria de MP2.5 agregada a mes",
+        "fuente": "SINCA — red nacional, serie diaria de MP2.5 agregada a mes y año",
         "min_dias_mes": MIN_DIAS_MES,
         "conteos": {"estaciones": len(estaciones), "meses": len(mensual),
                     "del_estudio_excluidas": int(est["en_estudio"].sum())},

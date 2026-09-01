@@ -53,6 +53,7 @@ log = logging.getLogger("red-nacional-proc")
 
 SALIDA_EST = PROCESSED / "red_nacional_estacion"
 SALIDA_MES = PROCESSED / "red_nacional_mes"
+SALIDA_ANIO = PROCESSED / "red_nacional_anio"
 
 # Misma reja que el resto del sitio. Ver docs/calidad/cobertura_sitio.md.
 MIN_DIAS_MES = 20
@@ -62,6 +63,18 @@ MIN_DIAS_ANIO = 300
 # diferencia de redondeo y estrecho para dos estaciones distintas: las dos más
 # cercanas del estudio (Talcahuano) están a 1,3 km.
 MISMA_ESTACION_KM = 0.3
+
+# El código romano que usa SINCA y el nombre de la región. El orden es el del
+# recorrido de norte a sur, y es también el orden en que conviene listarlas: un
+# chileno busca su región por dónde queda, no por su número.
+REGIONES_NOMBRE = {
+    "XV": "Arica y Parinacota", "I": "Tarapacá", "II": "Antofagasta",
+    "III": "Atacama", "IV": "Coquimbo", "V": "Valparaíso",
+    "M": "Metropolitana de Santiago", "VI": "O'Higgins", "VII": "Maule",
+    "XVI": "Ñuble", "VIII": "Biobío", "IX": "La Araucanía", "XIV": "Los Ríos",
+    "X": "Los Lagos", "XI": "Aysén", "XII": "Magallanes",
+}
+ORDEN_REGION = {r: i for i, r in enumerate(REGIONES_NOMBRE)}
 
 
 def distancia_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -130,6 +143,8 @@ def cmd_construir(args) -> int:
             "codigo": e["codigo"],
             "region_macro": e["region_macro"],
             "region_romana": e["region_romana"],
+            "region": REGIONES_NOMBRE.get(e["region_romana"], e["region_romana"]),
+            "orden_region": ORDEN_REGION.get(e["region_romana"], 99),
             "nombre": e["nombre"],
             "comuna": e["comuna"],
             "lat": e["lat"],
@@ -155,8 +170,15 @@ def cmd_construir(args) -> int:
     mes["maximo"] = mes["maximo"].round(2)
     mes["suficiente"] = mes["dias"] >= MIN_DIAS_MES
 
+    # Las mismas cuatro columnas que trae el bloque `anual` de las 16 del
+    # estudio, y calculadas igual, para que el panel de detalle no tenga que
+    # saber de qué colección viene la estación que está dibujando.
     anio = (dia.groupby(["estacion_id", "anio"], as_index=False)
-               .agg(dias=("mp25", "size"), media=("mp25", "mean")))
+               .agg(dias=("mp25", "size"), media=("mp25", "mean"),
+                    sobre50=("mp25", lambda s: int((s > 50).sum())),
+                    p98=("mp25", lambda s: s.quantile(0.98))))
+    anio["media"] = anio["media"].round(2)
+    anio["p98"] = anio["p98"].round(2)
     anio["completo"] = anio["dias"] >= MIN_DIAS_ANIO
 
     est = pd.DataFrame(estaciones)
@@ -167,9 +189,10 @@ def cmd_construir(args) -> int:
     est = est.merge(resumen_dia, on="estacion_id", how="left")
     est["dias_totales"] = est["dias_totales"].fillna(0).astype(int)
 
-    asegurar(SALIDA_EST, SALIDA_MES)
+    asegurar(SALIDA_EST, SALIDA_MES, SALIDA_ANIO)
     est.to_parquet(SALIDA_EST / "red_nacional_estacion.parquet", index=False)
     mes.to_parquet(SALIDA_MES / "red_nacional_mes.parquet", index=False)
+    anio.to_parquet(SALIDA_ANIO / "red_nacional_anio.parquet", index=False)
 
     print(f"  estaciones con serie : {len(est)}")
     print(f"    de ellas del estudio: {int(est['en_estudio'].sum())}")
@@ -189,11 +212,12 @@ def cmd_construir(args) -> int:
 
 
 def cmd_verificar(args) -> int:
-    for ruta in (SALIDA_EST, SALIDA_MES):
+    for ruta in (SALIDA_EST, SALIDA_MES, SALIDA_ANIO):
         if not ruta.exists():
             raise SystemExit(f"Falta {ruta}. Corre primero `construir`.")
     est = pq.read_table(SALIDA_EST).to_pandas()
     mes = pq.read_table(SALIDA_MES).to_pandas()
+    anio = pq.read_table(SALIDA_ANIO).to_pandas()
 
     problemas = []
     if est["lat"].isna().any() or est["lon"].isna().any():
@@ -210,8 +234,16 @@ def cmd_verificar(args) -> int:
     negativos = mes[mes["media"] < 0]
     if len(negativos):
         problemas.append(f"{len(negativos)} medias negativas")
+    sin_ficha_anio = set(anio["estacion_id"]) - set(est["estacion_id"])
+    if sin_ficha_anio:
+        problemas.append(f"{len(sin_ficha_anio)} estaciones en el anual sin ficha")
+    # El p98 no puede ser menor que la media: si lo es, el percentil se calculó
+    # sobre otro conjunto de filas que la media.
+    incoherentes = anio[anio["p98"] < anio["media"]]
+    if len(incoherentes):
+        problemas.append(f"{len(incoherentes)} años con p98 menor que la media")
 
-    print(f"  estaciones {len(est)}   filas mes {len(mes)}")
+    print(f"  estaciones {len(est)}   filas mes {len(mes)}   filas año {len(anio)}")
     print(f"  rango de medias mensuales: {mes['media'].min():.1f} a {mes['media'].max():.1f} µg/m³")
     print(f"  periodo: {mes['anio'].min()} a {mes['anio'].max()}")
     print("  problemas:", "ninguno" if not problemas else "")
