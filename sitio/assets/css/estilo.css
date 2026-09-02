@@ -28,6 +28,11 @@
   /* Superficies. */
   --fondo:#f0f5fb; --fondo-alt:#e4edf8; --panel:#ffffff; --panel-2:#f7faff;
   --hundido:#e4edf8;
+  /* Superficies de la barra lateral. Van aparte de --panel/--panel-2 porque
+     esos dos están a 1,5% de luminancia en claro y a menos en oscuro, y aquí
+     hacen falta tres escalones que se distingan de un vistazo: región abierta,
+     comuna y estación. Luminancia 0,73 / 0,88 / 1,00. */
+  --riel-region-on:#cfe0f7; --riel-comuna:#eaf2fc; --riel-est:#ffffff;
   /* Tinta. */
   --tinta:#0c1c30; --tinta-2:#3d5a7a; --tinta-3:#7a99b8;
   --linea:rgba(26,74,138,.15); --linea-2:rgba(26,74,138,.35);
@@ -69,6 +74,11 @@
   --celeste:#7db4f5; --celeste-c:#1e3a5f;
   --fondo:#07111f; --fondo-alt:#0c1b30; --panel:#0d2040; --panel-2:#102548;
   --hundido:#050d18;
+  /* Los mismos tres escalones en oscuro, y aquí es donde de verdad hacían
+     falta: los tokens de superficie caen todos entre 0,010 y 0,019 de
+     luminancia, que sobre negro es indistinguible. Estos van 0,058 / 0,022 /
+     0,010, o sea el encabezado de región abierta es seis veces la estación. */
+  --riel-region-on:#1e4479; --riel-comuna:#13294c; --riel-est:#0a1930;
   --tinta:#ddeeff; --tinta-2:#7da8cc; --tinta-3:#4a6e8a;
   --linea:rgba(96,165,250,.12); --linea-2:rgba(96,165,250,.30);
   --sombra:0 2px 14px rgba(0,0,0,.35);
@@ -88,6 +98,11 @@
   --celeste:#7db4f5; --celeste-c:#1e3a5f;
   --fondo:#07111f; --fondo-alt:#0c1b30; --panel:#0d2040; --panel-2:#102548;
   --hundido:#050d18;
+  /* Los mismos tres escalones en oscuro, y aquí es donde de verdad hacían
+     falta: los tokens de superficie caen todos entre 0,010 y 0,019 de
+     luminancia, que sobre negro es indistinguible. Estos van 0,058 / 0,022 /
+     0,010, o sea el encabezado de región abierta es seis veces la estación. */
+  --riel-region-on:#1e4479; --riel-comuna:#13294c; --riel-est:#0a1930;
   --tinta:#ddeeff; --tinta-2:#7da8cc; --tinta-3:#4a6e8a;
   --linea:rgba(96,165,250,.12); --linea-2:rgba(96,165,250,.30);
   --sombra:0 2px 14px rgba(0,0,0,.35);
@@ -180,10 +195,14 @@ a{color:inherit}
   border-bottom:1px solid var(--linea);border-left:3px solid transparent;
   background:var(--panel);cursor:pointer;position:sticky;top:38px;z-index:1}
 .grupo-region:hover{background:var(--panel-2)}
-.grupo-region[aria-expanded="true"]{background:var(--fondo-alt);
+.grupo-region[aria-expanded="true"]{background:var(--riel-region-on);
   border-left-color:var(--azul-medio);border-bottom-color:var(--linea-2)}
-.grupo-region[aria-expanded="true"] h3{color:var(--azul-medio)}
-.grupo-region[aria-expanded="true"]:hover{background:var(--hundido)}
+/* Sobre la banda abierta el nombre va en tinta plena y no en azul: el azul
+   --azul-medio sobre este fondo da 2,7:1 en oscuro y un encabezado no puede
+   quedarse ahí. El azul sigue estando, en la barra izquierda y en el chevrón. */
+.grupo-region[aria-expanded="true"] h3{color:var(--tinta)}
+.grupo-region[aria-expanded="true"] .meta{color:var(--tinta-2)}
+.grupo-region[aria-expanded="true"]:hover{background:var(--celeste-c)}
 /* Nombre y recuento apilados: «Metropolitana de Santiago» y «Arica y
    Parinacota» no caben en una línea a 290 px junto a la cifra. */
 .grupo-region .txt{flex:1;min-width:0;display:block}
@@ -205,7 +224,7 @@ a{color:inherit}
    Lo que sí se cumple en los dos temas es lo que importa: el encabezado de una
    región abierta es el más oscuro de los cuatro y se despega de su contenido. */
 .grupo-comuna{display:flex;align-items:baseline;gap:7px;padding:7px 14px 5px 22px;
-  border-bottom:1px solid var(--linea);cursor:pointer;background:var(--panel-2);
+  border-bottom:1px solid var(--linea);cursor:pointer;background:var(--riel-comuna);
   border-left:3px solid transparent}
 .grupo-comuna:hover{background:var(--fondo-alt)}
 .grupo-comuna h4{margin:0;font-family:var(--sans);font-size:12.5px;font-weight:600;
@@ -225,14 +244,19 @@ a{color:inherit}
   border:1px solid var(--celeste-c);border-radius:99px;padding:1px 5px;order:3;
   margin-left:6px}
 .grupo-comuna.es-estudio .cifra{order:4}
+/* `border:0` primero, y no es decorativo: esto es un <button> y el navegador le
+   pone su propio borde. Al fijar solo `border-bottom` y `border-left` quedaban
+   vivos el de arriba y el de la derecha, que en tema oscuro salen claros y
+   dibujaban un marco blanco alrededor de cada estación. */
 .fila-est{display:grid;grid-template-columns:1fr 58px 62px;align-items:center;gap:8px;
-  padding:6px 14px 6px 30px;border-bottom:1px solid var(--linea);cursor:pointer;width:100%;
-  background:none;border-left:3px solid transparent;text-align:left;color:inherit;
+  padding:6px 14px 6px 30px;cursor:pointer;width:100%;
+  background:var(--riel-est);border:0;border-bottom:1px solid var(--linea);
+  border-left:3px solid transparent;text-align:left;color:inherit;
   font:inherit;transition:background .12s}
 /* Las estaciones que no son del estudio traen menos —serie diaria, sin rosa— y
    el nombre va un punto más tenue para decirlo sin ocupar una columna. */
 .fila-est.es-red .nom{color:var(--tinta-2)}
-.fila-est:hover{background:var(--fondo-alt)}
+.fila-est:hover{background:var(--riel-comuna)}
 .fila-est[aria-pressed="true"]{background:var(--senal-suave);border-left-color:var(--senal)}
 .fila-est .nom{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;
   text-overflow:ellipsis}
