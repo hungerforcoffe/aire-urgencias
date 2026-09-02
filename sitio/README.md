@@ -89,7 +89,7 @@ del perfil local (`~/.aws/credentials`) únicamente en el paso de exportación.
 | Qué | De dónde | Para qué |
 |---|---|---|
 | Leaflet 1.9.4 | cdnjs | el mapa |
-| Teselas | Esri Canvas (gris claro / gris oscuro) | la cartografía de fondo |
+| Teselas | Esri Canvas (gris claro / gris oscuro), sobre datos de HERE, Garmin y OpenStreetMap | la cartografía de fondo |
 | Fraunces, Source Sans 3, JetBrains Mono | Google Fonts | tipografía |
 | Open-Meteo | `api.open-meteo.com` | viento y temperatura actuales |
 

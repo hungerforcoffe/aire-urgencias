@@ -35,8 +35,14 @@
     light: ESRI + "World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
     dark:  ESRI + "World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
   };
-  const ATRIB = '<a href="https://www.esri.com/">Esri</a>, HERE, Garmin, '
-    + '<a href="https://www.openstreetmap.org/copyright">OSM</a> · estaciones SINCA';
+  /* Créditos. HERE y Garmin son proveedores de datos de Esri y su licencia pide
+     nombrarlos —el `copyrightText` del servicio dice «Esri, HERE, Garmin, (c)
+     OpenStreetMap contributors»—, así que no se quitan. Lo que faltaba era la
+     palabra «Cartografía»: sin ella los cuatro nombres parecen fuentes del dato
+     de aire, y el único que mide aire acá es SINCA. */
+  const ATRIB = 'Cartografía <a href="https://www.esri.com/">Esri</a>, HERE, Garmin y '
+    + '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    + ' · Estaciones SINCA';
   const ZOOM_ESTACIONES = 9;
   const RADIO_ROSA = 1900;          // metros del pétalo más largo
 
@@ -176,6 +182,9 @@
      y se pueda desplazar hasta ella. Ver `elegir`. */
   const abiertas = new Set();
 
+  // Todas las estaciones de una región, sin el nivel de comuna en medio.
+  const estacionesDe = reg => reg.comunas.flatMap(c => c.estaciones);
+
   const promedio = xs => {
     const vs = xs.filter(v => v !== null && v !== undefined);
     return vs.length ? vs.reduce((a, b) => a + b, 0) / vs.length : null;
@@ -214,6 +223,25 @@
   function volarA(b, maxZoom) {
     if (!b || !b.isValid()) return;
     mapa.flyToBounds(b, { padding: [60, 60], maxZoom, duration: .8 });
+  }
+
+  /* Traer a la vista la estación elegida, y solo si hace falta.
+
+     Antes la condición era la escala del mapa —se volaba únicamente desde el
+     zoom agrupado— y eso dejaba un hueco: ya dentro de una comuna, elegir en la
+     lista una estación de otra región no movía nada, porque el mapa «ya estaba
+     mirando estaciones». La fila quedaba marcada y el punto fuera de pantalla.
+     Lo que importa no es a qué escala está el mapa sino si la estación se ve.
+
+     El margen negativo evita contar como visible una estación pegada al borde o
+     debajo de los controles de zoom: se ve, pero a medias. */
+  function asomar(e) {
+    if (!e) return;
+    const p = L.latLng(e.lat, e.lon);
+    if (nivelZoom() === "estacion" && mapa.getBounds().pad(-0.1).contains(p)) return;
+    // Se conserva la escala actual si ya era de estación: quien se acercó a
+    // nivel de calle no quiere que el mapa se aleje al cambiar de estación.
+    volarA(L.latLngBounds([p]), Math.max(mapa.getZoom(), 12));
   }
 
   function petalo(lat, lon, sector, metros) {
@@ -344,7 +372,7 @@
         .bindTooltip(`${gr.nombre} · ${v === null ? "s/d" : AU.num(v) + " µg/m³"} · `
           + `${gr.ests.length} est.`
           + (gr.con < gr.ests.length ? ` · ${gr.con} midieron` : ""), { direction: "top" })
-        .on("click", () => volarA(gr.b, nivel === "region" ? ZOOM_COMUNAS + 1 : 12));
+        .on("click", () => volarA(gr.b, nivel === "region" ? ZOOM_COMUNAS + 1 : 13));
     }
 
     /* Rótulos, y solo donde la cartografía no los pone ya: los nombres de región
@@ -439,14 +467,23 @@
     volarA(caja(com.estaciones), 13);
   }
 
+  /* Zoom a una región. Mismo encuadre que pinchar su marca en el mapa, para que
+     el mismo destino se alcance igual desde la lista o desde la cartografía.
+
+     Encuadra TODAS sus estaciones, incluidas las de la red nacional aunque su
+     capa esté apagada: la barra lateral las sigue listando, así que el vuelo
+     enmarca lo mismo que se está leyendo. */
+  function irARegion(nombre) {
+    const reg = arbol.find(r => r.nombre === nombre);
+    if (!reg) return;
+    volarA(caja(estacionesDe(reg)), ZOOM_COMUNAS + 1);
+  }
+
   function elegir(id) {
     const clave = String(id);
     sel = sel === clave ? null : clave;
     const e = porId.get(sel);
-    // Elegir una estación con el mapa alejado la dejaba dentro de una marca
-    // agrupada, sin nada que mirar. Si no está dibujada a esta escala, el mapa
-    // baja a buscarla.
-    if (e && nivelZoom() !== "estacion") volarA(L.latLngBounds([[e.lat, e.lon]]), 12);
+    asomar(e);
     // Con la barra cerrada de arranque, elegir una estación en el mapa dejaba
     // la lista sin ninguna fila que marcar. Se abre su región para que la fila
     // exista; abrirla es lo que además permite el scrollIntoView de más abajo.
@@ -508,7 +545,7 @@
         aria-pressed="${sel === String(e.id)}" title="${e.nombre} · ${e.comuna || ""}">
       <span class="nom">${e.nombre}</span>
       <span class="val">${val === null ? "<i>s/d</i>"
-        : punto(val) + AU.num(val, 0)}</span>
+        : punto(val) + AU.num(val, 1)}</span>
       ${chispa(e.id, 62, 15)}
     </button>`;
   }
@@ -516,9 +553,9 @@
   function pintarLista() {
     const html = arbol.map(reg => {
       const abierta = abiertas.has(reg.nombre);
-      const vReg = promedio(reg.comunas.flatMap(
-        c => c.estaciones.map(e => valorDe(e.id, t))));
-      const nEst = reg.comunas.reduce((n, c) => n + c.estaciones.length, 0);
+      const deRegion = estacionesDe(reg);
+      const vReg = promedio(deRegion.map(e => valorDe(e.id, t)));
+      const nEst = deRegion.length;
 
       const cuerpo = !abierta ? "" : reg.comunas.map(com => {
         const vCom = promedio(com.estaciones.map(e => valorDe(e.id, t)));
@@ -551,9 +588,14 @@
       el.addEventListener("keydown", ev => {
         if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); fn(); } });
     };
+    // Cerrar es ordenar la lista, no viajar: por eso el vuelo va solo al abrir.
+    // Y va acá, en el manejador del clic, y no dentro de un «abrir región»
+    // compartido: `elegir` también abre la región de la estación elegida, y ahí
+    // el encuadre lo decide `asomar`. Los dos vuelos se pelearían.
     $("#lista").querySelectorAll(".grupo-region").forEach(g => activar(g, () => {
       const n = g.dataset.region;
-      if (abiertas.has(n)) abiertas.delete(n); else abiertas.add(n);
+      if (abiertas.has(n)) abiertas.delete(n);
+      else { abiertas.add(n); irARegion(n); }
       pintarLista();
     }));
     $("#lista").querySelectorAll(".grupo-comuna").forEach(g => activar(g, () =>
