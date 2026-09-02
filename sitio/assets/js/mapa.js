@@ -166,11 +166,15 @@
       }));
   })();
 
-  // Regiones desplegadas. Arrancan abiertas las que tienen estaciones del
-  // estudio, que es de lo que trata el capstone; el resto del país se despliega
-  // a pedido para que la lista siga siendo recorrible.
-  const abiertas = new Set(
-    arbol.filter(r => r.comunas.some(c => c.estudio)).map(r => r.nombre));
+  /* Regiones desplegadas. Arrancan TODAS cerradas: la barra abre como lo que
+     es, un índice de dieciséis regiones de norte a sur que cabe de una mirada.
+     Antes se abrían solas las tres del estudio y la lista empezaba con sesenta
+     y tantas filas de tres alturas distintas, sin que se viera dónde terminaba
+     una región y empezaba la siguiente.
+
+     Se abren solas en un caso: al elegir una estación, para que su fila exista
+     y se pueda desplazar hasta ella. Ver `elegir`. */
+  const abiertas = new Set();
 
   const promedio = xs => {
     const vs = xs.filter(v => v !== null && v !== undefined);
@@ -443,6 +447,10 @@
     // agrupada, sin nada que mirar. Si no está dibujada a esta escala, el mapa
     // baja a buscarla.
     if (e && nivelZoom() !== "estacion") volarA(L.latLngBounds([[e.lat, e.lon]]), 12);
+    // Con la barra cerrada de arranque, elegir una estación en el mapa dejaba
+    // la lista sin ninguna fila que marcar. Se abre su región para que la fila
+    // exista; abrirla es lo que además permite el scrollIntoView de más abajo.
+    if (e) abiertas.add(e.regNombre);
     dibujarPuntos(); dibujarNacional(); rosaEnMapa(e, true);
     pintarLista(); pintarDetalle(); dibujarTira();
     if (sel) {

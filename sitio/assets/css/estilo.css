@@ -167,10 +167,23 @@ a{color:inherit}
 /* Jerarquía de la barra: región > comuna > estación. La sangría izquierda es
    lo único que marca el nivel; no hay líneas de árbol ni cajas anidadas, que a
    este ancho (290 px) roban más espacio del que aclaran. */
+/* Cerrada, una región es una fila más de un índice de dieciséis y se queda
+   quieta. Abierta pasa a ser el encabezado de todo lo que viene debajo, y ahí
+   sí tiene que distinguirse de su contenido: antes iba en --panel-2 (#f7faff),
+   que sobre el --panel blanco es un 1,5% de diferencia, o sea nada.
+
+   La marca son tres señales a la vez y no solo el fondo, porque el salto de
+   fondo es mucho más tenue en el tema oscuro (#0c1b30 sobre #0d2040): barra
+   azul a la izquierda, fondo hundido y el nombre en azul. El borde transparente
+   en estado cerrado existe para que el texto no salte al abrir. */
 .grupo-region{display:flex;align-items:center;gap:8px;padding:9px 14px;
-  border-bottom:1px solid var(--linea);border-top:1px solid var(--linea);
-  background:var(--panel-2);cursor:pointer;position:sticky;top:38px;z-index:1}
-.grupo-region:hover{background:var(--fondo-alt)}
+  border-bottom:1px solid var(--linea);border-left:3px solid transparent;
+  background:var(--panel);cursor:pointer;position:sticky;top:38px;z-index:1}
+.grupo-region:hover{background:var(--panel-2)}
+.grupo-region[aria-expanded="true"]{background:var(--fondo-alt);
+  border-left-color:var(--azul-medio);border-bottom-color:var(--linea-2)}
+.grupo-region[aria-expanded="true"] h3{color:var(--azul-medio)}
+.grupo-region[aria-expanded="true"]:hover{background:var(--hundido)}
 /* Nombre y recuento apilados: «Metropolitana de Santiago» y «Arica y
    Parinacota» no caben en una línea a 290 px junto a la cifra. */
 .grupo-region .txt{flex:1;min-width:0;display:block}
@@ -184,8 +197,15 @@ a{color:inherit}
   transition:transform .15s;align-self:center}
 .grupo-region[aria-expanded="true"] .chev{transform:none;color:var(--azul-medio)}
 
+/* Cada nivel tiene su propia superficie. En tema claro forman una rampa
+   completa —región abierta 0,84 de luminancia, comuna 0,95, estación 1,00— y en
+   oscuro no: ahí la convención es que la superficie elevada aclara, así que la
+   comuna (0,019) queda por encima de la estación (0,015) en vez de debajo.
+
+   Lo que sí se cumple en los dos temas es lo que importa: el encabezado de una
+   región abierta es el más oscuro de los cuatro y se despega de su contenido. */
 .grupo-comuna{display:flex;align-items:baseline;gap:7px;padding:7px 14px 5px 22px;
-  border-bottom:1px solid var(--linea);cursor:pointer;
+  border-bottom:1px solid var(--linea);cursor:pointer;background:var(--panel-2);
   border-left:3px solid transparent}
 .grupo-comuna:hover{background:var(--fondo-alt)}
 .grupo-comuna h4{margin:0;font-family:var(--sans);font-size:12.5px;font-weight:600;
@@ -195,8 +215,10 @@ a{color:inherit}
 .grupo-comuna .cifra{margin-left:auto;font-family:var(--mono);font-size:11.5px;
   font-variant-numeric:tabular-nums;color:var(--tinta-2);white-space:nowrap}
 /* Las comunas de las tres ciudades del estudio. Marca de color, no un bloque
-   aparte: siguen donde les toca en el territorio. */
-.grupo-comuna.es-estudio{border-left-color:var(--azul-medio);background:var(--fondo-alt)}
+   aparte: siguen donde les toca en el territorio. Sin fondo propio: el relleno
+   pasó a significar «región abierta» y darle el mismo a la comuna volvería a
+   confundir los dos niveles, que es justo lo que la rampa viene a arreglar. */
+.grupo-comuna.es-estudio{border-left-color:var(--azul-medio)}
 .grupo-comuna.es-estudio h4{color:var(--azul-medio)}
 .grupo-comuna.es-estudio::after{content:"estudio";font-family:var(--mono);font-size:8px;
   letter-spacing:.07em;text-transform:uppercase;color:var(--azul-medio);
