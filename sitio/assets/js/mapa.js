@@ -191,7 +191,13 @@
   };
 
   /* ===================== mapa ===================== */
-  const mapa = L.map("mapa", { zoomControl: true, minZoom: 3, attributionControl: true });
+  /* `worldCopyJump` no es un adorno. El mundo se repite al arrastrar en
+     horizontal, pero los marcadores viven en UNA sola copia: al dar la vuelta
+     entera se llegaba a un Chile de teselas sin una sola estación encima —el
+     mapa completo y los datos desaparecidos, sin ningún error—. Con esto los
+     marcadores saltan a la copia que se está mirando. */
+  const mapa = L.map("mapa", { zoomControl: true, minZoom: 3, attributionControl: true,
+    worldCopyJump: true });
   let capaBase = null, capaRot = null;
   function teselas() {
     const modo = AU.temaActual() === "dark" ? "dark" : "light";
@@ -616,7 +622,14 @@
       return vs.length ? vs.reduce((a, b) => a + b, 0) / vs.length : null;
     });
     const todos = red.filter(v => v !== null);
-    const max = Math.max(35, ...todos) * 1.05;
+    /* El techo tiene que contar TAMBIÉN la estación elegida. Salía solo del
+       promedio de la red —que ronda los 60— y la línea de la estación se
+       dibujaba con esa misma escala: Coyhaique llega a 160,8 y se le iban 26 de
+       sus 104 meses por encima del borde, justo los invernales, que son los que
+       importan. Un gráfico que corta sus valores altos miente sobre la forma de
+       la serie. */
+    const suyos = sel ? claves.map((k, i) => valorDe(sel, i)).filter(v => v !== null) : [];
+    const max = Math.max(35, ...todos, ...suyos) * 1.05;
     const X = i => i / (claves.length - 1) * w;
     const Y = v => mt + (1 - v / max) * (h - mt - mb);
     const L = AU.css("--linea"), T3 = AU.css("--tinta-3");
@@ -717,7 +730,10 @@
   // cobertura. El tercero decide si los dos primeros valen algo.
   function meteograma(e) {
     const w = 760, ml = 34, mr = 8, mt = 6, ejeAlto = 15;
-    const alturas = [104, 46, 30], sep = 13;
+    // Alto de los tres paneles. Subieron con la tabla anual: al sacarla de la
+    // columna lateral el gráfico se quedaba corto frente a la rosa, y 104 px
+    // para 104 meses de concentración eran pocos de todos modos.
+    const alturas = [168, 62, 40], sep = 13;
     const h = mt + alturas.reduce((a, b) => a + b + sep, 0) + ejeAlto;
     const L = AU.css("--linea"), T3 = AU.css("--tinta-3"), T2 = AU.css("--tinta-2");
     const M = 'font-family="JetBrains Mono,ui-monospace,monospace"';
@@ -847,6 +863,7 @@
         + 'izquierda o en el mapa. Se abre su meteograma —concentración, episodios y '
         + 'cobertura sobre un mismo eje— y su rosa de contaminación.</p>';
       $("#d-lado").innerHTML = "";
+      $("#d-anual").innerHTML = "";
       return;
     }
     $("#d-nombre").textContent = e.nombre;
@@ -887,21 +904,29 @@
         Registra MP2.5 pero no tiene anemómetro ni veleta, así que no hay rosa que dibujar.
         Sigue en el mapa porque su serie de partículas es válida.</p>`;
     }
+    $("#d-lado").innerHTML = lado;
+
+    /* Año por año, en su propia banda y con los años como columnas.
+
+       Apilado en la columna lateral de 280 px ocupaba 584 px de alto —el doble
+       que el meteograma— y obligaba a la rejilla a estirar la columna del
+       gráfico hasta igualarlo. Puesto en horizontal ocupa el ancho, que es lo
+       que sobraba, y deja leer un año contra el siguiente de corrido. */
     const anios = Object.keys(anual).map(Number).sort((p, q) => p - q);
-    lado += `<h3 style="margin-top:14px">Año por año</h3>`;
     if (!anios.length) {
-      lado += `<p class="aviso">Sin resumen anual para esta estación.</p>`;
-      $("#d-lado").innerHTML = lado;
+      $("#d-anual").innerHTML = "<h3>Año por año</h3>"
+        + '<p class="aviso">Sin resumen anual para esta estación.</p>';
     } else {
-      lado += `<div class="scroll-x"><table><thead>
-        <tr><th>Año</th><th>Días</th><th>Media</th><th>&gt;50</th></tr></thead><tbody>`;
-      for (const y of anios) {
-        const d = anual[y];
-        lado += `<tr class="${d.completo ? "" : "parcial"}"><td>${y}</td><td>${d.dias}</td>
-          <td>${d.completo ? punto(d.media) : ""}${AU.num(d.media)}</td>
-          <td>${d.sobre50}</td></tr>`;
-      }
-      $("#d-lado").innerHTML = lado + "</tbody></table></div>";
+      const fila = (rotulo, celda) => `<tr><th scope="row">${rotulo}</th>`
+        + anios.map(y => `<td>${celda(anual[y])}</td>`).join("") + "</tr>";
+      $("#d-anual").innerHTML = `<h3>Año por año</h3><div class="scroll-x"><table>
+        <thead><tr><th></th>${anios.map(y =>
+          `<th${anual[y].completo ? "" : ' class="parcial"'}>${y}</th>`).join("")}</tr></thead>
+        <tbody>
+          ${fila("Días con dato", d => d.dias)}
+          ${fila("Media, µg/m³", d => (d.completo ? punto(d.media) : "") + AU.num(d.media))}
+          ${fila("Días sobre 50", d => d.sobre50)}
+        </tbody></table></div>`;
     }
     if (e.rosa) mostrarViento(e);
   }
