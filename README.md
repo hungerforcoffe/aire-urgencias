@@ -4,6 +4,13 @@ Capstone de Big Data. Estudia la **asociación** entre material particulado fino
 (MP2.5) y las consultas de urgencia por causa respiratoria en tres ciudades
 chilenas.
 
+### Equipo
+- Pablo Rojas
+- 
+- Nicolás Torres
+-
+-
+
 ## Pregunta de investigación
 
 ¿Cómo se asocia la variación semanal de MP2.5 con la variación semanal de
