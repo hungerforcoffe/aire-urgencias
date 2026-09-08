@@ -23,6 +23,13 @@
   semanal.sort((a, b) => a.ciudad_id.localeCompare(b.ciudad_id) ||
                          a.semana_id.localeCompare(b.semana_id));
 
+  // Escribir en un contenedor que no existe tumbaba el script entero y con el
+  // las figuras siguientes. Se falla en silencio y se avisa por consola.
+  const pon = (sel, html) => {
+    const el = document.querySelector(sel);
+    if (el) el.innerHTML = html; else console.warn("falta el contenedor", sel);
+  };
+
   const NOMBRE = new Map(ciudades.map(c => [c.id, c.nombre]));
   let ciudad = "santiago", rezago = 1, modo = "anomalia";
 
@@ -309,7 +316,7 @@
     }
     const rTemp = pearson(tempPar.x, tempPar.y);
 
-    $("#s-fenomeno").innerHTML = `
+    pon("#s-fenomeno", `
       ${AU.figura(`MP2.5 y urgencias respiratorias por semana. ${nom}, ${base.length} semanas.`,
         serieDoble(base), {
         clave: [{ nom: "MP2.5 (µg/m³)", color: "var(--fig-s1)" },
@@ -320,9 +327,9 @@
       })}
       <p>Las dos curvas suben y bajan a la vez, todos los años. Es lo que hace evidente
         la pregunta y también lo que la vuelve difícil: <b>coincidir en el tiempo no es
-        depender una de la otra</b>.</p>`;
+        depender una de la otra</b>.</p>`);
 
-    $("#s-clima").innerHTML = `
+    pon("#s-clima", `
       ${AU.figura(`Promedio de cada semana del año, todos los años superpuestos. ${nom}.`,
         graficoClima(filas), {
         clave: [{ nom: "MP2.5", color: "var(--fig-s1)" },
@@ -334,9 +341,9 @@
       <p>La misma joroba de invierno en las tres. La temperatura es su espejo:
         cuando cae, suben el humo y las consultas. Con
         <b>r = ${rTemp === null ? "—" : rTemp.toFixed(2)}</b> entre temperatura y urgencias,
-        el frío por sí solo explica buena parte de lo que se ve arriba.</p>`;
+        el frío por sí solo explica buena parte de lo que se ve arriba.</p>`);
 
-    $("#indicadores").innerHTML = `
+    pon("#indicadores", `
       <div><div class="k">Semanas</div><div class="v">${AU.miles(base.length)}</div>
         <div class="d">${base[0] ? base[0].semana_id : "—"} a
           ${base.length ? base[base.length - 1].semana_id : "—"}</div></div>
@@ -351,9 +358,9 @@
           : "descontado el ciclo semanal"}</div></div>
       <div><div class="k">r · temperatura</div>
         <div class="v" style="color:var(--tinta-3)">${rTemp === null ? "—" : rTemp.toFixed(2)}</div>
-        <div class="d">el frío también acompaña a las dos</div></div>`;
+        <div class="d">el frío también acompaña a las dos</div></div>`);
 
-    $("#s-trampa").innerHTML = `
+    pon("#s-trampa", `
       <div class="fig-par">
         ${AU.figura(`Correlación por rezago, antes y después de descontar la estación. ${nom}.`,
           graficoRezagos(filas), {
@@ -380,7 +387,7 @@
              la asociación de su ausencia.`
           : `el intervalo no cruza el cero.`}
         Eso no prueba que no exista: la semana es una ventana ancha para algo que la
-        literatura busca en días. Ese es el motivo del capítulo siguiente.</p>`;
+        literatura busca en días. Ese es el motivo del capítulo siguiente.</p>`);
   }
 
   /* ================= controles ================= */

@@ -121,10 +121,26 @@ hace comparables entre sí.
 ## Efecto en la página
 
 `modelo.json` pasó de 10 kB a 18,5 kB (150 filas). La página se reorganizó de dos
-mitades —modelo diario arriba, exploración semanal abajo— a **cinco preguntas**,
-porque con dos cuerpos de análisis y cuatro gráficos nuevos el orden por autor
-obligaba a recorrer las tres ciudades dos veces. Ver
-[`analisis_semanal.md`](analisis_semanal.md).
+mitades —modelo diario arriba, exploración semanal abajo— a **siete capítulos y
+un anexo**, ordenados de lo más digerible a lo más técnico:
+
+| | Capítulo | Figuras |
+|---|---|---|
+| 01 | Las dos series suben juntas cada invierno | serie temporal MP2.5 + urgencias |
+| 02 | Las dos siguen el calendario | climatología con temperatura |
+| 03 | Casi toda la correlación era el calendario | bruto vs. anomalía, precedencia semanal |
+| 04 | Con días, y descontando clima y virus | escalera de ajuste, rezagos 0–7 |
+| 05 | Dónde | ciudades, zonas RM, cobertura, distancias, viento |
+| 06 | En quién | edad, diagnóstico |
+| 07 | Lo que no salió limpio | sensibilidades, controles negativos, placebo |
+| — | Anexo | proyección (fuera del alcance declarado) |
+
+El orden por autor obligaba a recorrer las tres ciudades dos veces, y arrancar
+por el modelo dejaba lo más difícil de leer en primer lugar. Ahora la página abre
+con el gráfico que cualquiera entiende —dos líneas que suben juntas— y solo
+después explica por qué eso no basta. Ver
+[`analisis_semanal.md`](analisis_semanal.md) y
+[`figuras_sitio.md`](figuras_sitio.md).
 
 ## Pendientes
 
