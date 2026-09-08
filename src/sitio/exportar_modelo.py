@@ -218,6 +218,7 @@ def exportar(destino: Path) -> dict:
         datos[clave] = limpiar(d)
         log.info("  %-38s %3d filas  (%s)", archivo, len(d), origen.name)
 
+
     ruta = destino / NOMBRE
     ruta.write_text(json.dumps(datos, ensure_ascii=False, separators=(",", ":")),
                     encoding="utf-8")

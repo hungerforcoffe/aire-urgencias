@@ -214,6 +214,27 @@ const AU = (() => {
   // Escala lineal: devuelve la función que lleva un valor a un píxel.
   const escala = (v0, v1, p0, p1) => v => p0 + (v - v0) / (v1 - v0) * (p1 - p0);
 
+  /* ---------- figuras ----------
+     Envuelve un gráfico o una tabla en su lámina.
+
+     El número NO se lleva en JavaScript. Lo pone un contador de CSS sobre la
+     clase .fig, y por dos razones: los paneles se repintan al mover un control
+     —un contador de JS iría subiendo hasta «Fig. 47»— y tres scripts distintos
+     escriben figuras en la misma página, así que ninguno sabe cuántas van. El
+     contador de CSS cuenta posiciones en el documento, que es lo correcto. */
+  function figura(titulo, cuerpo, { pie = "", clave = [], ancho = "" } = {}) {
+    const leyenda = clave.length
+      ? `<div class="fig-clave">${clave.map(c =>
+          `<span><i style="background:${c.color}"></i>${c.nom}</span>`).join("")}</div>`
+      : "";
+    return `<figure class="fig"${ancho ? ` style="max-width:${ancho}"` : ""}>
+      <div class="fig-cab"><b></b><span>${titulo}</span></div>
+      ${leyenda}
+      <div class="fig-cuerpo">${cuerpo}</div>
+      ${pie ? `<div class="fig-pie">${pie}</div>` : ""}
+    </figure>`;
+  }
+
   /* ---------- geometría de la rosa ---------- */
   const SECTORES = ["N", "NE", "E", "SE", "S", "SO", "O", "NO"];
   // Sector i cubre 45° centrados en i*45. El -90 lleva el 0° (norte) hacia
@@ -264,7 +285,7 @@ const AU = (() => {
   document.addEventListener("au:tema", () => { _paradas = null; });
 
   return { css, tono, peldano, icap, num, miles, MESES, mesLargo, cargar, fallo,
-           marcas, escala,
+           marcas, escala, figura,
            SECTORES, arco, sectorDe, vientoAhora, temaActual,
            CATEGORIAS, REFERENCIAS, NORMA_ANUAL, NORMA_24H };
 })();

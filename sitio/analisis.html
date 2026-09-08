@@ -33,205 +33,143 @@
  <div>
   <div class="ojo">Estudio ecol&oacute;gico observacional &middot; 2018&ndash;2026</div>
   <h1>MP2.5 y urgencias respiratorias</h1>
-  <p>Cuando el aire de una ciudad empeora respecto de sus propios d&iacute;as vecinos,
-   <b>las consultas de urgencia respiratoria suben un poco</b>. El modelo compara cada
-   ciudad consigo misma y ajusta por temperatura, humedad y circulaci&oacute;n viral.
-   La asociaci&oacute;n es peque&ntilde;a, consistente entre ciudades y edades, y
-   &mdash;como muestra el &uacute;ltimo panel&mdash; <b>no est&aacute; libre de sesgo</b>.</p>
+  <p>Cada invierno suben el humo y las consultas de urgencia. Separar cu&aacute;nto de
+   eso es el aire y cu&aacute;nto es el fr&iacute;o, los virus y el calendario es todo el
+   trabajo. Esta p&aacute;gina lo recorre en orden, del gr&aacute;fico m&aacute;s simple
+   al m&aacute;s exigente.</p>
  </div>
 </header>
 
 <div class="indicadores" id="m-indicadores"></div>
 
-<section class="pregunta">
- <div class="rotulo">
-  <div class="num">Pregunta 1</div>
-  <h2>&iquest;Queda algo cuando se descuenta lo dem&aacute;s?</h2>
-  <p>El invierno trae humo, fr&iacute;o y virus a la vez. La primera pregunta no es si el
-   MP2.5 acompa&ntilde;a a las urgencias &mdash;lo hace&mdash;, sino <b>qu&eacute; queda de esa
-   compa&ntilde;&iacute;a al descontar uno por uno los otros culpables</b>.</p>
+<section class="cap">
+ <div class="cap-cab">
+  <span class="cap-n">01</span>
+  <h2>Las dos series suben juntas cada invierno</h2>
+  <p>Lo primero que se ve en los datos, sin ning&uacute;n modelo de por medio.</p>
  </div>
- <div class="paneles" id="p-asociacion"></div>
+ <div class="cap-cuerpo" id="s-fenomeno"></div>
 </section>
 
-<section class="pregunta">
- <div class="rotulo">
-  <div class="num">Pregunta 2</div>
-  <h2>&iquest;Cu&aacute;ndo ocurre?</h2>
-  <p>Si el aire de hoy tiene algo que ver con las consultas, &iquest;se nota hoy mismo o
-   d&iacute;as despu&eacute;s? La respuesta depende de <b>a qu&eacute; resoluci&oacute;n se
-   mire</b>, y es el hallazgo que ordena el resto de la p&aacute;gina.</p>
+<section class="cap">
+ <div class="cap-cab">
+  <span class="cap-n">02</span>
+  <h2>Las dos siguen el calendario</h2>
+  <p>El MP2.5 sube por calefacci&oacute;n e inversi&oacute;n t&eacute;rmica; las urgencias,
+   por fr&iacute;o y circulaci&oacute;n viral. Coinciden en el tiempo sin necesidad de que
+   una explique a la otra.</p>
  </div>
- <div class="paneles" id="p-cuando"></div>
+ <div class="cap-cuerpo" id="s-clima"></div>
 </section>
 
-<section class="pregunta">
- <div class="rotulo">
-  <div class="num">Pregunta 3</div>
-  <h2>&iquest;D&oacute;nde?</h2>
-  <p>Tres ciudades con geograf&iacute;as opuestas: una cuenca de siete millones, un puerto
-   ventilado y un valle patag&oacute;nico que quema le&ntilde;a. <b>Ni la asociaci&oacute;n ni
-   la calidad de la medici&oacute;n son iguales en las tres.</b></p>
+<section class="cap">
+ <div class="cap-cab">
+  <span class="cap-n">03</span>
+  <h2>Casi toda la correlaci&oacute;n era el calendario</h2>
+  <p>Al descontar la estaci&oacute;n del a&ntilde;o, la correlaci&oacute;n semanal se
+   desploma. Este es el resultado que obliga a todo lo que viene despu&eacute;s.</p>
  </div>
- <div class="paneles" id="p-donde"></div>
+ <div class="controles">
+  <div class="campo">
+   <label for="sel-ciudad">Ciudad</label>
+   <select id="sel-ciudad"></select>
+  </div>
+  <div class="campo">
+   <label for="sel-rezago">Rezago del MP2.5</label>
+   <select id="sel-rezago">
+    <option value="0">misma semana</option>
+    <option value="1" selected>1 semana antes</option>
+    <option value="2">2 semanas antes</option>
+   </select>
+  </div>
+  <div class="campo">
+   <label>Serie</label>
+   <div class="conmutador" id="modo">
+    <button data-modo="anomalia" aria-pressed="true">Anomalía</button>
+    <button data-modo="bruto" aria-pressed="false">Bruto</button>
+   </div>
+  </div>
+  <span class="pastilla" style="margin-left:auto">semanas MMWR</span>
+ </div>
+ <div class="indicadores" id="indicadores"></div>
+ <div class="cap-cuerpo" id="s-trampa"></div>
 </section>
 
-<section class="pregunta">
- <div class="rotulo">
-  <div class="num">Pregunta 4</div>
-  <h2>&iquest;En qui&eacute;n?</h2>
-  <p>Las mismas estimaciones, partidas por grupo de edad y por diagn&oacute;stico
-   respiratorio. Son cortes <b>descriptivos</b>: no se hizo una prueba formal de
-   interacci&oacute;n, as&iacute; que las diferencias entre grupos se describen, no se
-   contrastan.</p>
+<section class="cap">
+ <div class="cap-cab">
+  <span class="cap-n">04</span>
+  <h2>Con d&iacute;as, y descontando clima y virus</h2>
+  <p>El modelo compara cada ciudad consigo misma dentro del mismo mes y d&iacute;a de
+   semana, y ajusta por temperatura, humedad y vigilancia viral del ISP. La unidad es
+   el <b>RR por cada +10&nbsp;&micro;g/m&sup3;</b>.</p>
  </div>
- <div class="paneles" id="p-quien"></div>
+ <div class="cap-cuerpo" id="s-modelo"></div>
 </section>
 
-<section class="pregunta">
- <div class="rotulo">
-  <div class="num">Pregunta 5</div>
-  <h2>&iquest;Cu&aacute;n robusto es?</h2>
-  <p>Lo que sigue es el intento de tumbar el resultado propio: cambiarle el modelo, darle
-   aire del futuro, medir un desenlace que el humo no puede provocar. <b>Dos de esas pruebas
-   no salieron limpias</b>, y est&aacute;n ac&aacute; por eso.</p>
+<section class="cap">
+ <div class="cap-cab">
+  <span class="cap-n">05</span>
+  <h2>D&oacute;nde</h2>
+  <p>Tres ciudades con geograf&iacute;as opuestas, y dentro de Santiago seis zonas que no
+   se comportan igual ni se miden igual.</p>
  </div>
- <div class="paneles" id="p-robustez"></div>
+ <div class="cap-cuerpo" id="s-donde"></div>
+</section>
+
+<section class="cap">
+ <div class="cap-cab">
+  <span class="cap-n">06</span>
+  <h2>En qui&eacute;n</h2>
+  <p>Cortes por edad y por diagn&oacute;stico. Son <b>descriptivos</b>: no se hizo prueba
+   formal de interacci&oacute;n, as&iacute; que las diferencias entre grupos se describen,
+   no se contrastan.</p>
+ </div>
+ <div class="cap-cuerpo" id="s-quien"></div>
+</section>
+
+<section class="cap">
+ <div class="cap-cab">
+  <span class="cap-n">07</span>
+  <h2>Lo que no sali&oacute; limpio</h2>
+  <p>El intento de tumbar el resultado propio: cambiarle el modelo, darle aire del futuro
+   y medir un desenlace que el humo no puede provocar.</p>
+ </div>
+ <div class="cap-cuerpo" id="s-firme"></div>
+</section>
+
+<section class="cap anexo">
+ <div class="cap-cab">
+  <span class="cap-n">Anexo &middot; fuera del alcance declarado</span>
+  <h2>Proyectar la semana siguiente</h2>
+  <p>No responde la pregunta del estudio ni forma parte de su resultado. Est&aacute;
+   porque su respuesta la acota: si el MP2.5 fuera el motor de las urgencias,
+   aqu&iacute; se habr&iacute;a notado.</p>
+ </div>
+ <div class="cap-cuerpo" id="s-anexo"></div>
 </section>
 
 <div class="franja">
  <div class="notas">
   <section>
-   <h3>Qu&eacute; hace el modelo</h3>
-   <p>Es un <b>case-crossover estratificado por tiempo</b>. En vez de comparar ciudades
-    entre s&iacute;, compara cada ciudad <b>consigo misma</b> dentro de bloques de
-    ciudad &times; a&ntilde;o &times; mes &times; d&iacute;a de la semana: los jueves de
-    julio de 2019 en Santiago se comparan solo entre ellos.</p>
-   <p>Eso apaga de un plumazo todo lo que no cambia dentro de esa ventana &mdash;
-    poblaci&oacute;n, red de urgencias, h&aacute;bitos, la estaci&oacute;n del a&ntilde;o&mdash;
-    sin tener que medirlo. Encima se ajusta por temperatura (spline), humedad y la
-    <b>vigilancia viral del ISP</b>.</p>
-  </section>
-  <section>
    <h3>C&oacute;mo se lee un RR</h3>
-   <p><b>RR 1,0081</b> quiere decir que por cada <b>+10 &micro;g/m&sup3;</b> de MP2.5 las
-    consultas son un <b>0,81 % m&aacute;s altas</b>. Suena poco, y lo es a nivel de una
-    persona; sobre millones de consultas al a&ntilde;o no lo es.</p>
-   <p>El intervalo de 95 % es el rango compatible con los datos. Si <b>contiene el
-    1</b> &mdash;el 0 % de cambio&mdash;, el dato no distingue la asociaci&oacute;n de su
-    ausencia. Los intervalos ya vienen ensanchados por la sobredispersi&oacute;n de los
-    conteos diarios, as&iacute; que no son optimistas.</p>
+   <p><b>RR 1,0081</b> es un <b>0,81 % m&aacute;s</b> de consultas por cada
+    +10&nbsp;&micro;g/m&sup3;. Si el intervalo de 95 % <b>contiene el 1</b>, el dato no
+    distingue la asociaci&oacute;n de su ausencia.</p>
   </section>
   <section>
    <h3>Qu&eacute; es una fila</h3>
-   <p><b>Una ciudad en un d&iacute;a</b>: el MP2.5 promedio de sus estaciones SINCA y el
-    recuento de urgencias respiratorias (J00&ndash;J98) de sus establecimientos DEIS.
-    8.713 d&iacute;as-ciudad en total.</p>
-   <p>De ah&iacute; que sea un <b>estudio ecol&oacute;gico</b>. Que un d&iacute;a con m&aacute;s
-    MP2.5 traiga m&aacute;s urgencias no implica que las personas expuestas sean las que
-    consultaron &mdash; eso es la falacia ecol&oacute;gica, y es la raz&oacute;n de que
-    ninguna conclusi&oacute;n baje del nivel de ciudad.</p>
+   <p>Una ciudad en un d&iacute;a: el MP2.5 de sus estaciones SINCA y las urgencias
+    respiratorias de sus establecimientos DEIS. Por eso es un <b>estudio
+    ecol&oacute;gico</b> y ninguna conclusi&oacute;n baja del nivel de ciudad.</p>
   </section>
   <section>
-   <h3 class="alerta">Lo que este estudio no puede decir</h3>
-   <p>No dice que el MP2.5 <b>cause</b> consultas. El dise&ntilde;o es observacional y los
-    controles negativos muestran que parte de lo medido es estructura temporal
-    compartida, no aire.</p>
-   <p>Tampoco mide el riesgo de ninguna persona, ni sirve para pronosticar, ni atribuye el
-    humo a una fuente. Y la serie viral del ISP es <b>nacional</b>: controla la ola com&uacute;n
-    del pa&iacute;s, no la temporada de cada ciudad.</p>
+   <h3 class="alerta">Lo que no puede decir</h3>
+   <p>No dice que el MP2.5 <b>cause</b> consultas. Tampoco mide el riesgo de nadie en
+    particular ni atribuye el humo a una fuente. La serie viral del ISP es
+    <b>nacional</b>: controla la ola del pa&iacute;s, no la de cada ciudad.</p>
   </section>
  </div>
 </div>
-
-<div class="corte">
- <div>
-  <div class="ojo">Explorar los datos</div>
-  <h2>Por qu&eacute; la semana no bastaba</h2>
-  <p>Antes de llegar al d&iacute;a, el an&aacute;lisis se hizo <b>por semana</b>. A esa
-   resoluci&oacute;n, y descontando solo el ciclo estacional, la asociaci&oacute;n
-   <b>no se distingu&iacute;a de cero</b> en ninguna de las tres ciudades. No fue un error:
-   fue la pista de que la ventana era demasiado ancha. Lo que sigue es esa exploraci&oacute;n,
-   que adem&aacute;s es la mejor forma de ver el problema de fondo &mdash; el calendario.
-   Los controles son de verdad: se puede cambiar de ciudad, de rezago y de serie.</p>
- </div>
-</div>
-
-<div class="controles">
- <div class="campo">
-  <label for="sel-ciudad">Ciudad</label>
-  <select id="sel-ciudad"></select>
- </div>
- <div class="campo">
-  <label for="sel-rezago">Rezago del MP2.5</label>
-  <select id="sel-rezago">
-   <option value="0">misma semana</option>
-   <option value="1" selected>1 semana antes</option>
-   <option value="2">2 semanas antes</option>
-  </select>
- </div>
- <div class="campo">
-  <label>Serie</label>
-  <div class="conmutador" id="modo">
-   <button data-modo="anomalia" aria-pressed="true">Anomalía</button>
-   <button data-modo="bruto" aria-pressed="false">Bruto</button>
-  </div>
- </div>
- <span class="pastilla" style="margin-left:auto">3 ciudades &middot; semanas MMWR</span>
-</div>
-
-<div class="indicadores" id="indicadores"></div>
-<div class="paneles" id="paneles"></div>
-
-<div class="franja">
- <div class="notas">
-  <section>
-   <h3>La resoluci&oacute;n decid&iacute;a el resultado</h3>
-   <p>En bruto Santiago da <b>r = 0,27</b>: parece asociaci&oacute;n. Descontado el ciclo
-    estacional cae a <b>0,04</b> (IC 95% &minus;0,06 a 0,13). Los tres intervalos semanales
-    incluyen el cero.</p>
-   <p>Con d&iacute;as y comparaci&oacute;n dentro del mismo mes, la asociaci&oacute;n
-    aparece. <b>El hallazgo metodol&oacute;gico es ese</b>: promediar por semana diluye una
-    se&ntilde;al que se da en horas o d&iacute;as, y la curva de rezagos de arriba lo confirma
-    &mdash; casi todo est&aacute; en el d&iacute;a 0 y se apaga al segundo.</p>
-  </section>
-  <section>
-   <h3>Por qu&eacute; anomal&iacute;a y no bruto</h3>
-   <p>En invierno sube el MP2.5 &mdash;le&ntilde;a m&aacute;s inversi&oacute;n
-    t&eacute;rmica&mdash; y suben las urgencias respiratorias &mdash;virus y fr&iacute;o&mdash;.
-    Correlacionar las series crudas mide sobre todo que <b>las dos conocen el
-    calendario</b>.</p>
-   <p>La anomal&iacute;a resta a cada semana el promedio hist&oacute;rico de esa misma semana
-    del a&ntilde;o en esa ciudad. La pregunta pasa a ser: cuando una semana trae <b>m&aacute;s
-    MP2.5 que lo normal para esa fecha</b>, &iquest;trae tambi&eacute;n m&aacute;s urgencias
-    que lo normal?</p>
-  </section>
-  <section>
-   <h3>Dos descuentos, dos alcances</h3>
-   <p>La anomal&iacute;a semanal es el descuento estacional <b>m&aacute;s simple que
-    existe</b>: no supone forma de la curva, pero tampoco controla nada m&aacute;s. Si un
-    a&ntilde;o trae una epidemia fuerte, aparece como anomal&iacute;a positiva sin
-    relaci&oacute;n con el aire.</p>
-   <p>El modelo diario s&iacute; incorpora la <b>vigilancia viral del ISP</b>, adem&aacute;s
-    de temperatura y humedad. Es la diferencia principal entre las dos mitades de esta
-    p&aacute;gina, junto con la resoluci&oacute;n.</p>
-  </section>
- </div>
-</div>
-
-<div class="corte extension">
- <div>
-  <div class="ojo">Fuera del alcance declarado</div>
-  <h2>Una extensi&oacute;n: proyectar la semana siguiente</h2>
-  <p>Lo que sigue <b>no responde la pregunta de este estudio</b> y no forma parte de su
-   resultado. Es una extensi&oacute;n que el equipo explor&oacute; aparte: entrenar modelos
-   para anticipar la demanda de urgencias de la semana siguiente y ver <b>cu&aacute;nto
-   aporta el MP2.5 cuando ya se conoce la inercia de las consultas y el clima</b>.
-   Se publica porque su respuesta es informativa &mdash; y modesta.</p>
- </div>
-</div>
-
-<div class="paneles" id="p-extension"></div>
 
 <footer>
  Estudio ecológico observacional · <b>asociación, no causalidad</b><br>
@@ -239,8 +177,8 @@
 </footer>
 
 <script src="assets/js/comun.js"></script>
+<script src="assets/js/analisis.js"></script>
 <script src="assets/js/modelo.js"></script>
 <script src="assets/js/semanal_nt.js"></script>
-<script src="assets/js/analisis.js"></script>
 </body>
 </html>

@@ -556,34 +556,92 @@ ol.reglas li::before{content:counter(r);font-family:var(--mono);font-size:11.5px
 .trio .rot{font-family:var(--mono);font-size:10px;letter-spacing:.07em;
   text-transform:uppercase;color:var(--tinta-3);margin-bottom:2px}
 
-/* ============ analisis: narrativa por preguntas ============ */
-/* La pagina avanza por preguntas, no por autor. Cada bloque abre con su rotulo
-   y agrupa los paneles que la responden, vengan del analisis que vengan. El
-   peso visual queda entre .corte (que anuncia cambio de tema) y .paneles h3
-   (que titula un grafico): se lee como capitulo. */
-.pregunta{border-top:1px solid var(--linea)}
-.pregunta > .rotulo{max-width:1180px;margin:0 auto;padding:30px 20px 0}
-.pregunta .num{font-family:var(--mono);font-size:11px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--azul-medio);margin-bottom:6px}
-.pregunta h2{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--tinta);
-  line-height:1.25;margin-bottom:8px}
-.pregunta > .rotulo p{font-size:14px;color:var(--tinta-2);max-width:660px;
-  line-height:1.65;margin:0}
-.pregunta > .rotulo b{color:var(--tinta);font-weight:600}
-.pregunta .paneles{padding-top:16px}
+/* ============ figuras ============ */
+/* Los graficos NO siguen el tema de la pagina. Viven sobre una lamina clara con
+   marco, siempre, como la figura de un informe. No es una preferencia estetica:
+   un grafico que toma los colores del panel se disuelve en el, y lo primero que
+   se pierde es la frontera entre lo que es dato y lo que es diseño. Al separarlo
+   tambien se puede exportar o imprimir sin rehacerlo.
 
-/* De cual de los dos analisis viene un panel. Con dos disenos distintos en la
+   Por eso estos tokens estan fijados aqui y NO se redefinen en los bloques de
+   tema oscuro de mas arriba. Si alguien los agrega alli, la lamina deja de ser
+   una lamina. */
+.fig{
+  --fig-sup:#fcfbf8;      /* superficie de la lamina */
+  --fig-tinta:#16181b;    /* titulos y valores */
+  --fig-tinta-2:#585d63;  /* rotulos de eje */
+  --fig-tinta-3:#8b8f95;  /* ticks y marcas finas */
+  --fig-linea:#d5d2c9;    /* marco y eje */
+  --fig-rejilla:#eae7e0;  /* rejilla interior */
+  --fig-s1:#1c5fa8;       /* serie 1 - MP2.5 */
+  --fig-s2:#c2481a;       /* serie 2 - urgencias */
+  --fig-s3:#1a7f5a;       /* serie 3 */
+  --fig-alerta:#b3261e;   /* lo que no deberia estar ahi */
+  --fig-sombra:#ece9e2;   /* franjas de contexto: invierno, pandemia */
+  background:var(--fig-sup);border:1px solid var(--fig-linea);border-radius:6px;
+  margin:0 0 12px;overflow:hidden;counter-increment:figura}
+.fig-cab{display:flex;gap:8px;align-items:baseline;padding:9px 12px 8px;
+  border-bottom:1px solid var(--fig-linea);font-size:12px;color:var(--fig-tinta)}
+/* El numero lo cuenta el CSS y no el JS: los paneles se repintan al mover un
+   control, y un contador en JS seguiria subiendo. Este cuenta posiciones en el
+   documento, asi que sale bien aunque tres scripts escriban figuras. */
+body{counter-reset:figura}
+.fig-cab b{font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--fig-s1);font-weight:600;white-space:nowrap}
+.fig-cab b::before{content:"Fig. " counter(figura)}
+.fig-cuerpo{padding:12px 12px 8px}
+.fig-cuerpo svg{display:block;width:100%;height:auto}
+.fig-pie{padding:0 12px 10px;font-size:10.5px;color:var(--fig-tinta-2);
+  line-height:1.5}
+/* Leyenda dentro de la lamina, con los colores de la lamina y no los del tema. */
+.fig-clave{display:flex;gap:14px;flex-wrap:wrap;padding:0 12px 8px;
+  font-family:var(--mono);font-size:10px;color:var(--fig-tinta-2)}
+.fig-clave i{display:inline-block;width:12px;height:2px;margin-right:5px;
+  vertical-align:middle;border-radius:1px}
+/* Tablas de datos: mismo trato que un grafico, son la misma clase de objeto. */
+.fig table{width:100%;border-collapse:collapse;font-size:11.5px}
+.fig th{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--fig-tinta-2);font-weight:500;
+  text-align:right;padding:6px 12px;border-bottom:1px solid var(--fig-linea)}
+.fig th:first-child{text-align:left}
+.fig td{padding:5px 12px;color:var(--fig-tinta);text-align:right;
+  font-family:var(--mono);font-variant-numeric:tabular-nums}
+.fig td:first-child{text-align:left;font-family:var(--sans)}
+.fig tbody tr:not(:last-child) td{border-bottom:1px solid var(--fig-rejilla)}
+
+/* ============ analisis: capitulos en una columna ============ */
+/* Una sola columna de lectura, no una grilla de tarjetas. La grilla dejaba
+   huecos cada vez que un panel ocupaba el ancho completo, y obligaba a leer en
+   zigzag. Con una columna el orden es el orden: texto, figura, texto. */
+.cap{border-top:1px solid var(--linea);padding:32px 20px 26px}
+.cap-cab{max-width:880px;margin:0 auto 16px}
+.cap-n{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  color:var(--azul-medio);display:block;margin-bottom:5px}
+.cap h2{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--tinta);
+  line-height:1.25;margin:0 0 7px}
+.cap-cab p{font-size:14px;color:var(--tinta-2);max-width:680px;line-height:1.6;margin:0}
+.cap-cuerpo{max-width:880px;margin:0 auto}
+/* Los parrafos entre figuras son cortos a proposito: la figura es el argumento,
+   el texto solo dice que mirar. */
+.cap-cuerpo > p{font-size:13.5px;color:var(--tinta-2);max-width:680px;
+  line-height:1.6;margin:0 0 16px}
+.cap-cuerpo > p:last-child{margin-bottom:0}
+.cap b{color:var(--tinta);font-weight:600}
+/* Dos figuras que se leen juntas. Bajo ~660 px se apilan solas. */
+.fig-par{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:12px;align-items:start}
+
+/* De cual de los dos analisis viene una figura. Con dos disenos distintos en la
    misma pagina, no decirlo obliga al lector a suponerlo. */
-.paneles .origen{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--tinta-3);display:block;margin-bottom:5px}
-.paneles .origen::before{content:"";display:inline-block;width:6px;height:6px;
+.fuente{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--tinta-3);display:block;margin:-6px 0 10px}
+.fuente::before{content:"";display:inline-block;width:6px;height:6px;
   border-radius:50%;margin-right:6px;vertical-align:middle;background:var(--s1)}
-.paneles .origen.dia::before{background:var(--s2)}
+.fuente.dia::before{background:var(--s2)}
 
-/* El bloque que queda fuera del alcance declarado del estudio. El rotulo naranja
-   es el mismo que marca los hallazgos incomodos: aqui advierte, no destaca. */
-.corte.extension{border-left:3px solid var(--senal)}
-.corte.extension .ojo{color:var(--senal)}
+/* El bloque que queda fuera del alcance declarado del estudio. */
+.cap.anexo{background:var(--fondo-alt);border-left:3px solid var(--senal)}
+.cap.anexo .cap-n{color:var(--senal)}
 
 /* ============ pie ============ */
 footer{background:var(--navy);color:rgba(255,255,255,.4);font-family:var(--mono);
