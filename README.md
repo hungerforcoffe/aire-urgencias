@@ -6,7 +6,7 @@ chilenas.
 
 ### Equipo
 - Pablo Rojas
-- 
+- Camila Bravo
 - Nicolás Torres
 -
 -
