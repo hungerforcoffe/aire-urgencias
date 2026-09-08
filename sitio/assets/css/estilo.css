@@ -536,6 +536,55 @@ ol.reglas li::before{content:counter(r);font-family:var(--mono);font-size:11.5px
 .clave i{display:inline-block;width:14px;height:2px;margin-right:5px;vertical-align:middle;
   border-radius:1px}
 
+/* ============ analisis: corte de seccion y trio de curvas ============ */
+/* Separa el modelo diario (arriba) de la exploracion semanal (abajo). Es mas
+   claro que el hero para no anunciar una pagina nueva, pero con suficiente peso
+   para que se lea como un cambio de tema y no como un panel mas. */
+.corte{background:var(--fondo-alt);border-top:1px solid var(--linea);
+  border-bottom:1px solid var(--linea);padding:26px 24px}
+.corte > div{max-width:900px;margin:0 auto}
+.corte .ojo{font-family:var(--mono);font-size:11px;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--senal);margin-bottom:8px}
+.corte h2{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--tinta);
+  line-height:1.25;margin-bottom:8px}
+.corte p{font-size:14px;color:var(--tinta-2);max-width:640px;line-height:1.65;margin:0}
+.corte b{color:var(--tinta);font-weight:600}
+
+/* Tres curvas de rezago en fila. Cada SVG trae su viewBox, asi que el minmax
+   solo decide cuantas caben: bajo ~700 px pasan a una columna sin recortarse. */
+.trio{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.trio .rot{font-family:var(--mono);font-size:10px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--tinta-3);margin-bottom:2px}
+
+/* ============ analisis: narrativa por preguntas ============ */
+/* La pagina avanza por preguntas, no por autor. Cada bloque abre con su rotulo
+   y agrupa los paneles que la responden, vengan del analisis que vengan. El
+   peso visual queda entre .corte (que anuncia cambio de tema) y .paneles h3
+   (que titula un grafico): se lee como capitulo. */
+.pregunta{border-top:1px solid var(--linea)}
+.pregunta > .rotulo{max-width:1180px;margin:0 auto;padding:30px 20px 0}
+.pregunta .num{font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--azul-medio);margin-bottom:6px}
+.pregunta h2{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--tinta);
+  line-height:1.25;margin-bottom:8px}
+.pregunta > .rotulo p{font-size:14px;color:var(--tinta-2);max-width:660px;
+  line-height:1.65;margin:0}
+.pregunta > .rotulo b{color:var(--tinta);font-weight:600}
+.pregunta .paneles{padding-top:16px}
+
+/* De cual de los dos analisis viene un panel. Con dos disenos distintos en la
+   misma pagina, no decirlo obliga al lector a suponerlo. */
+.paneles .origen{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--tinta-3);display:block;margin-bottom:5px}
+.paneles .origen::before{content:"";display:inline-block;width:6px;height:6px;
+  border-radius:50%;margin-right:6px;vertical-align:middle;background:var(--s1)}
+.paneles .origen.dia::before{background:var(--s2)}
+
+/* El bloque que queda fuera del alcance declarado del estudio. El rotulo naranja
+   es el mismo que marca los hallazgos incomodos: aqui advierte, no destaca. */
+.corte.extension{border-left:3px solid var(--senal)}
+.corte.extension .ojo{color:var(--senal)}
+
 /* ============ pie ============ */
 footer{background:var(--navy);color:rgba(255,255,255,.4);font-family:var(--mono);
   font-size:11.5px;line-height:1.7;padding:16px 24px;text-align:center}

@@ -191,6 +191,29 @@ const AU = (() => {
       '<code>sitio/assets/datos/</code>. Detalle: ' + String(err.message || err) + '</p>';
   }
 
+  /* ---------- ejes ----------
+     Vivían dentro de modelo.js, que era el único que dibujaba estimaciones. Con
+     dos análisis produciendo gráficos, quedarse ahí obligaba a copiarlas: es la
+     tercera versión de la misma función la que hace que dos ejes de la misma
+     página dejen de coincidir. */
+
+  // Paso de grilla. Se elige el primero que deje 7 marcas o menos: más que eso
+  // se apelmaza en el ancho de una tarjeta.
+  // Los cuatro primeros son los que ya usaba modelo.js para RR en centésimas;
+  // se conservan al frente para que los gráficos existentes no cambien de eje.
+  // La cola cubre los rangos del análisis semanal: R², porcentajes, kilómetros.
+  const PASOS = [0.1, 0.2, 0.25, 0.5, 1, 2, 5, 10, 20, 25, 50, 100];
+  function marcas(lo, hi) {
+    const paso = PASOS.find(p => (hi - lo) / p <= 7) || PASOS[PASOS.length - 1];
+    const xs = [];
+    for (let v = Math.ceil(lo / paso) * paso; v <= hi + 1e-9; v += paso) {
+      xs.push(Math.round(v / paso) * paso);
+    }
+    return xs;
+  }
+  // Escala lineal: devuelve la función que lleva un valor a un píxel.
+  const escala = (v0, v1, p0, p1) => v => p0 + (v - v0) / (v1 - v0) * (p1 - p0);
+
   /* ---------- geometría de la rosa ---------- */
   const SECTORES = ["N", "NE", "E", "SE", "S", "SO", "O", "NO"];
   // Sector i cubre 45° centrados en i*45. El -90 lleva el 0° (norte) hacia
@@ -241,6 +264,7 @@ const AU = (() => {
   document.addEventListener("au:tema", () => { _paradas = null; });
 
   return { css, tono, peldano, icap, num, miles, MESES, mesLargo, cargar, fallo,
+           marcas, escala,
            SECTORES, arco, sectorDe, vientoAhora, temaActual,
            CATEGORIAS, REFERENCIAS, NORMA_ANUAL, NORMA_24H };
 })();

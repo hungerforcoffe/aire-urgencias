@@ -18,7 +18,27 @@ python -m src.sitio.exportar --verificar # relee lo escrito, sin volver a consul
 
 python -m src.sitio.exportar_nacional            # capa nacional -> assets/datos/nacional.json
 python -m src.sitio.exportar_nacional --verificar
+
+python -m src.sitio.exportar_modelo             # resultados del modelo -> assets/datos/modelo.json
+python -m src.sitio.exportar_modelo --verificar
+
+python -m src.sitio.exportar_semanal            # análisis semanal -> assets/datos/semanal_nt.json
+python -m src.sitio.exportar_semanal --verificar
 ```
+
+`semanal_nt.json` es el **segundo cuerpo de análisis** del proyecto: series de tiempo a
+escala ciudad-semana, análisis espacial y una extensión de proyección. Llegó en notebooks,
+sin el handoff de CSV que sí acompañó al modelo diario, así que los CSV los produce
+`python -m src.procesamiento.analisis_semanal extraer` leyendo las salidas guardadas de las
+celdas. Vive en un JSON aparte de `modelo.json` porque **no comparte unidad**: allá todo es
+un RR por +10 µg/m³, acá hay p-valores, R², correlaciones y kilómetros. Ver
+`docs/calidad/analisis_semanal.md`.
+
+`modelo.json` alimenta la mitad superior de `analisis.html`. **No sale de Athena ni de
+ninguna consulta**: son los RR e intervalos que produce el cuaderno de análisis del equipo,
+que llegan como CSV a `data/raw/modelo/`. El exportador solo valida y publica — el sitio no
+ajusta ningún modelo, porque GitHub Pages no ejecuta código. Ver
+`docs/calidad/resultados_modelo.md`.
 
 `nacional.json` es la capa de contexto del mapa: las 84 estaciones de SINCA que miden MP2.5
 fuera de las tres ciudades. Sale de `data/processed/red_nacional_*` y **no pasa por Athena**
@@ -69,9 +89,9 @@ intermedia y procesada. `sitio/assets/datos/` es otra cosa — es el **resultado
 del orden de las figuras de un informe:
 
 - solo agregados: medias mensuales por estación, medianas por sector de viento, la tabla
-  semanal por ciudad;
+  semanal por ciudad y las estimaciones del modelo;
 - ningún registro individual, ninguna atención de ninguna persona;
-- unos 900 kB en total.
+- unos 910 kB en total.
 
 GitHub Pages sirve archivos y nada más, así que estos JSON tienen que estar en el repo para
 que el sitio funcione. Si dejan de estarlo, el flujo de publicación falla a propósito antes

@@ -21,8 +21,12 @@ consultas de urgencia por causa respiratoria en Santiago, Talcahuano y Coyhaique
 | Rezagos | hasta 2 semanas |
 
 **Fuera de alcance:** causalidad · inferencia individual · app para ciudadanos ·
-otros contaminantes · pronóstico · atribución de fuentes · cobertura nacional ·
+otros contaminantes · atribución de fuentes · cobertura nacional ·
 valorización económica · mortalidad · datos clínicos individuales.
+
+El sitio publica además un bloque de **proyección a una semana** rotulado como
+extensión fuera del alcance declarado. No forma parte del resultado del estudio,
+que es sobre asociación; está porque su respuesta lo acota. Ver `CLAUDE.md`.
 
 ## Reglas que no se rompen
 

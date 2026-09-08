@@ -47,6 +47,15 @@ jobs:
           done
           echo "los cinco JSON están presentes"
 
+          # modelo.json y semanal_nt.json sostienen la pagina de analisis entera:
+          # sin ellos las cinco secciones de preguntas quedan vacias y la pagina
+          # se publica igual, sin error visible. Antes no estaban en esta lista.
+          test -s sitio/assets/datos/modelo.json \
+            || { echo "falta sitio/assets/datos/modelo.json — corre 'python -m src.sitio.exportar_modelo'"; exit 1; }
+          test -s sitio/assets/datos/semanal_nt.json \
+            || { echo "falta sitio/assets/datos/semanal_nt.json — corre 'python -m src.sitio.exportar_semanal'"; exit 1; }
+          echo "los resultados de análisis están presentes"
+
           # nacional.json es la capa de contexto del mapa y es OPCIONAL: sin él
           # el sitio funciona con las 16 del estudio y el interruptor de la capa
           # queda desactivado. No se corta el despliegue por esto, pero sí se
