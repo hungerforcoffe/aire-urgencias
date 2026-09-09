@@ -9,7 +9,7 @@ chilenas.
 - Camila Bravo
 - Nicolás Torres
 - Noemi Calabuig
--
+- Dante Velasquez
 
 ## Pregunta de investigación
 
