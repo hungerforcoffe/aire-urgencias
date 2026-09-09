@@ -6,7 +6,7 @@ chilenas.
 
 ### Equipo
 - Pablo Rojas
-- 
+- Noemi Calabuig
 - Nicolás Torres
 -
 -
