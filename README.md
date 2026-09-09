@@ -6,9 +6,9 @@ chilenas.
 
 ### Equipo
 - Pablo Rojas
-- Noemi Calabuig
+- 
 - Nicolás Torres
--
+- Noemi Calabuig
 -
 
 ## Pregunta de investigación
