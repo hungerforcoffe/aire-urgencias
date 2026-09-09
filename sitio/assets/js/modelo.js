@@ -219,7 +219,8 @@
       <div class="d">suma de los ocho rezagos</div></div>
     <div><div class="k">Días-ciudad</div>
       <div class="v">${AU.miles(CONTEMP.n_dias)}</div>
-      <div class="d">en ${AU.miles(CONTEMP.n_estratos)} estratos</div></div>
+      <div class="d">en ${AU.miles(CONTEMP.n_estratos)} bloques de
+        ciudad × año × mes × día de semana</div></div>
     <div><div class="k">Control negativo</div>
       <div class="v" style="color:var(--tinta-3)">${pct(control.rr10)}</div>
       <div class="d">debería ser 0 %. Ver capítulo 7</div></div>`);
