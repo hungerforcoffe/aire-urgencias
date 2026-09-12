@@ -82,6 +82,18 @@ python -m http.server 8000 --directory sitio
 Hay que servirlo por HTTP: abriendo `index.html` con doble clic, el navegador bloquea el
 `fetch` de los JSON por política de origen y el mapa queda en blanco.
 
+## Los gráficos temporales interactivos
+
+`assets/graficos_temporales/` tiene tres gráficos Plotly de **Dante Velasquez**, uno por
+ciudad: MP2.5 y urgencias respiratorias semanales, su media móvil de cuatro semanas, la guía
+OMS de 15 µg/m³ y la marca del período de pandemia. Se abren desde el capítulo 01 de
+`analisis.html`.
+
+Son HTML autocontenidos, con los datos del gráfico escritos dentro. **plotly.js no va
+embebido**: se carga desde cdnjs, igual que Leaflet. Embebido, cada archivo pesaba 4,3 MB
+—la librería repetida tres veces—; con el CDN pesan 55 kB. Si se regeneran, conviene hacerlo
+con `fig.write_html(..., include_plotlyjs="cdn")`, que produce directamente esa forma.
+
 ## Por qué los JSON sí están versionados
 
 El repositorio no versiona datos: `data/` está en `.gitignore` y ahí viven las zonas cruda,
@@ -109,11 +121,12 @@ del perfil local (`~/.aws/credentials`) únicamente en el paso de exportación.
 | Qué | De dónde | Para qué |
 |---|---|---|
 | Leaflet 1.9.4 | cdnjs | el mapa |
+| plotly.js 4.0.0 | cdnjs | los tres gráficos temporales interactivos (`assets/graficos_temporales/`) |
 | Teselas | Esri Canvas (gris claro / gris oscuro), sobre datos de HERE, Garmin y OpenStreetMap | la cartografía de fondo |
 | Fraunces, Source Sans 3, JetBrains Mono | Google Fonts | tipografía |
 | Open-Meteo | `api.open-meteo.com` | viento y temperatura actuales |
 
-**Ninguna de las cuatro pide llave, y esa es la condición de entrada.** CARTO servía las
+**Ninguna de las cinco pide llave, y esa es la condición de entrada.** CARTO servía las
 teselas hasta que empezó a exigir una: no falla con un error, responde **HTTP 200 con un PNG
 válido que dice «API KEY REQUIRED» impreso encima**. El `fetch` no se queja, la capa se
 agrega y el mapa se ve roto solo al mirarlo. Es la regla 5 del proyecto aplicada a una

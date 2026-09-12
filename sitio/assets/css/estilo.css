@@ -454,6 +454,9 @@ tbody tr:last-child td{border-bottom:0}
 .pastilla{font-family:var(--mono);font-size:10.5px;color:var(--azul-medio);
   border:1px solid var(--celeste-c);background:var(--fondo-alt);padding:4px 11px;
   border-radius:99px;white-space:nowrap}
+/* La pastilla como enlace: los gráficos interactivos del capítulo 01. */
+a.pastilla{text-decoration:none}
+a.pastilla:hover{border-color:var(--azul-medio)}
 
 /* ============ prosa ============ */
 .prosa{max-width:800px;margin:0 auto;padding:36px 0 48px}
