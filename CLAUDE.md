@@ -62,7 +62,7 @@ consultas de urgencia por causa respiratoria en Santiago, Talcahuano y Coyhaique
 |---|---|---|
 | SINCA (MMA) | **Única fuente de aire para Chile.** MP2.5 horario + meteorología | descarga web por estación/año |
 | DEIS (MINSAL) | Co-primaria: urgencias respiratorias | descarga de archivos |
-| ISP | Vigilancia de virus respiratorios: control del confusor | tabulado por el equipo desde los PDF |
+| ISP | Vigilancia de virus respiratorios: control del confusor | **reservada** — ver `docs/calidad/isp_virus.md` |
 | Reanálisis meteorológico | Temperatura donde SINCA no mide; relleno de vacíos | API pública |
 | INE | Proyecciones de población por comuna y año: el denominador | XLSX |
 | CASEN | Combustible de calefacción del hogar: contexto regional, no covariable | `.dta` por año |
@@ -131,6 +131,12 @@ Tres convenciones de subcomando que se repiten en todo el repo:
 | `construir` / `verificar` | `src/procesamiento/*` y `src/sitio/*`: construir escribe, verificar relee lo escrito sin recalcular |
 | `acceso`, `particion`, `contar`, `descargar` | `src/ingesta/reconocer_*`: reconocimiento de una fuente, de barato a caro |
 
+El tercer juego cambia con la fuente y no conviene adivinarlo: `reconocer_openaq`
+y `reconocer_satpm` siguen la escalera de arriba, `reconocer_deis` usa
+`disponibilidad/esquema/establecimientos/cobertura/perfil` y `reconocer_casen`
+`disponibilidad/descargar/variables/perfil`. El `--help` de cada módulo es la
+referencia, porque es su docstring.
+
 Cadena completa, de la fuente al sitio:
 
 ```powershell
@@ -139,6 +145,8 @@ uv run python -m src.ingesta.reconocer_deis descargar --desde 2018 --hasta 2024
 uv run python -m src.ingesta.reconocer_ine descargar
 uv run python -m src.ingesta.red_nacional catalogo
 uv run python -m src.ingesta.red_nacional descargar
+uv run python -m src.ingesta.red_nacional sondeo      # metadatos: qué serie declara cada ficha
+uv run python -m src.ingesta.red_nacional viento      # par horario MP2.5+viento, ~221 MB
 
 # 2. procesamiento -> data/processed (Parquet)
 uv run python -m src.procesamiento.deis_access convertir      # 2018-2019: .mdb -> CSV
@@ -149,7 +157,9 @@ uv run python -m src.procesamiento.tiempo validar             # MMWR contra el D
 uv run python -m src.procesamiento.estaciones construir --bucket <bucket> --perfil <perfil>
 uv run python -m src.procesamiento.ciudades construir
 uv run python -m src.procesamiento.poblacion construir
-uv run python -m src.procesamiento.isp_virus construir
+uv run python -m src.procesamiento.isp_virus construir     # reservado: ver docs/privado/LEEME.md
+uv run python -m src.procesamiento.red_nacional construir
+uv run python -m src.procesamiento.red_nacional_rosa construir
 uv run python -m src.procesamiento.analitico construir        # recorte a 3 ciudades
 uv run python -m src.procesamiento.analisis_semanal extraer   # notebooks -> CSV
 
@@ -164,6 +174,19 @@ uv run python -m src.sitio.exportar --verificar
 uv run python -m src.sitio.exportar_nacional
 uv run python -m src.sitio.exportar_modelo
 uv run python -m src.sitio.exportar_semanal
+```
+
+Los marcadores no son secretos: el bucket del equipo es `aire-urgencias-2026-pr`
+y el perfil `aire-admin` (`docs/nube/README.md`). `src/nube/consultar.py` ya los
+trae por defecto junto con la base de Athena `aire_urgencias`; los demás módulos
+de `src/nube/` exigen `--bucket`.
+
+**`data/` no está en el repositorio.** Un clon recién hecho no puede construir ni
+analizar nada hasta bajar los datos:
+
+```powershell
+uv run python -m src.nube.sincronizar --bucket aire-urgencias-2026-pr --perfil aire-admin `
+    bajar --zona processed --aplicar        # 209 MB; raw/ son 3,5 GB y solo hace falta para reprocesar
 ```
 
 Spark corre **fuera** del repositorio, en la VM, con su propio intérprete:
@@ -204,7 +227,7 @@ repositorio, así el código corre igual en cualquier máquina y en la VM.
 | `dim_ciudad` | qué comunas forman cada ciudad; audita aire contra salud | `procesamiento/ciudades.py` |
 | `dim_causa`, `dim_establecimiento` | catálogos del DEIS | `procesamiento/deis.py` |
 | `poblacion_comuna_anio`, `poblacion_ciudad_anio` | denominador por año y franja etaria | `procesamiento/poblacion.py` |
-| `isp_virus_dia`, `isp_virus_semana` | circulación viral: control del confusor | `procesamiento/isp_virus.py` |
+| vigilancia viral (reservada) | circulación viral: control del confusor. La base es de una integrante y se publica primero en su repositorio; ver `docs/privado/LEEME.md` | `procesamiento/isp_virus.py` (stub) |
 | `analitico_ciudad_semana` | **ciudad × semana MMWR** — la última etapa, y el único sitio donde el recorte a tres ciudades es legítimo (regla 2) | `procesamiento/analitico.py` |
 | `red_nacional_estacion/_mes/_anio/_rosa` | contexto del mapa; serie **diaria** ya promediada por Airviro | `procesamiento/red_nacional*.py` |
 
@@ -212,21 +235,56 @@ repositorio, así el código corre igual en cualquier máquina y en la VM.
 análisis; `red_nacional_*` es diario y solo alimenta el mapa. Mezclarlos
 rompería la procedencia de la tabla horaria.
 
+### Dos módulos que centralizan una decisión
+
+No son etapas de la cadena: son el único sitio donde vive un criterio que si se
+duplica, se desincroniza.
+
+- **`procesamiento/geografia.py` — qué comunas forman cada ciudad.** La
+  pertenencia se decide por **código de comuna**, nunca por cercanía ni por
+  región, y la usan los dos lados del modelo: `estaciones.py` para el aire y
+  `ciudades.py` para la salud, que contrasta esa lista contra `COMUNAS_CIUDAD`
+  de `ingesta/reconocer_deis.py` para que numerador y denominador hablen del
+  mismo territorio. Una estación cuya comuna no está en las tres listas devuelve
+  `None`: no se le asigna la ciudad más cercana.
+- **`ingesta/sinca_cliente.py` — el patrón de descarga de Airviro APUB**,
+  deducido del JavaScript de la página de consulta y no documentado en ninguna
+  parte. Todas las trampas de SINCA (ver más abajo) están ahí y no se
+  reimplementan en cada llamador. El macro de las series **horarias** de viento
+  lleva la altura del sensor, cambia de estación en estación y por eso no se
+  arma a plantilla: se lee con `red_nacional sondeo`, un paso de metadatos que
+  no baja ni una medición.
+
 ### Athena es la base de datos
 
 Nadie sincroniza `data/processed/` para consultar: Glue guarda dónde está cada
 Parquet y Athena los lee desde S3 (`src/nube/consultar.py`). El DDL se genera
 leyendo el **esquema real del Parquet**, no a mano — es la regla 6 aplicada al
 catálogo. Filtrar por `anio` usa la partición; `SELECT *` sin filtro escanea la
-tabla entera.
+tabla entera. Desde Python es `from src.nube.consultar import consultar`, que
+devuelve un DataFrame — el camino que evita depender de la versión local de
+pyarrow, porque quien lee los Parquet es el servidor de Athena.
+
+`src/nube/configurar_s3.py` prepara el destino **una sola vez** y no sube nada:
+bucket privado, versionado (la regla 3 materializada), cifrado en reposo, ciclo
+de vida que borra `interim/` a los 30 días, y un grupo IAM con un usuario por
+integrante. `sincronizar.py` conoce solo dos zonas, `raw` y `processed`:
+`interim/` se regenera, no viaja.
+
+`src/nube/historial.py` lee el historial de consultas de Athena y escribe el
+anexo `docs/informe/anexos/athena_ddl.md` con el DDL vigente de cada tabla. La
+base tiene 14 tablas: las 12 del modelo más dos CTAS que no forman parte de él.
+Las dos de vigilancia viral están en `RESERVADAS`: se cuentan pero no se anexan.
 
 ### El sitio no tiene backend
 
 GitHub Pages sirve archivos y no guarda secretos, así que el sitio **no**
 consulta Athena: lee los JSON que alguien exportó con credenciales locales, y
 esos JSON se versionan (excepción deliberada, anotada en `.gitignore`). El CI
-solo publica: comprueba que los cinco JSON obligatorios existan y avisa —sin
-fallar— si falta `nacional.json`. Tres exportadores con orígenes distintos:
+solo publica: corta el despliegue si falta cualquiera de los **siete**
+obligatorios (`meta`, `estaciones`, `mensual`, `ciudades`, `semanal`, `modelo`,
+`semanal_nt`) y solo **avisa** si falta `nacional.json`, que es la capa opcional
+del mapa. Cuatro exportadores con orígenes distintos:
 
 - `exportar.py` — Athena; `meta/estaciones/mensual/ciudades/semanal.json`
 - `exportar_nacional.py` — `data/processed/red_nacional_*` en local, sin AWS
@@ -246,11 +304,37 @@ o con una columna en nulo: un vacío publicado es peor que un error visible.
 `src/analisis/asociacion.py` es la maquinaria (panel ciudad-día, rezagos de
 Almon, Poisson condicional por efectos fijos de estrato, quasi-Poisson);
 `notebooks/analisis_mp25_urgencias.ipynb` es la narrativa. Las decisiones de
-diseño están fijadas en el docstring del módulo y no se eligen al vuelo.
+diseño están fijadas en el docstring del módulo y no se eligen al vuelo, igual
+que las constantes del encabezado: códigos de causa, umbrales de temperatura y
+de cobertura, y los dos controles negativos (trauma y tránsito). Quemaduras
+(causa 43) **no** es control negativo a propósito: en una ciudad que se calienta
+con leña responde de verdad al humo.
 
-`Improve Chile MP2.5 Dashboard/` es un scaffold de Figma Make (React 19 + Vite +
-Tailwind v4) **ajeno a la cadena de datos**, con su propio `AGENTS.md`. No es el
-sitio que se publica; el sitio es `sitio/`.
+`analisis/graficos_reporte.py` y `analisis/generar_pdf.py` arman el informe de la
+etapa de reconocimiento. Sus cifras están escritas a mano a propósito —vienen de
+`docs/reconocimiento/hallazgos.md` y de los JSON de evidencia— y no se
+recalculan: no son un pipeline roto.
+
+### El informe final
+
+`docs/informe/informe_final.md` es la **única fuente** del informe, y de ahí
+salen dos cosas que no se editan a mano:
+
+- `src/informe/markdown.py` → `docs/informe/INFORME.md`, lo que se publica.
+- `src/informe/generar_docx.py` → el `.docx` del curso, que **no se versiona**:
+  embebe la pauta del Samsung Innovation Campus, cuya licencia prohíbe
+  reproducirla fuera del curso. `.gitignore` excluye todo `*.docx`.
+
+`src/informe/figuras.py` dibuja las figuras desde `data/processed/` y
+`modelo.json`, así que no pueden quedar desfasadas del resultado.
+
+### Material reservado
+
+La base de vigilancia viral del ISP la construyó una integrante del equipo y la
+publica primero en su propio repositorio. `docs/calidad/isp_virus.md` y
+`src/procesamiento/isp_virus.py` son stubs; las versiones íntegras están solo en
+local, en `docs/privado/` (ignorado), con las instrucciones para restaurarlas en
+`docs/privado/LEEME.md`. No se sube nada de esa carpeta.
 
 ## Estructura del repo
 
@@ -260,11 +344,13 @@ data/
   interim/      # intermedios de limpieza (regenerables, no viajan a S3)
   processed/    # tablas finales
 src/
-  ingesta/  procesamiento/  analisis/  nube/  sitio/  rutas.py
+  ingesta/  procesamiento/  analisis/  nube/  sitio/  informe/  rutas.py
 docs/
   reconocimiento/   # hallazgos sobre estructura de las fuentes
   calidad/          # una decisión de limpieza por archivo (plantilla en su README)
   nube/             # operación del bucket y de los permisos del equipo
+  informe/          # informe final: fuente, INFORME.md, figuras y anexos
+  privado/          # reservado, solo local (ignorado)
 sitio/          # sitio estático publicado en GitHub Pages
 notebooks/
 logs/
@@ -305,7 +391,10 @@ Todos siguen la misma forma; conviene copiarla al agregar uno:
 - **`pyarrow>=20`.** Los Parquet los escribe pyarrow 25 con `SizeStatistics`;
   pyarrow 19 falla con `Repetition level histogram size mismatch`, un error que
   no menciona la versión. Si aparece, es que corre otro Python — casi siempre un
-  Anaconda. Ver `notebooks/README.md`.
+  Anaconda. El arreglo es registrar el kernel del proyecto
+  (`uv run python -m ipykernel install --user --name aire-urgencias`) y elegirlo
+  en el cuaderno; fuera del equipo, `requirements.txt` (`uv export --no-hashes`)
+  fija la versión exacta. Ver `notebooks/README.md`.
 - **SINCA: `outtype=xcl` devuelve CSV.** `outtype=csv` devuelve un GIF de 0
   bytes con HTTP 200. Las barras del parámetro `macro` van sin codificar (no
   usar `params=` de requests) y las fechas en `AAMMDD`.

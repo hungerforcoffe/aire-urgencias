@@ -4,7 +4,21 @@ Hallazgos sobre la **estructura real** de cada fuente, antes de escribir código
 de ingesta definitivo: qué entrega, en qué formato, con qué codificación, qué
 campos trae, qué falta y qué se rompe.
 
-Un documento por fuente: `sinca.md`, `deis.md`, `openaq.md`, `dimensiones.md`.
+## Qué hay
+
+| Archivo | Contenido |
+|---|---|
+| [`hallazgos.md`](hallazgos.md) | El documento principal: OpenAQ, SINCA, DEIS y el cambio de Temuco a Talcahuano |
+| [`casen.md`](casen.md) | La encuesta CASEN y el combustible de calefacción |
+| [`satpm.md`](satpm.md) | El MP2.5 satelital de ACAG |
+| `_*.json` | La evidencia en crudo de cada hallazgo, tal como la escribieron los módulos de `src/ingesta/` |
+| [`informe_etapa1.html`](informe_etapa1.html) · `.pdf` · `figuras/` | El informe de cierre de esta etapa |
+
+Este es el registro de **cómo se eligieron las fuentes**, no de cómo se usaron al
+final: por ejemplo, OpenAQ aparece reconocido en detalle porque el contraste contra
+el SINCA es lo que justificó descartarlo.
+
+## Qué debía dejar por escrito cada reconocimiento
 
 Cada documento debería dejar por escrito:
 

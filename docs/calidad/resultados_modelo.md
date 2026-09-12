@@ -108,7 +108,8 @@ tránsito (82.720 casos, IC cuatro veces más ancho) es el número llamativo.
 `analisis.html` afirmaba, antes de esto, que los tres intervalos incluían el cero
 y que **«no se incorporó la vigilancia del ISP, así que queda declarado y no
 corregido»**. Lo segundo dejó de ser cierto el mismo día en que el ISP entró al
-catálogo (ver `isp_virus.md`), y lo primero quedó superado.
+catálogo (documentación reservada: ver [`isp_virus.md`](isp_virus.md)), y lo
+primero quedó superado.
 
 El análisis semanal **no se borró**: pasó a ser la primera mitad de la historia,
 bajo el título «Por qué la semana no bastaba». No estaba equivocado, medía otra
