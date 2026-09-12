@@ -54,6 +54,23 @@ aws_*.json
 docs/reconocimiento/figuras/_informe_armado.html
 
 # ---------------------------------------------------------------
+# Informe final del curso
+# ---------------------------------------------------------------
+# Ningún .docx entra al repositorio. La pauta del Samsung Innovation Campus
+# lleva una licencia que prohíbe reproducirla fuera del curso, y los informes
+# generados la embeben entera (portada, encabezado y aviso de copyright). Lo
+# que se publica es el contenido en Markdown: docs/informe/INFORME.md.
+*.docx
+# Archivos de bloqueo que Word deja al lado del documento abierto.
+~$*
+
+# Registro interno de la revisión que hizo el equipo al informe.
+docs/informe/respuesta_critica.md
+
+# Material reservado hasta que su autora lo publique. Se conserva en local.
+docs/privado/
+
+# ---------------------------------------------------------------
 # Sistema operativo y editores
 # ---------------------------------------------------------------
 Thumbs.db
