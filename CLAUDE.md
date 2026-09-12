@@ -248,10 +248,6 @@ Almon, Poisson condicional por efectos fijos de estrato, quasi-Poisson);
 `notebooks/analisis_mp25_urgencias.ipynb` es la narrativa. Las decisiones de
 diseño están fijadas en el docstring del módulo y no se eligen al vuelo.
 
-`Improve Chile MP2.5 Dashboard/` es un scaffold de Figma Make (React 19 + Vite +
-Tailwind v4) **ajeno a la cadena de datos**, con su propio `AGENTS.md`. No es el
-sitio que se publica; el sitio es `sitio/`.
-
 ## Estructura del repo
 
 ```
