@@ -62,7 +62,7 @@ consultas de urgencia por causa respiratoria en Santiago, Talcahuano y Coyhaique
 |---|---|---|
 | SINCA (MMA) | **Única fuente de aire para Chile.** MP2.5 horario + meteorología | descarga web por estación/año |
 | DEIS (MINSAL) | Co-primaria: urgencias respiratorias | descarga de archivos |
-| ISP | Vigilancia de virus respiratorios: control del confusor | tabulado por el equipo desde los PDF |
+| ISP | Vigilancia de virus respiratorios: control del confusor | **reservada** — ver `docs/calidad/isp_virus.md` |
 | Reanálisis meteorológico | Temperatura donde SINCA no mide; relleno de vacíos | API pública |
 | INE | Proyecciones de población por comuna y año: el denominador | XLSX |
 | CASEN | Combustible de calefacción del hogar: contexto regional, no covariable | `.dta` por año |
@@ -149,7 +149,7 @@ uv run python -m src.procesamiento.tiempo validar             # MMWR contra el D
 uv run python -m src.procesamiento.estaciones construir --bucket <bucket> --perfil <perfil>
 uv run python -m src.procesamiento.ciudades construir
 uv run python -m src.procesamiento.poblacion construir
-uv run python -m src.procesamiento.isp_virus construir
+uv run python -m src.procesamiento.isp_virus construir     # reservado: ver docs/privado/LEEME.md
 uv run python -m src.procesamiento.analitico construir        # recorte a 3 ciudades
 uv run python -m src.procesamiento.analisis_semanal extraer   # notebooks -> CSV
 
@@ -204,7 +204,7 @@ repositorio, así el código corre igual en cualquier máquina y en la VM.
 | `dim_ciudad` | qué comunas forman cada ciudad; audita aire contra salud | `procesamiento/ciudades.py` |
 | `dim_causa`, `dim_establecimiento` | catálogos del DEIS | `procesamiento/deis.py` |
 | `poblacion_comuna_anio`, `poblacion_ciudad_anio` | denominador por año y franja etaria | `procesamiento/poblacion.py` |
-| `isp_virus_dia`, `isp_virus_semana` | circulación viral: control del confusor | `procesamiento/isp_virus.py` |
+| vigilancia viral (reservada) | circulación viral: control del confusor. La base es de una integrante y se publica primero en su repositorio; ver `docs/privado/LEEME.md` | `procesamiento/isp_virus.py` (stub) |
 | `analitico_ciudad_semana` | **ciudad × semana MMWR** — la última etapa, y el único sitio donde el recorte a tres ciudades es legítimo (regla 2) | `procesamiento/analitico.py` |
 | `red_nacional_estacion/_mes/_anio/_rosa` | contexto del mapa; serie **diaria** ya promediada por Airviro | `procesamiento/red_nacional*.py` |
 
