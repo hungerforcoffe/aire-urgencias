@@ -1,127 +1,95 @@
 # Aire y Urgencias
 
-Capstone de Big Data. Estudia la **asociación** entre material particulado fino
-(MP2.5) y las consultas de urgencia por causa respiratoria en tres ciudades
+¿Se asocia el material particulado fino (MP2.5) con las consultas de urgencia
+por causa respiratoria? Un estudio ecológico en **Gran Santiago, Talcahuano y
+Coyhaique**, 2018–2026, sobre 70 millones de registros de fuentes públicas
 chilenas.
 
-### Equipo
-- Pablo Rojas
-- Camila Bravo
-- Nicolás Torres
-- Noemi Calabuig
-- Dante Velasquez
+Proyecto capstone del curso de Big Data del Samsung Innovation Campus.
 
-## Pregunta de investigación
+**[Ver el sitio](https://hungerforcoffe.github.io/aire-urgencias/)** ·
+**[Leer el informe](docs/informe/INFORME.md)**
 
-¿Cómo se asocia la variación semanal de MP2.5 con la variación semanal de
-consultas de urgencia por causa respiratoria en Santiago, Talcahuano y Coyhaique
-(2018–2024), controlando por temperatura, estacionalidad y período de pandemia?
+![De la fuente al análisis](docs/informe/figuras/arquitectura.png)
 
-## Alcance
+---
 
-| Dimensión | Definición |
+## Qué encontramos
+
+**La resolución temporal decide el resultado.** A escala semanal, descontando la
+estacionalidad, la asociación entre MP2.5 y urgencias no se distingue de cero. A
+escala diaria, comparando cada ciudad consigo misma dentro del mismo mes y día de
+la semana, aparece: **+0,81 % de consultas respiratorias por cada +10 µg/m³**
+el mismo día (IC 95 % +0,47 a +1,15), ajustando por temperatura, humedad y
+circulación viral.
+
+**Pero no es un resultado limpio.** Los controles negativos —traumatismos y
+accidentes de tránsito, que respirar partículas no puede provocar— dan una
+asociación igual o mayor. Eso mide sesgo, no aire: los días de alto MP2.5 son días
+de inversión térmica, fríos y sin viento, y ese patrón mueve también otras
+urgencias. Con esta metodología **no podemos separar cuánto de la asociación es
+el aire**, y lo decimos.
+
+Es un estudio ecológico y observacional: habla de **asociación, nunca de
+causalidad**, y ninguna fila describe a una persona.
+
+## En números
+
+| | |
 |---|---|
-| Ciudades | Santiago, Talcahuano, Coyhaique |
-| Período | 2018–2024 |
-| Contaminante | solo MP2.5 |
-| Agregación | semanal (revisar si DEIS permite diario) |
-| Rezagos | hasta 2 semanas |
+| Filas procesadas | **70,5 millones** en 16 tablas Parquet (209 MB) |
+| Zona cruda | **3,7 GB** en siete formatos distintos |
+| Base en Athena | **14 tablas**, 12 del modelo en estrella |
+| Estaciones de monitoreo | 16 del estudio + 84 de contexto nacional en el mapa |
+| Días-ciudad en el modelo | 8.713 |
+| Código | 38 módulos de Python |
 
-**Fuera de alcance:** causalidad · inferencia individual · app para ciudadanos ·
-otros contaminantes · atribución de fuentes · cobertura nacional ·
-valorización económica · mortalidad · datos clínicos individuales.
+## Cómo está organizado
 
-El sitio publica además un bloque de **proyección a una semana** rotulado como
-extensión fuera del alcance declarado. No forma parte del resultado del estudio,
-que es sobre asociación; está porque su respuesta lo acota. Ver `CLAUDE.md`.
+| Carpeta | Qué hay |
+|---|---|
+| [`src/`](src/) | El código, en cinco etapas: ingesta → procesamiento → nube → análisis → sitio |
+| [`docs/`](docs/) | El informe final, cada decisión de limpieza con su umbral, y el reconocimiento de las fuentes |
+| [`sitio/`](sitio/) | El sitio público: mapa de la red, análisis y metodología |
+| [`notebooks/`](notebooks/) | La narrativa del análisis y su réplica en PySpark |
 
-## Reglas que no se rompen
+Cada carpeta tiene su propio README.
 
-1. **Asociación, nunca causalidad.** Ningún texto, nombre de variable, comentario
-   o gráfico debe afirmar que la contaminación *causa* consultas. Es un estudio
-   ecológico observacional.
-2. **Acotar al final, no al principio.** La ingesta y el procesamiento operan a
-   escala nacional/global. El filtro a tres ciudades ocurre en la última etapa.
-   Si se filtra en la ingesta, el proyecto deja de ser Big Data.
-3. **Nunca sobrescribir la zona cruda.** Los archivos de `data/raw/` son
-   inmutables. Todo reproceso parte de ahí.
-4. **Toda decisión de limpieza se documenta.** Si se descarta una semana por
-   cobertura insuficiente, la regla queda escrita en `docs/calidad/` con su
-   umbral y su justificación.
+## Reproducir
 
-## Fuentes
+Requiere [`uv`](https://docs.astral.sh/uv/); el entorno queda fijado en Python 3.12.
 
-| Fuente | Rol | Acceso |
+```powershell
+uv sync                                        # crea .venv e instala el lock
+uv run python -m src.nube.consultar tablas     # la base, desde Athena (requiere perfil AWS)
+uv run python -m http.server 8000 --directory sitio   # el sitio en local
+```
+
+Los datos no están en el repositorio: `data/` se construye desde las fuentes con
+los módulos de [`src/`](src/), o se baja del bucket del proyecto con credenciales
+del equipo. Todo módulo se ejecuta como `python -m src.<paquete>.<modulo>` y su
+`--help` es su documentación.
+
+## Equipo · PARTICULAS CERO
+
+| Integrante | Rol | GitHub |
 |---|---|---|
-| SINCA (MMA) | **Única fuente de aire para Chile.** MP2.5 horario + meteorología | descarga web por estación/año |
-| DEIS (MINSAL) | Co-primaria: urgencias respiratorias | descarga de archivos |
-| ISP | Vigilancia de virus respiratorios: control del confusor | por verificar |
-| Reanálisis meteorológico | Temperatura donde SINCA no mide; relleno de vacíos | API pública |
-| OpenAQ | **Solo referencia internacional.** NO usar para datos chilenos | `s3://openaq-data-archive/` |
-| Dimensiones | comunas, establecimientos, estaciones, calendario epidemiológico | construidas por el equipo |
+| Pablo Rojas | Ingesta, procesamiento, nube y sitio | [@hungerforcoffe](https://github.com/hungerforcoffe) |
+| Camila Bravo | Diseño, presentación y análisis de datos | [@mikabldev](https://github.com/mikabldev) |
+| Nicolás Torres | Análisis de datos | [@NicolasTorresSSNA](https://github.com/NicolasTorresSSNA) |
+| Noemi Calabuig | Análisis de datos | [@noemicalabuig](https://github.com/noemicalabuig) |
+| Dante Velasquez | Gráficos temporales interactivos | [@Sketles](https://github.com/Sketles) |
 
-**Regla sobre OpenAQ.** OpenAQ cosecha los datos chilenos desde SINCA, pero **no los
-replica**: publica `round(media_móvil_24h + 10)`, sin marcas de validación y sin
-meteorología (ver `docs/reconocimiento/hallazgos.md` §1.5). Usarlo como fuente de
-MP2.5 chileno introduciría un sesgo sistemático. Su único rol es posicionar las tres
-ciudades frente al resto del mundo.
+## Fuentes y créditos
 
-## Estructura
+| Fuente | Qué aporta |
+|---|---|
+| **SINCA** · Ministerio del Medio Ambiente | MP2.5 horario y meteorología por estación |
+| **DEIS** · Ministerio de Salud | Atenciones de urgencia por establecimiento, causa y día |
+| **INE** | Proyecciones de población comunal |
+| **CASEN** | Combustible de calefacción de los hogares |
+| **ISP** · Instituto de Salud Pública | Vigilancia de virus respiratorios |
 
-```
-data/
-  raw/          # inmutable, tal como se descargó
-  interim/      # intermedios de limpieza
-  processed/    # tablas finales
-src/
-  ingesta/
-  procesamiento/
-  analisis/
-docs/
-  reconocimiento/   # hallazgos sobre la estructura de las fuentes
-  calidad/          # reportes de calidad de datos
-notebooks/
-logs/
-```
-
-`data/` y `logs/` están en `.gitignore`: se versiona el código, no los datos.
-La estructura de carpetas se conserva mediante archivos `.gitkeep`.
-
-## Puesta en marcha
-
-Requiere [`uv`](https://docs.astral.sh/uv/). El entorno queda fijado en Python
-3.12 (ver `.python-version`).
-
-```powershell
-uv sync                      # crea .venv e instala dependencias
-.venv\Scripts\activate
-```
-
-Para generar un `requirements.txt` si el equipo lo necesita:
-
-```powershell
-uv export --no-hashes -o requirements.txt
-```
-
-## Convenciones
-
-- Nada de rutas absolutas ni credenciales en el código.
-- Nombres de archivo: `fuente_alcance_periodo.ext`
-  (ej. `sinca_mp25_2018-2024.parquet`).
-- Los procesos largos escriben a `logs/`, no a stdout.
-- Formato intermedio y final: Parquet.
-
-## Notas de entorno
-
-- Windows 10, i7-7700HQ, 16 GB RAM. La VM de Hadoop dispone de ~8 GB.
-- **PySpark no está en las dependencias locales**: la VM de Hadoop corre su
-  propio intérprete. Si se necesita Spark en el equipo anfitrión, se agrega
-  aparte y se verifica la compatibilidad con Python 3.12.
-- **La conexión está detrás de CGNAT y CloudFront devuelve 403.** Si una descarga
-  falla con 403 o timeout, lo más probable es que sea la IP y no el servidor. El
-  código de ingesta debe distinguir siempre *sin permiso / bloqueado* de
-  *no existe / vacío* en sus mensajes de error.
-- AWS: los buckets son públicos y no se usan credenciales. Con `boto3`, esto
-  significa `Config(signature_version=UNSIGNED)`; con el CLI, `--no-sign-request`.
-- Las fuentes chilenas suelen entregar CSV con separador `;` y codificación
-  `latin-1`/`cp1252`. No asumir UTF-8 ni coma.
+La **base de vigilancia viral** que usa el modelo la construyó una integrante del
+equipo a partir de los informes semanales del ISP, y se publicará en su propio
+repositorio. Hasta entonces su documentación está reservada.

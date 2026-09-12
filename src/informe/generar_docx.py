@@ -659,7 +659,7 @@ def construir(args) -> int:
     nuevos: dict[str, bytes] = {}
     for n, (rid, ruta) in enumerate(imagenes, 1):
         # Nombre de parte propio y sin puntos intermedios: el del archivo de
-        # origen puede traerlos (modelo_relacional_…_MP2.5.png) y no vale la pena
+        # origen puede traerlos (cualquier `…_MP2.5.png`) y no vale la pena
         # depender de cómo los interprete cada lector de OOXML.
         nombre = f"informe_{n}.png"
         nuevos[f"word/media/{nombre}"] = ruta.read_bytes()
