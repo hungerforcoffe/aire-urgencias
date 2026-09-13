@@ -505,6 +505,12 @@ ol.reglas li::before{content:counter(r);font-family:var(--mono);font-size:11.5px
 .campo select{font-family:var(--sans);font-size:13.5px;padding:6px 10px;
   border:1px solid var(--linea-2);border-radius:6px;background:var(--fondo);
   color:var(--tinta);cursor:pointer}
+.controles .nota{font-size:12.5px;color:var(--tinta-3);padding-bottom:7px}
+/* El selector de ciudad acompaña la lectura de los capítulos 01 a 03 bajo la barra.
+   En pantalla angosta la barra cambia de alto y no hay dónde anclarlo. */
+@media (min-width:761px){
+  .controles-ciudad{position:sticky;top:52px;z-index:5;box-shadow:var(--sombra)}
+}
 .conmutador{display:flex;border:1px solid var(--linea-2);border-radius:6px;overflow:hidden}
 .conmutador button{font-family:var(--sans);font-size:13.5px;padding:6px 14px;border:0;
   background:var(--fondo);color:var(--tinta-2);cursor:pointer;transition:background .12s}

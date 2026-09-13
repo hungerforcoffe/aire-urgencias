@@ -42,6 +42,18 @@
 
 <div class="indicadores" id="m-indicadores"></div>
 
+<!-- La ciudad gobierna las figuras 1 a 4, repartidas entre los capitulos 01 y 03.
+     El selector va antes de ellos y los envuelve: se queda a la vista mientras se
+     recorren y se va al llegar al 04, que ya es de las tres ciudades juntas. -->
+<div class="por-ciudad">
+<div class="controles controles-ciudad">
+ <div class="campo">
+  <label for="sel-ciudad">Ciudad</label>
+  <select id="sel-ciudad"></select>
+ </div>
+ <span class="nota">cambia las figuras 1 a 4 y sus indicadores</span>
+</div>
+
 <section class="cap">
  <div class="cap-cab">
   <span class="cap-n">01</span>
@@ -82,10 +94,6 @@
  </div>
  <div class="controles">
   <div class="campo">
-   <label for="sel-ciudad">Ciudad</label>
-   <select id="sel-ciudad"></select>
-  </div>
-  <div class="campo">
    <label for="sel-rezago">Rezago del MP2.5</label>
    <select id="sel-rezago">
     <option value="0">misma semana</option>
@@ -108,6 +116,7 @@
       mueve un control, y borraria lo que otro script hubiera insertado. -->
  <div class="cap-cuerpo" id="s-trampa-nt"></div>
 </section>
+</div>
 
 <section class="cap">
  <div class="cap-cab">
