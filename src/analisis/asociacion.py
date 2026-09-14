@@ -325,8 +325,9 @@ def almon(datos, desenlace: str, exposicion: str = "mp25", L: int = 7,
     if r is None:
         return None
     alpha = r["beta"][:grado + 1]
-    # Covarianza de alpha reescalada por la sobredispersion, igual que los EE.
-    cov = np.diag(r["se"][:grado + 1] ** 2)
+    # Covarianza quasi-Poisson completa de los coeficientes de Almon.
+    # Es importante conservar también las covarianzas entre coeficientes.
+    cov = r["cov"][:grado + 1, :grado + 1]
     beta = P @ alpha
     se = np.sqrt(np.einsum("ij,jk,ik->i", P, cov, P))
     return {"lag": np.arange(L + 1), "beta": beta, "se": se,
@@ -425,7 +426,10 @@ def poisson_condicional(y, X, estrato, max_iter: int = 200):
     cov = np.linalg.pinv(H)
     gl = max(len(y) - n_est - k, 1)
     escala = float(np.sum((y - mu) ** 2 / np.maximum(mu, 1e-9)) / gl)  # quasi-Poisson
-    se = np.sqrt(np.diag(cov) * escala)
+
+    # Matriz de covarianza quasi-Poisson completa.
+    cov_quasi = cov * escala
+    se = np.sqrt(np.diag(cov_quasi))
 
     # Convergencia en unidades adimensionales. La norma del gradiente crece con
     # el numero de casos —traumatismos tiene millones y respiratorias tambien—
@@ -434,7 +438,8 @@ def poisson_condicional(y, X, estrato, max_iter: int = 200):
     # medido en errores estandar: si es menos del 1 %, ya llego.
     paso = cov @ grad(beta)
     paso_en_se = float(np.max(np.abs(paso) / np.maximum(se, 1e-12)))
-    return {"beta": beta, "se": se, "escala": escala, "n": len(y),
+    return {"beta": beta, "se": se, "cov": cov_quasi,
+            "escala": escala, "n": len(y),
             "n_estratos": n_est, "norma_gradiente": norma_grad,
             "paso_restante_en_se": paso_en_se,
             "convergio": paso_en_se < 0.01,
