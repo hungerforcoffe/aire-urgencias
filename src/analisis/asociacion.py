@@ -325,17 +325,117 @@ def almon(datos, desenlace: str, exposicion: str = "mp25", L: int = 7,
     if r is None:
         return None
     alpha = r["beta"][:grado + 1]
-    # Covarianza quasi-Poisson completa de los coeficientes de Almon.
-    # Es importante conservar también las covarianzas entre coeficientes.
-    cov = r["cov"][:grado + 1, :grado + 1]
-    beta = P @ alpha
-    se = np.sqrt(np.einsum("ij,jk,ik->i", P, cov, P))
-    return {"lag": np.arange(L + 1), "beta": beta, "se": se,
-            "rr10": np.exp(10 * beta),
-            "ic_inf": np.exp(10 * (beta - 1.96 * se)),
-            "ic_sup": np.exp(10 * (beta + 1.96 * se)),
-            "n": r["n"], "escala": r["escala"], "convergio": r["convergio"]}
+    # Covarianza de alpha reescalada por la sobredispersion, igual que los EE.
+    cov_alpha = (
+        r["cov"][
+            :grado + 1,
+            :grado + 1,
+        ]
+    )
 
+    beta = (
+        P @ alpha
+    )
+
+    se = np.sqrt(
+        np.einsum(
+            "ij,jk,ik->i",
+            P,
+            cov_alpha,
+            P,
+        )
+    )
+    vector_acumulado = (
+        P.sum(axis=0)
+    )
+
+    beta_acumulado = float(
+        vector_acumulado
+        @ alpha
+    )
+
+    se_acumulado = float(
+        np.sqrt(
+            vector_acumulado
+            @ cov_alpha
+            @ vector_acumulado
+        )
+    )
+
+    rr10_acumulado = float(
+        np.exp(
+            10 * beta_acumulado
+        )
+    )
+
+    ic_inf_acumulado = float(
+        np.exp(
+            10
+            * (
+                beta_acumulado
+                - 1.96 * se_acumulado
+            )
+        )
+    )
+
+    ic_sup_acumulado = float(
+        np.exp(
+            10
+            * (
+                beta_acumulado
+                + 1.96 * se_acumulado
+            )
+        )
+    )
+    return {
+        "lag": np.arange(L + 1),
+        "beta": beta,
+        "se": se,
+
+        "rr10": np.exp(
+            10 * beta
+        ),
+
+        "ic_inf": np.exp(
+            10
+            * (
+                beta
+                - 1.96 * se
+            )
+        ),
+
+        "ic_sup": np.exp(
+            10
+            * (
+                beta
+                + 1.96 * se
+            )
+        ),
+
+        "beta_acumulado":
+            beta_acumulado,
+
+        "se_acumulado":
+            se_acumulado,
+
+        "rr10_acumulado":
+            rr10_acumulado,
+
+        "ic_inf_acumulado":
+            ic_inf_acumulado,
+
+        "ic_sup_acumulado":
+            ic_sup_acumulado,
+
+        "n":
+            r["n"],
+
+        "escala":
+            r["escala"],
+
+        "convergio":
+            r["convergio"],
+    }
 
 # ==========================================================================
 # Poisson condicional
@@ -424,12 +524,27 @@ def poisson_condicional(y, X, estrato, max_iter: int = 200):
         media = ps @ Xs
         H += totales[s] * ((Xs * ps[:, None]).T @ Xs - np.outer(media, media))
     cov = np.linalg.pinv(H)
-    gl = max(len(y) - n_est - k, 1)
-    escala = float(np.sum((y - mu) ** 2 / np.maximum(mu, 1e-9)) / gl)  # quasi-Poisson
 
-    # Matriz de covarianza quasi-Poisson completa.
-    cov_quasi = cov * escala
-    se = np.sqrt(np.diag(cov_quasi))
+    gl = max(
+        len(y) - n_est - k,
+        1,
+    )
+
+    escala = float(
+        np.sum(
+            (y - mu) ** 2
+            / np.maximum(mu, 1e-9)
+        )
+        / gl
+    )
+
+    cov_quasi = (
+        cov * escala
+    )
+
+    se = np.sqrt(
+        np.diag(cov_quasi)
+    )
 
     # Convergencia en unidades adimensionales. La norma del gradiente crece con
     # el numero de casos —traumatismos tiene millones y respiratorias tambien—
@@ -438,12 +553,20 @@ def poisson_condicional(y, X, estrato, max_iter: int = 200):
     # medido en errores estandar: si es menos del 1 %, ya llego.
     paso = cov @ grad(beta)
     paso_en_se = float(np.max(np.abs(paso) / np.maximum(se, 1e-12)))
-    return {"beta": beta, "se": se, "cov": cov_quasi,
-            "escala": escala, "n": len(y),
-            "n_estratos": n_est, "norma_gradiente": norma_grad,
-            "paso_restante_en_se": paso_en_se,
-            "convergio": paso_en_se < 0.01,
-            "casos": float(y.sum()), "residuos": y - mu, "ajustado": mu}
+    return {
+        "beta": beta,
+        "se": se,
+        "cov": cov_quasi,
+        "escala": escala,
+        "n": len(y),
+        "n_estratos": n_est,
+        "norma_gradiente": norma_grad,
+        "paso_restante_en_se": paso_en_se,
+        "convergio": paso_en_se < 0.01,
+        "casos": float(y.sum()),
+        "residuos": y - mu,
+        "ajustado": mu,
+    }
 
 
 # ==========================================================================
